@@ -1,3 +1,6 @@
+import styled from 'styled-components';
+import {Box,Button, Menu, MenuItem,  } from '@mui/material';
+import { css } from '@emotion/react';
 import {
   MapContainer,
   TileLayer,
@@ -12,7 +15,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 // import "./index.css";
 
-import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconUrl from "leaflet/dist/images/marker-icon.png"
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
 import { v4 as uuidv4 } from "uuid";
@@ -623,6 +626,49 @@ const Maps = () => {
               </button>
             </aside>
           </div>
+                <Nav className="header-nav">
+        <Box component='ul' sx={{ textAlign: 'center' }}>
+          <Li>
+            <MenuBtn
+            variant='contained'
+              onClick={(event) =>{
+              console.log()
+              }}
+            >
+            지도 검색
+            </MenuBtn>
+          </Li>
+          <Li>
+            <MenuBtn
+              variant='contained'
+              // aria-expanded={'true'}
+              onClick={(event) =>{
+              console.log()
+              }}
+            >
+              마커 리스트
+            </MenuBtn>
+          </Li>
+        </Box>  
+
+                    {/* <ul className="header-nav-list-wrap">
+                        <li className="header-nav-list" >
+                            <a href="/condos" className="header-nav-link">등산지도</a>
+                        </li>
+                        <li className="header-nav-list" >
+                            <a href="/condos" className="header-nav-link">자전거 지도</a>
+                        </li>
+                        <li className="header-nav-list"  >
+                            <a href="/parks" className="header-nav-link">등산</a>
+                        </li>
+                        <li className="header-nav-list"  >
+                            <a href="/parks" className="header-nav-link">자전거</a>
+                        </li>
+                        <li className="header-nav-list"  >
+                            <a href="/partners" className="header-nav-link">공지사항</a>
+                        </li>
+                    </ul> */}
+      </Nav>
           <MapContainer
             center={[36.17, 127.83]} // 초기 중심 좌표
             zoom={6.0} // 초기 줌 레벨
@@ -1050,3 +1096,23 @@ const input = {
   // padding: 0,
 }
 
+const Nav = styled.div`
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+`
+const Li = styled.li`
+  display: inline-block;
+  position: relative;
+  margin: 0 1%;
+`
+const MenuBtn = styled(Button)`
+ width: 100px
+ margin: 0 1% !important;
+ background-color: #90caf9 !important;
+ &:hover {
+  background-color: #ce93d8 !important;
+  }
+`
