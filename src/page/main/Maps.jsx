@@ -626,7 +626,7 @@ const Maps = () => {
               </button>
             </aside>
           </div>
-                <Nav className="header-nav">
+      <Nav className="header-nav">
         <Box component='ul' sx={{ textAlign: 'center' }}>
           <Li>
             <MenuBtn
@@ -650,24 +650,6 @@ const Maps = () => {
             </MenuBtn>
           </Li>
         </Box>  
-
-                    {/* <ul className="header-nav-list-wrap">
-                        <li className="header-nav-list" >
-                            <a href="/condos" className="header-nav-link">등산지도</a>
-                        </li>
-                        <li className="header-nav-list" >
-                            <a href="/condos" className="header-nav-link">자전거 지도</a>
-                        </li>
-                        <li className="header-nav-list"  >
-                            <a href="/parks" className="header-nav-link">등산</a>
-                        </li>
-                        <li className="header-nav-list"  >
-                            <a href="/parks" className="header-nav-link">자전거</a>
-                        </li>
-                        <li className="header-nav-list"  >
-                            <a href="/partners" className="header-nav-link">공지사항</a>
-                        </li>
-                    </ul> */}
       </Nav>
           <MapContainer
             center={[36.17, 127.83]} // 초기 중심 좌표
@@ -1097,10 +1079,12 @@ const input = {
 }
 
 const Nav = styled.div`
-  width: 100%;
-  position: fixed;
-  left: 0;
+  width: calc(100vw - 4em - 2.8em);
+  height: 2em;
+  position: absolute;
   top: 0;
+  bottom: 0;
+  // left: 0;
   z-index: 999;
 `
 const Li = styled.li`
@@ -1109,7 +1093,7 @@ const Li = styled.li`
   margin: 0 1%;
 `
 const MenuBtn = styled(Button)`
- width: 100px
+ width: 8em
  margin: 0 1% !important;
  background-color: #90caf9 !important;
  &:hover {
