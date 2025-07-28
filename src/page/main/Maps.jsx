@@ -148,7 +148,7 @@ const Maps = () => {
   })
   return (
     <>
-      <ResponsiveDiv
+      <div
         style={{
           width: "100vw",
           height: '100vh',
@@ -716,7 +716,7 @@ const Maps = () => {
             <ZoomControl position="topright" />
           </MapContainer>
         </div>
-      </ResponsiveDiv>
+      </div>
     </>
   );
 
