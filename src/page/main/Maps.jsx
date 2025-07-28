@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import {Box,Button, Menu, MenuItem,  } from '@mui/material';
+import {Box,Button, Menu, MenuItem  } from '@mui/material';
+import { Modal, Paper,Typography  } from '@mui/material';
 import { css } from '@emotion/react';
 import {
   MapContainer,
@@ -146,6 +147,8 @@ const Maps = () => {
     let vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
   })
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
       <div
@@ -632,7 +635,7 @@ const Maps = () => {
             <MenuBtn
             variant='contained'
               onClick={(event) =>{
-              console.log()
+              setIsModalOpen(true)
               }}
             >
             지도 검색
@@ -651,6 +654,19 @@ const Maps = () => {
           </Li>
         </Box>  
       </Nav>
+       <CustomModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      >
+        <Box>
+          <Typography variant="h6" component="h2">
+            hi
+          </Typography>
+          <Typography sx={{ mt: 2 }}>
+            it's me
+          </Typography>
+        </Box>
+      </CustomModal>
           <MapContainer
             center={[36.17, 127.83]} // 초기 중심 좌표
             zoom={6.0} // 초기 줌 레벨
@@ -1161,9 +1177,11 @@ const ResponsiveDiv = styled.div`
         button {
           outline: none;
         }
+
         .fold-button {
             border-left: 1px solid  rgb(217, 217, 217) !important;  
         }
+            
         .fold-button > span {
           border: solid  #fff !important;  
           border-width: 2px 2px 0 0 !important;
@@ -1174,9 +1192,30 @@ const ResponsiveDiv = styled.div`
         
         }
 
-        .icon_inner > svg{
+        .icon_inner > svg {
           fill: rgb(217, 217, 217);
         }
 
     }
-`;
+`
+export const CustomModal= ({ isOpen, closeModal, children }) => {
+  return (
+    <Modal open={isOpen} onClose={closeModal}>
+      <Paper
+        elevation={2}
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 800,
+          maxWidth: "100%",
+          maxHeight: "90%",
+          overflowY: "auto",
+        }}
+      >
+        {children}
+      </Paper>
+    </Modal>
+  );
+}
