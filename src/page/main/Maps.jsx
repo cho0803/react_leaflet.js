@@ -148,7 +148,7 @@ const Maps = () => {
   })
   return (
     <>
-      <div
+      <ResponsiveDiv
         style={{
           width: "100vw",
           height: '100vh',
@@ -569,7 +569,7 @@ const Maps = () => {
               <button
                 type="button"
                 aria-expanded="false"
-                className="sc-eib5gi eYWsSk"
+                className="fold-button"
                 style={{
                   ...button,
                   display: "block",
@@ -716,7 +716,7 @@ const Maps = () => {
             <ZoomControl position="topright" />
           </MapContainer>
         </div>
-      </div>
+      </ResponsiveDiv>
     </>
   );
 
@@ -1100,3 +1100,83 @@ const MenuBtn = styled(Button)`
   background-color: #ce93d8 !important;
   }
 `
+
+// 화면 크기에 따라 글꼴 크기를 설정하는 ResponsiveDiv 컴포넌트
+const ResponsiveDiv = styled.div`
+
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    color: inherit;
+    font-size: 14px; // 기본 모바일 글꼴 크기
+
+    @media (min-width: 768px) { // 태블릿
+    font-size: 16px;
+    }
+
+    @media (min-width: 1224px) { // 데스크탑
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        font-size: 20px;
+    }
+
+    @media (prefers-color-scheme: light) {
+        /* 라이트 모드에 적용할 스타일 정의 */
+        color: #000;
+        background-color: #fff;
+
+    }
+        
+    @media (prefers-color-scheme: dark) {
+        /* 다크 모드에 적용할 스타일 정의 */
+        color: #fff  !important;
+        background-color: #121212 !important;
+
+        h1, h2, h3, .navbar_text {
+            color: #ffffff;
+        }
+
+        .search, .aside {
+        color: #fff  !important;
+        background-color: #121212 !important;
+        border: 1px solid rgb(217, 217, 217) !important;
+        }
+
+        .aside {
+        color: #fff  !important;
+        background-color: #121212 !important;
+        border: 1px solid rgb(217, 217, 217) !important;
+        border-left: none !important;
+        }
+
+        p {
+            color: #dbdbdb;
+        }
+
+        a {
+            // color: #41adff;
+        }
+
+        button {
+          outline: none;
+        }
+        .fold-button {
+            border-left: 1px solid  rgb(217, 217, 217) !important;  
+        }
+        .fold-button > span {
+          border: solid  #fff !important;  
+          border-width: 2px 2px 0 0 !important;
+        }
+
+        header {
+          background-color: #121212 !important;
+        
+        }
+
+        .icon_inner > svg{
+          fill: rgb(217, 217, 217);
+        }
+
+    }
+`;
