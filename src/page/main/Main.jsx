@@ -1,11 +1,8 @@
-export default function Main (){
-    return(
-          <Maps/>
-    )
-};
-import Maps from "./Maps.jsx"
-import Maps2 from "./Maps2.jsx"
-import Maps3 from "./Maps3.jsx"
+export default function Main() {
+  return <Maps />;
+}
+import Maps from "../maps/Maps.jsx";
 
-import Test from "./test.jsx"
+import Map from "../component/Leaflet.jsx";
 
+// import Page005, { Page006} from "../component/AddMarker.jsx";

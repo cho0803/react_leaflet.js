@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import {Box,Button, Menu, MenuItem  } from '@mui/material';
-import { Modal, Paper,Typography  } from '@mui/material';
-import { css } from '@emotion/react';
+import styled from "styled-components";
+import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Modal, Paper, Typography } from "@mui/material";
+import { css } from "@emotion/react";
 import {
   MapContainer,
   TileLayer,
@@ -16,7 +16,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 // import "./index.css";
 
-import iconUrl from "leaflet/dist/images/marker-icon.png"
+import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
 import { v4 as uuidv4 } from "uuid";
@@ -103,11 +103,11 @@ const Maps = () => {
     setValue,
     getValues,
   } = useForm();
-  
+
   const [key, setKey] = useState();
 
-  const sidebarEl = document.querySelector(".sidebar") 
-  const asideEl = document.querySelector(".aside") 
+  const sidebarEl = document.querySelector(".sidebar");
+  const asideEl = document.querySelector(".aside");
   const buttonEl = document.querySelector("button[aria-expanded]");
 
   useEffect(() => {
@@ -139,14 +139,14 @@ const Maps = () => {
   // console.log(getDate);
   // axios.get("test").then((res) => console.log(res.data), setMarkers(res.data));
 
-  let vh = window.innerHeight * 0.01
+  let vh = window.innerHeight * 0.01;
 
-  document.documentElement.style.setProperty('--vh', `${vh}px`)
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
 
-  window.addEventListener('resize', () => {
-    let vh = window.innerHeight * 0.01
-    document.documentElement.style.setProperty('--vh', `${vh}px`)
-  })
+  window.addEventListener("resize", () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -154,11 +154,11 @@ const Maps = () => {
       <div
         style={{
           width: "100vw",
-          height: '100vh',
+          height: "100vh",
           // height: 'calc(100 * var(--vh)',
           display: "flex",
           color: "inherit",
-          fontSize: '100%',
+          fontSize: "100%",
         }}
       >
         {/* {Object.entries(markers).forEach((key, value) => {
@@ -188,7 +188,7 @@ const Maps = () => {
           <h1
             className="logo_box"
             // style={{ padding:'0', fontSize:"2em",borderBottom: "1px solid rgba(0, 0, 0, 0.15)" }}
-          style={h1}
+            style={h1}
           >
             <a
               className="link_logo"
@@ -198,8 +198,9 @@ const Maps = () => {
                 color: "inherit",
               }}
             >
-              <span className="blind" 
-                style={{    
+              <span
+                className="blind"
+                style={{
                   display: "inline-block",
                   height: "1em",
                   // overflow: "hidden",
@@ -211,16 +212,17 @@ const Maps = () => {
             </a>
           </h1>
           <nav style={{ width: "4em" }}>
-            <ul className="list_navbar -fold" 
-                // style={{ width: "100%" }}
-                style={ul}
+            <ul
+              className="list_navbar -fold"
+              // style={{ width: "100%" }}
+              style={ul}
             >
               {" "}
               <li className="sc-3l5nav iKvVhN" style={li}>
                 <button
                   type="button"
                   className="btn_navbar"
-                  style={{...button, width:'62px', textAlign: 'center'}}
+                  style={{ ...button, width: "62px", textAlign: "center" }}
                   // style={{
                   //   // appearance: "none",
                   //   backgroundColor: "inherit",
@@ -246,35 +248,47 @@ const Maps = () => {
                 </button>
               </li>
               <li className="sc-3l5nav iKvVhN" style={li}>
-                <button type="button" className="btn_navbar" style={{...button, width:'62px', textAlign: 'center'}}
-                  onClick={() =>{
-                    console.log(document.defaultView.getComputedStyle(document.querySelector('.sidebar')).getPropertyValue("font-size"))
+                <button
+                  type="button"
+                  className="btn_navbar"
+                  style={{ ...button, width: "62px", textAlign: "center" }}
+                  onClick={() => {
+                    console.log(
+                      document.defaultView
+                        .getComputedStyle(document.querySelector(".sidebar"))
+                        .getPropertyValue("font-size")
+                    );
 
-                    if (sidebarEl.style.transform == `translateX(0%)`){
+                    if (sidebarEl.style.transform == `translateX(0%)`) {
+                      sidebarEl.style.transform = "translateX(-100%)";
 
-                      sidebarEl.style.transform = 'translateX(-100%)';
-                      
                       //sidebarEl.style.transform == `translateX(0%)`
-                      if (asideEl.style.transform == `translateX(0%)`){
-                        asideEl.style.transform = 'translateX(0%)'
-                      }else{
+                      if (asideEl.style.transform == `translateX(0%)`) {
+                        asideEl.style.transform = "translateX(0%)";
+                      } else {
                         //sidebarEl.style.transform == `translateX(0%)`
                         //asideEl.style.transform == `translateX(-100%)`
-                        buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
+                        buttonEl.querySelector(
+                          "span"
+                        ).style.transform = `translateY(-60%) rotate(45deg)`;
                       }
-                    }else{
+                    } else {
                       //sidebarEl.style.transform == `translateX(-100%)
-                      if (asideEl.style.transform == `translateX(0%)`){
-                        sidebarEl.style.transform = 'translateX(0%)';
-                        asideEl.style.transform = `translateX(0%)`
-                        buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+                      if (asideEl.style.transform == `translateX(0%)`) {
+                        sidebarEl.style.transform = "translateX(0%)";
+                        asideEl.style.transform = `translateX(0%)`;
+                        buttonEl.querySelector(
+                          "span"
+                        ).style.transform = `translate(40%,-50%) rotate(-135deg)`;
                         buttonEl.setAttribute("aria-controls", "true");
-                      }else{
-                        //sidebarEl.style.transform == `translateX(-100%)  
+                      } else {
+                        //sidebarEl.style.transform == `translateX(-100%)
                         //asideEl.style.transform == `translateX(-100%)
-                        sidebarEl.style.transform = 'translateX(0%)';
-                        asideEl.style.transform = 'translateX(-100%)'
-                        buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+                        sidebarEl.style.transform = "translateX(0%)";
+                        asideEl.style.transform = "translateX(-100%)";
+                        buttonEl.querySelector(
+                          "span"
+                        ).style.transform = `translate(40%,-50%) rotate(-135deg)`;
                         buttonEl.setAttribute("aria-controls", "true");
                       }
                     }
@@ -298,26 +312,31 @@ const Maps = () => {
         </header>
 
         <div
-          style={
-            {
-              // display: "flex",
-              flex: "1 1 auto"
-              // position: "relative",width: "inherit"
-              // zIndex: 0,
-            }
-          }
+          style={{
+            // display: "flex",
+            flex: "1 1 auto",
+            // position: "relative",width: "inherit"
+            // zIndex: 0,
+          }}
         >
           {/* <div className='side' style={{ position: "absolute", top:'0', bottom: '0', transition: "0.4s", transform: "translateX(-100%)",width: "inherit", zIndex: " 2",}}> */}
-          <div 
-            className='sidebar' 
-            style={{ 
-              /*transform: "translateX(-100%)", display: 'flex', */ 
-              width: '13em',
-              boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 8px 0px', 
-              display: 'flex', transform: "translateX(-100%)",transition: "0.4s",position: "absolute", top:'0', bottom: '0', zIndex:1, 
-           }}>
+          <div
+            className="sidebar"
+            style={{
+              /*transform: "translateX(-100%)", display: 'flex', */
+              width: "13em",
+              boxShadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px",
+              display: "flex",
+              transform: "translateX(-100%)",
+              transition: "0.4s",
+              position: "absolute",
+              top: "0",
+              bottom: "0",
+              zIndex: 1,
+            }}
+          >
             <div
-              className='search'
+              className="search"
               style={{
                 width: "inherit",
                 // height: "100vh",
@@ -330,45 +349,45 @@ const Maps = () => {
                 // float: "left",
                 backgroundColor: "rgb(255, 255, 255)",
                 zIndex: " 2",
-                boxShadow: 'inherit',
+                boxShadow: "inherit",
                 // border: "1px solid rgb(217, 217, 217)",
-                textAlign: 'center'
+                textAlign: "center",
               }}
             >
-              <div style={{ padding: '15px 0px' }}>               
+              <div style={{ padding: "15px 0px" }}>
                 <input
-                type="text"
-                placeholder="장소 검색"
-                style={{ height: '32px' }}
-                // value="북한산"
-                onKeyDown={(e) => {
-                  if (e.keyCode == 13) {
-                    // console.log(e.target.value);
-                    axios
-                      .get("https://nominatim.openstreetmap.org/search", {
-                        params: {
-                          lon: "127.01",
-                          lat: "37.64",
-                          q: e.target.value,
-                          limit: 5,
-                          format: "json",
-                          exclude: "206494953,206604942,207242176",
-                        },
-                      })
-                      .then(function (res) {
-                        setMaps(
-                          res.data.map((item) => {
-                            // console.log(item);
-                            return {
-                              display_name: item.display_name,
-                              lat: item.lat,
-                              lon: item.lon,
-                            };
-                          })
-                        );
-                      });
-                  }
-                }}
+                  type="text"
+                  placeholder="장소 검색"
+                  style={{ height: "32px" }}
+                  // value="북한산"
+                  onKeyDown={(e) => {
+                    if (e.keyCode == 13) {
+                      // console.log(e.target.value);
+                      axios
+                        .get("https://nominatim.openstreetmap.org/search", {
+                          params: {
+                            lon: "127.01",
+                            lat: "37.64",
+                            q: e.target.value,
+                            limit: 5,
+                            format: "json",
+                            exclude: "206494953,206604942,207242176",
+                          },
+                        })
+                        .then(function (res) {
+                          setMaps(
+                            res.data.map((item) => {
+                              // console.log(item);
+                              return {
+                                display_name: item.display_name,
+                                lat: item.lat,
+                                lon: item.lon,
+                              };
+                            })
+                          );
+                        });
+                    }
+                  }}
                 />
               </div>
 
@@ -407,7 +426,7 @@ const Maps = () => {
               </div>
             </div>
             <aside
-              className='aside'
+              className="aside"
               style={{
                 width: "inherit",
                 // height: "100%",
@@ -422,28 +441,54 @@ const Maps = () => {
                 // float: "left",
                 backgroundColor: "rgb(255, 255, 255)",
                 zIndex: " 1",
-                boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 8px 0px',
+                boxShadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px",
                 // border: "1px solid rgb(217, 217, 217)",
-                textAlign: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                display:'flex',
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
               }}
             >
-<div style={{flexBasis: '100%'}}>
+              <div style={{ flexBasis: "100%" }}>
                 {" "}
-              <div style={{ padding: '15px 0px' }}>    
-                <input
-                  type="text"
-                  style={{...input,}}
-                  placeholder="제목"
-                  {...register("title", { required: "제목을 입력해주세요" })}
-                  onKeyUp={() => {
+                <div style={{ padding: "15px 0px" }}>
+                  <input
+                    type="text"
+                    style={{ ...input }}
+                    placeholder="제목"
+                    {...register("title", { required: "제목을 입력해주세요" })}
+                    onKeyUp={() => {
+                      // markers[getValues("id")].title = getValues("title");
+                      // markers[getValues("id")].content = getValues("content");
+                      if (!markers[getValues("id")]) {
+                        alert("지도에서 좌표를 클릭해주세요");
+                        return;
+                      }
+                      setMarkers((prev) => ({
+                        ...prev,
+                        [getValues("id")]: {
+                          position: markers[getValues("id")].position,
+                          title: getValues("title"),
+                          content: getValues("content"),
+                        },
+                      }));
+                    }}
+                  />
+                </div>
+                <span>{errors.title?.message}</span>
+                <textarea
+                  style={{ ...input, height: "60px" }}
+                  placeholder="내용"
+                  {...register("content", { required: "내용을 입력해주세요" })}
+                  onKeyUp={(e) => {
+                    // var keycode = e.keyCode;
+                    // console.log(e.target.value);
+
                     // markers[getValues("id")].title = getValues("title");
                     // markers[getValues("id")].content = getValues("content");
-                    if(!markers[getValues("id")] ) {
-                      alert('지도에서 좌표를 클릭해주세요')
-                      return
+                    if (!markers[getValues("id")]) {
+                      alert("지도에서 좌표를 클릭해주세요");
+                      return;
                     }
                     setMarkers((prev) => ({
                       ...prev,
@@ -454,121 +499,120 @@ const Maps = () => {
                       },
                     }));
                   }}
+                />{" "}
+                <span>{errors.content?.message}</span>
+                <br />
+                <input
+                  type="text"
+                  hidden
+                  placeholder="id"
+                  {...register("id")}
                 />
-                
-              </div>  
-              <span>{errors.title?.message}</span>
-              <textarea
-                style={{...input,height: '60px'}}
-                placeholder="내용"
-                {...register("content", { required: "내용을 입력해주세요" })}
-                onKeyUp={(e) => {
-                  // var keycode = e.keyCode;
-                  // console.log(e.target.value);
+                <input
+                  type="text"
+                  hidden
+                  placeholder="lat"
+                  {...register("lat")}
+                />
+                <input
+                  type="text"
+                  hidden
+                  placeholder="lng"
+                  {...register("lng")}
+                />
+                <div style={{ width: "7em", float: "right" }}>
+                  {" "}
+                  <button
+                    className="btn btn-primary"
+                    // style={button}
+                    style={{
+                      ...button,
+                      borderRadius: 0,
+                      padding: "1px 6px",
+                      background: "#f0f0f0",
+                      border: "1px solid rgb(0, 0, 0)",
+                    }}
+                    onClick={() => {
+                      handleSubmit(
+                        function (param) {
+                          // if (data.id) console.log("데이타 id", id);
+                          console.log(param);
+                          // param.id = Number(param.id) + 1 ? param.id : "";
 
-                  // markers[getValues("id")].title = getValues("title");
-                  // markers[getValues("id")].content = getValues("content");
-                  if(!markers[getValues("id")] ) {
-                    alert('지도에서 좌표를 클릭해주세요')
-                    return
-                  }
-                  setMarkers((prev) => ({
-                    ...prev,
-                    [getValues("id")]: {
-                      position: markers[getValues("id")].position,
-                      title: getValues("title"),
-                      content: getValues("content"),
-                    },
-                  }));
-                }}
-              />
-              {" "}
-              <span>{errors.content?.message}</span>
-              <br />
-              <input type="text" hidden placeholder="id" {...register("id")} />
-              <input type="text" hidden placeholder="lat" {...register("lat")} />
-              <input type="text" hidden placeholder="lng" {...register("lng")} />
-              <div style={{ width: '7em', float: "right" }}>
-                {" "}
-                <button
-                  className="btn btn-primary"
-                  // style={button}
-                  style={{...button, borderRadius: 0 , padding: "1px 6px", background: '#f0f0f0',border: '1px solid rgb(0, 0, 0)'}}
-                  onClick={() => {
-                    handleSubmit(
-                      function (param) {
-                        // if (data.id) console.log("데이타 id", id);
-                        console.log(param);
-                        // param.id = Number(param.id) + 1 ? param.id : "";
+                          axios
+                            .post("api/test", {
+                              ...param,
+                              id: Number(param.id) + 1 ? param.id : "",
+                            })
+                            .then(async (res) => {
+                              // console.log(res.data);
+                              // console.log(res);
+                              refreshFn();
 
-                        axios
-                          .post("api/test", {
-                            ...param,
-                            id: Number(param.id) + 1 ? param.id : "",
-                          })
-                          .then(async (res) => {
-                            // console.log(res.data);
-                            // console.log(res);
-                            refreshFn();
+                              if (!Number(param.id) + 0) {
+                                console.log(data, getValues("id"), "들어옴1");
+                                setMarkers((prev) => {
+                                  const { [param.id]: $, ...rest } = prev;
+                                  console.log(prev, param.id, rest, "rest");
+                                  return rest;
+                                });
+                              }
 
-                            if (!Number(param.id) + 0) {
-                              console.log(data, getValues("id"), "들어옴1");
-                              setMarkers((prev) => {
-                                const { [param.id]: $, ...rest } = prev;
-                                console.log(prev, param.id, rest, "rest");
-                                return rest;
-                              });
-                            }
+                              if (!Number(param.id) + 0) {
+                                console.log(data, "데이타");
+                                Object.entries(res.data).forEach(
+                                  ([key, value]) => {
+                                    // console.log(`${key}: ${value}`);
+                                    setValue(key, value);
+                                  }
+                                );
+                              }
+                            });
+                        },
+                        function (e) {
+                          const errorlist = Object.values(e);
+                          console.log(errorlist[0].message);
+                          // console.log(errorlist);
+                        }
+                      )();
+                    }}
+                  >
+                    저장
+                  </button>{" "}
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      ...button,
+                      borderRadius: 0,
+                      padding: "1px 6px",
+                      background: "#f0f0f0",
+                      border: "1px solid rgb(0, 0, 0)",
+                    }}
+                    onClick={() => {
+                      // console.log("삭제", getValues("id"));
+                      if (Number(getValues("id")) + 0) {
+                        console.log("값있음");
+                        axios.delete(`api/test/${getValues("id")}`);
+                        setMarkers((prev) => {
+                          const { [getValues("id")]: _, ...rest } = prev;
+                          // console.log(rest, "rest");
 
-                            if (!Number(param.id) + 0) {
-                              console.log(data, "데이타");
-                              Object.entries(res.data).forEach(
-                                ([key, value]) => {
-                                  // console.log(`${key}: ${value}`);
-                                  setValue(key, value);
-                                }
-                              );
-                            }
-                          });
-                      },
-                      function (e) {
-                        const errorlist = Object.values(e);
-                        console.log(errorlist[0].message);
-                        // console.log(errorlist);
+                          return rest;
+                        });
+                        // refreshFn();
+                        reset();
+                      } else {
+                        alert("저장 후 삭제 하실수 있습니다");
                       }
-                    )();
-                  }}
-                >
-                  저장
-                </button>{" "}
-                <button
-                  className="btn btn-primary"
-                  style={{...button, borderRadius: 0 , padding: "1px 6px", background: '#f0f0f0',border: '1px solid rgb(0, 0, 0)'}}
-                  onClick={() => {
-                    // console.log("삭제", getValues("id"));
-                    if (Number(getValues("id")) + 0) {
-                      console.log("값있음");
-                      axios.delete(`api/test/${getValues("id")}`);
-                      setMarkers((prev) => {
-                        const { [getValues("id")]: _, ...rest } = prev;
-                        // console.log(rest, "rest");
-
-                        return rest;
-                      });
-                      // refreshFn();
-                      reset();
-                    } else {
-                      alert("저장 후 삭제 하실수 있습니다");
-                    }
-                  }}
-                >
-                  삭제
-                </button>
-                {/* {Number(getValues("id")) + 0}
+                    }}
+                  >
+                    삭제
+                  </button>
+                  {/* {Number(getValues("id")) + 0}
                 {typeof (Number(getValues("id")) + 0)} */}
-                {/* {typeof (Number(getValues("id")) + 0) === "number"} */}
+                  {/* {typeof (Number(getValues("id")) + 0) === "number"} */}
+                </div>
               </div>
-</div>
               <button
                 type="button"
                 aria-expanded="false"
@@ -583,33 +627,42 @@ const Maps = () => {
                   left: "100%",
                   top: "40%",
                   cursor: "pointer",
-                  backgroundColor: 'inherit',
-                  border: 'none',
-                  outline: 'none',
-                  borderRadius: '0px 9px 9px 0px',
-                  border: '1px solid rgba(0, 0, 0, 0.15)',
-                  zIndex:'4',
+                  backgroundColor: "inherit",
+                  border: "none",
+                  outline: "none",
+                  borderRadius: "0px 9px 9px 0px",
+                  border: "1px solid rgba(0, 0, 0, 0.15)",
+                  zIndex: "4",
                 }}
                 onClick={() => {
-                  
                   if (!buttonEl.getAttribute("aria-controls")) return;
-                  
+
                   // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                  
-                  if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(0%)`){
-                    asideEl.style.transform = `translateX(-100%)`
-                    buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                    return
+
+                  if (
+                    sidebarEl.style.transform == `translateX(-100%)` &&
+                    asideEl.style.transform == `translateX(0%)`
+                  ) {
+                    asideEl.style.transform = `translateX(-100%)`;
+                    buttonEl.querySelector(
+                      "span"
+                    ).style.transform = `translateY(-60%) rotate(45deg)`;
+                    return;
                   }
 
-                  if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform == `translateX(0%)` || asideEl.style.transform == `translateX(-100%)`){
+                  if (
+                    (sidebarEl.style.transform == `translateX(0%)` &&
+                      asideEl.style.transform == `translateX(0%)`) ||
+                    asideEl.style.transform == `translateX(-100%)`
+                  ) {
                     // sidebarEl.style.transform = `translateX(0%)`
-                    sidebarEl.style.transform = 'translateX(-100%)';
-                    asideEl.style.transform = 'translateX(-100%)'
-                    buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                    return
+                    sidebarEl.style.transform = "translateX(-100%)";
+                    asideEl.style.transform = "translateX(-100%)";
+                    buttonEl.querySelector(
+                      "span"
+                    ).style.transform = `translateY(-60%) rotate(45deg)`;
+                    return;
                   }
-
                 }}
               >
                 {" "}
@@ -629,44 +682,42 @@ const Maps = () => {
               </button>
             </aside>
           </div>
-      <Nav className="header-nav">
-        <Box component='ul' sx={{ textAlign: 'center' }}>
-          <Li>
-            <MenuBtn
-            variant='contained'
-              onClick={(event) =>{
-              setIsModalOpen(true)
-              }}
-            >
-            지도 검색
-            </MenuBtn>
-          </Li>
-          <Li>
-            <MenuBtn
-              variant='contained'
-              // aria-expanded={'true'}
-              onClick={(event) =>{
-              console.log()
-              }}
-            >
-              마커 리스트
-            </MenuBtn>
-          </Li>
-        </Box>  
-      </Nav>
-       <CustomModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-      >
-        <Box>
-          <Typography variant="h6" component="h2">
-            hi
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            it's me
-          </Typography>
-        </Box>
-      </CustomModal>
+          <Nav className="header-nav">
+            <Box component="ul" sx={{ textAlign: "center" }}>
+              <Li>
+                <MenuBtn
+                  variant="contained"
+                  onClick={(event) => {
+                    setIsModalOpen(true);
+                  }}
+                >
+                  지도 검색
+                </MenuBtn>
+              </Li>
+              <Li>
+                <MenuBtn
+                  variant="contained"
+                  // aria-expanded={'true'}
+                  onClick={(event) => {
+                    console.log();
+                  }}
+                >
+                  마커 리스트
+                </MenuBtn>
+              </Li>
+            </Box>
+          </Nav>
+          <CustomModal
+            isOpen={isModalOpen}
+            closeModal={() => setIsModalOpen(false)}
+          >
+            <Box>
+              <Typography variant="h6" component="h2">
+                hi
+              </Typography>
+              <Typography sx={{ mt: 2 }}>it's me</Typography>
+            </Box>
+          </CustomModal>
           <MapContainer
             center={[36.17, 127.83]} // 초기 중심 좌표
             zoom={6.0} // 초기 줌 레벨
@@ -679,7 +730,7 @@ const Maps = () => {
             zoomControl={false}
             style={{
               // flex 1 1 auto 적용 해제시
-              width: 'calc(100vw - 66px)',
+              width: "calc(100vw - 66px)",
               // width: "calc(100vw - 7em)",
               // width: "100vw",
               height: "100%",
@@ -697,7 +748,7 @@ const Maps = () => {
               // icon = {new L.Icon({
               //   ...L.Icon.Default.prototype.options,
               //   // className: "blink", // 선택된 마커에 애니메이션 적용
-              // })}         
+              // })}
               // icon={L.icon({ iconUrl: markerIcon })}
               // eventHandlers={{ click: tooltipClick.bind(this, "TEST Message") }}
               eventHandlers={{
@@ -743,11 +794,11 @@ const Maps = () => {
 
     setMarkers((markers) => {
       // console.log(markers,data.length !=0);
-      if (markers && data.length !=0) {
-        // Object.entries(data[data.length - 1]).forEach(([key, value]) => {
-        //   // console.log(`${key}: ${value}`);
-        //   setValue(key, value);
-        // });
+      if (markers && data.length != 0) {
+        Object.entries(data[data.length - 1]).forEach(([key, value]) => {
+          // console.log(`${key}: ${value}`);
+          setValue(key, value);
+        });
       }
       return {
         ...markers,
@@ -785,13 +836,13 @@ const Maps = () => {
             position: e.latlng,
           },
         }));
-        reset()
+        reset();
         setValue("id", uuid),
           setValue("title", ""),
           setValue("content", ""),
           setValue("lat", e.latlng.lat);
         setValue("lng", e.latlng.lng);
-        
+
         // console.log("add");
         // map.setView(e.latlng, 13);
         setKey(null);
@@ -822,7 +873,7 @@ const Maps = () => {
                   setValue("lng", lng); // 경도
                   setValue("title", markers[uuid].title); // 제목
                   setValue("content", markers[uuid].content); // 내용
-                  
+
                   // console.log(
                   //   document.getElementsByClassName("sidebar")[0],
                   //   document.querySelector(".sidebar")
@@ -832,55 +883,81 @@ const Maps = () => {
                   // sidebarEl.style.transform = `translateX(-50%)`;
                   // sidebarEl.style.transition = `0.4s`
 
-                  if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(0%)`){
-
-                    if(uuid != getValues("id")){
-                      console.log(uuid != getValues("id"),'두개다 오픈',uuid,getValues('id'))
+                  if (
+                    sidebarEl.style.transform == `translateX(0%)` &&
+                    asideEl.style.transform == `translateX(0%)`
+                  ) {
+                    if (uuid != getValues("id")) {
+                      console.log(
+                        uuid != getValues("id"),
+                        "두개다 오픈",
+                        uuid,
+                        getValues("id")
+                      );
                       setValue("id", uuid);
-                      return
-                    } 
-                  
+                      return;
+                    }
+
                     setValue("id", uuid);
-                  
-                    asideEl.style.transform = `translateX(-100%)`
-                    buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+
+                    asideEl.style.transform = `translateX(-100%)`;
+                    buttonEl.querySelector(
+                      "span"
+                    ).style.transform = `translate(40%,-50%) rotate(-135deg)`;
                     buttonEl.setAttribute("aria-controls", "true");
-                    return
+                    return;
                   }
 
-                  if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(-100%)`){
-
-                   setValue("id", uuid);
-                    asideEl.style.transform = `translateX(0%)`
+                  if (
+                    sidebarEl.style.transform == `translateX(0%)` &&
+                    asideEl.style.transform == `translateX(-100%)`
+                  ) {
+                    setValue("id", uuid);
+                    asideEl.style.transform = `translateX(0%)`;
                     // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
                     // sidebarEl.style.transform = `translateX(100%)`
                   }
-                  
-                  if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(0%)`){
-                    if(uuid != getValues("id")){
-                      console.log(uuid != getValues("id"),'마커만클릭',uuid,getValues('id'))
-                      setValue("id", uuid);
-                      return
-                    } 
 
-                   setValue("id", uuid);
-                    asideEl.style.transform = `translateX(-100%)`
-                    buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                    buttonEl.setAttribute("aria-controls", "true");
-                    return
-                  }
-                  
-                  if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(-100%)`){
+                  if (
+                    sidebarEl.style.transform == `translateX(-100%)` &&
+                    asideEl.style.transform == `translateX(0%)`
+                  ) {
+                    if (uuid != getValues("id")) {
+                      console.log(
+                        uuid != getValues("id"),
+                        "마커만클릭",
+                        uuid,
+                        getValues("id")
+                      );
+                      setValue("id", uuid);
+                      return;
+                    }
+
                     setValue("id", uuid);
-                    asideEl.style.transform = `translateX(0%)`
+                    asideEl.style.transform = `translateX(-100%)`;
+                    buttonEl.querySelector(
+                      "span"
+                    ).style.transform = `translateY(-60%) rotate(45deg)`;
+                    buttonEl.setAttribute("aria-controls", "true");
+                    return;
+                  }
+
+                  if (
+                    sidebarEl.style.transform == `translateX(-100%)` &&
+                    asideEl.style.transform == `translateX(-100%)`
+                  ) {
+                    setValue("id", uuid);
+                    asideEl.style.transform = `translateX(0%)`;
                     // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
                     // sidebarEl.style.transform = `translateX(100%)`
                   }
 
                   // asideEl.style.transform = `translateX(-100%)`;
                   // asideEl.style.transition = `0.4s`
-                  
-                  buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+
+                  buttonEl.querySelector(
+                    "span"
+                  ).style.transform = `translate(40%,-50%) rotate(-135deg)`;
                   buttonEl.setAttribute("aria-controls", "true");
                 },
                 mouseover: (e) => {
@@ -977,36 +1054,54 @@ const Maps = () => {
               map.setView(e.latlng, 13);
               setKey(null);
 
-              if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(0%)`){
-                asideEl.style.transform = `translateX(-100%)`
-                buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+              if (
+                sidebarEl.style.transform == `translateX(0%)` &&
+                asideEl.style.transform == `translateX(0%)`
+              ) {
+                asideEl.style.transform = `translateX(-100%)`;
+                buttonEl.querySelector(
+                  "span"
+                ).style.transform = `translate(40%,-50%) rotate(-135deg)`;
                 buttonEl.setAttribute("aria-controls", "true");
-                return
+                return;
               }
 
-              if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(-100%)`){
-                asideEl.style.transform = `translateX(0%)`
+              if (
+                sidebarEl.style.transform == `translateX(0%)` &&
+                asideEl.style.transform == `translateX(-100%)`
+              ) {
+                asideEl.style.transform = `translateX(0%)`;
                 // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
                 // sidebarEl.style.transform = `translateX(100%)`
               }
-              
-              if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(0%)`){
-                asideEl.style.transform = `translateX(-100%)`
-                buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
+
+              if (
+                sidebarEl.style.transform == `translateX(-100%)` &&
+                asideEl.style.transform == `translateX(0%)`
+              ) {
+                asideEl.style.transform = `translateX(-100%)`;
+                buttonEl.querySelector(
+                  "span"
+                ).style.transform = `translateY(-60%) rotate(45deg)`;
                 buttonEl.setAttribute("aria-controls", "true");
-                return
+                return;
               }
-              
-              if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(-100%)`){
-                asideEl.style.transform = `translateX(0%)`
+
+              if (
+                sidebarEl.style.transform == `translateX(-100%)` &&
+                asideEl.style.transform == `translateX(-100%)`
+              ) {
+                asideEl.style.transform = `translateX(0%)`;
                 // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
                 // sidebarEl.style.transform = `translateX(100%)`
               }
 
               // asideEl.style.transform = `translateX(-100%)`;
               // asideEl.style.transition = `0.4s`
-              
-              buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+
+              buttonEl.querySelector(
+                "span"
+              ).style.transform = `translate(40%,-50%) rotate(-135deg)`;
               buttonEl.setAttribute("aria-controls", "true");
             }
           },
@@ -1038,61 +1133,57 @@ const Maps = () => {
   }
 };
 
-function sidbarBtn (){
+function sidbarBtn() {
   const element = createElement(
-        "div",
-        { id: "app" },
-        createElement("h1", null, "Hello, World!"),
-        createElement(
-          "button",
-          { onClick: () => alert("Clicked!") },
-          "Click me"
-        )
-      );
-  document.querySelector('.search').append(element)
+    "div",
+    { id: "app" },
+    createElement("h1", null, "Hello, World!"),
+    createElement("button", { onClick: () => alert("Clicked!") }, "Click me")
+  );
+  document.querySelector(".search").append(element);
 }
 
 export default Maps;
 
 const h1 = {
-  listStyle: 'none',
+  listStyle: "none",
   /* margin: 0; */
   padding: 0,
   borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
   fontSize: "2em",
 
   lineHeight: 1,
-}
+};
 
-const button ={
+const button = {
   padding: 0,
   margin: 0,
 
-  border: 'none',
-  outline: 'none',
- 
-  //  backgroundColor: 'transparent', 
+  border: "none",
+  outline: "none",
+
+  //  backgroundColor: 'transparent',
 
   /* 마우스 올렸을 때 마우스 스타일 지정 -> 손모양 */
-  cursor: 'pointer',
-  backgroundColor: 'inherit',
-  fontSize: '0.8333em'
-}
+  cursor: "pointer",
+  backgroundColor: "inherit",
+  fontSize: "0.8333em",
+};
 
 const ul = {
-   padding: 0,
-}
+  padding: 0,
+};
 
 const li = {
-  listStyle: 'none',
+  listStyle: "none",
   // padding: 0,
-}
+};
 
 const input = {
-  width: '13em',
-  height: '32px',
+  width: "13em",
+  height: "32px",
   // padding: 0,
-}
+};
 
 const Nav = styled.div`
   width: calc(100vw - 4em - 2.8em);
@@ -1102,12 +1193,12 @@ const Nav = styled.div`
   bottom: 0;
   // left: 0;
   z-index: 999;
-`
+`;
 const Li = styled.li`
   display: inline-block;
   position: relative;
   margin: 0 1%;
-`
+`;
 const MenuBtn = styled(Button)`
  width: 8em
  margin: 0 1% !important;
@@ -1115,90 +1206,92 @@ const MenuBtn = styled(Button)`
  &:hover {
   background-color: #ce93d8 !important;
   }
-`
+`;
 
 // 화면 크기에 따라 글꼴 크기를 설정하는 ResponsiveDiv 컴포넌트
 const ResponsiveDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  color: inherit;
+  font-size: 14px; // 기본 모바일 글꼴 크기
 
+  @media (min-width: 768px) {
+    // 태블릿
+    font-size: 16px;
+  }
+
+  @media (min-width: 1224px) {
+    // 데스크탑
     width: 100vw;
     height: 100vh;
     display: flex;
-    color: inherit;
-    font-size: 14px; // 기본 모바일 글꼴 크기
+    font-size: 20px;
+  }
 
-    @media (min-width: 768px) { // 태블릿
-    font-size: 16px;
+  @media (prefers-color-scheme: light) {
+    /* 라이트 모드에 적용할 스타일 정의 */
+    color: #000;
+    background-color: #fff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    /* 다크 모드에 적용할 스타일 정의 */
+    color: #fff !important;
+    background-color: #121212 !important;
+
+    h1,
+    h2,
+    h3,
+    .navbar_text {
+      color: #ffffff;
     }
 
-    @media (min-width: 1224px) { // 데스크탑
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        font-size: 20px;
+    .search,
+    .aside {
+      color: #fff !important;
+      background-color: #121212 !important;
+      border: 1px solid rgb(217, 217, 217) !important;
     }
 
-    @media (prefers-color-scheme: light) {
-        /* 라이트 모드에 적용할 스타일 정의 */
-        color: #000;
-        background-color: #fff;
-
+    .aside {
+      color: #fff !important;
+      background-color: #121212 !important;
+      border: 1px solid rgb(217, 217, 217) !important;
+      border-left: none !important;
     }
-        
-    @media (prefers-color-scheme: dark) {
-        /* 다크 모드에 적용할 스타일 정의 */
-        color: #fff  !important;
-        background-color: #121212 !important;
 
-        h1, h2, h3, .navbar_text {
-            color: #ffffff;
-        }
-
-        .search, .aside {
-        color: #fff  !important;
-        background-color: #121212 !important;
-        border: 1px solid rgb(217, 217, 217) !important;
-        }
-
-        .aside {
-        color: #fff  !important;
-        background-color: #121212 !important;
-        border: 1px solid rgb(217, 217, 217) !important;
-        border-left: none !important;
-        }
-
-        p {
-            color: #dbdbdb;
-        }
-
-        a {
-            // color: #41adff;
-        }
-
-        button {
-          outline: none;
-        }
-
-        .fold-button {
-            border-left: 1px solid  rgb(217, 217, 217) !important;  
-        }
-            
-        .fold-button > span {
-          border: solid  #fff !important;  
-          border-width: 2px 2px 0 0 !important;
-        }
-
-        header {
-          background-color: #121212 !important;
-        
-        }
-
-        .icon_inner > svg {
-          fill: rgb(217, 217, 217);
-        }
-
+    p {
+      color: #dbdbdb;
     }
-`
-export const CustomModal= ({ isOpen, closeModal, children }) => {
+
+    a {
+      // color: #41adff;
+    }
+
+    button {
+      outline: none;
+    }
+
+    .fold-button {
+      border-left: 1px solid rgb(217, 217, 217) !important;
+    }
+
+    .fold-button > span {
+      border: solid #fff !important;
+      border-width: 2px 2px 0 0 !important;
+    }
+
+    header {
+      background-color: #121212 !important;
+    }
+
+    .icon_inner > svg {
+      fill: rgb(217, 217, 217);
+    }
+  }
+`;
+export const CustomModal = ({ isOpen, closeModal, children }) => {
   return (
     <Modal open={isOpen} onClose={closeModal}>
       <Paper
@@ -1218,4 +1311,4 @@ export const CustomModal= ({ isOpen, closeModal, children }) => {
       </Paper>
     </Modal>
   );
-}
+};
