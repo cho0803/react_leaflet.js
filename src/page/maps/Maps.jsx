@@ -159,7 +159,7 @@ const Maps = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <>
+    <div>
       <div
         style={{
           width: "100vw",
@@ -365,7 +365,7 @@ const Maps = () => {
             <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} ></Leaflet>
         </div>
       </div>
-    </>
+    </div>
   );
 
   function updateMarkers(data) {
