@@ -34,16 +34,16 @@ L.Icon.Default.mergeOptions({
   // popupAnchor: [0, -60], // 팝업 위치
 });
 
-export default function Leaflet () {
+export default function Leaflet ({markers, setMarkers, place, setPlace, reset, setValue, getValues}) {
   
- const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-    getValues,
-  } = useForm();
+//  const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//     // reset,
+//     // setValue,
+//     // getValues,
+//   } = useForm();
 
   const [key, setKey] = useState();
 
@@ -51,39 +51,39 @@ export default function Leaflet () {
   const asideEl = document.querySelector(".aside");
   const buttonEl = document.querySelector("button[aria-expanded]");
 
-  const [placeList, setPlaceList] = useState([]);
+  // const [placeList, setPlaceList] = useState([]);
 
-  const [place, setPlace] = useState();
+  // const [place, setPlace] = useState();
   
-  const [markers, setMarkers] = useState({
-    1: {
-      position: {
-        lat: 37.57,
-        lng: 127.26,
-      },
-      title: "기본",
-      content: "기본내용",
-      status: 1,
-    },
-    2: {
-      position: {
-        lat: 38.22,
-        lng: 126.58,
-      },
-      title: "테스트",
-      content: "테스트 내용",
-      status: 1,
-    },
-  });
+  // const [markers, setMarkers] = useState({
+  //   1: {
+  //     position: {
+  //       lat: 37.57,
+  //       lng: 127.26,
+  //     },
+  //     title: "기본",
+  //     content: "기본내용",
+  //     status: 1,
+  //   },
+  //   2: {
+  //     position: {
+  //       lat: 38.22,
+  //       lng: 126.58,
+  //     },
+  //     title: "테스트",
+  //     content: "테스트 내용",
+  //     status: 1,
+  //   },
+  // });
   
   
   return (
     <>
     {/* <Header sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl}/> */}
-    <SideBar markers={markers} setMarkers={setMarkers} reset={reset} setValue={setValue} getValues={getValues} handleSubmit={handleSubmit}
+    {/* <SideBar markers={markers} setMarkers={setMarkers} reset={reset} setValue={setValue} getValues={getValues} handleSubmit={handleSubmit}
             register={register} errors={errors}
             setPlace={setPlace} placeList={placeList} setPlaceList={setPlaceList} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} 
-      />
+      /> */}
       <MapContainer
         center={[36.17, 127.83]} // 초기 중심 좌표
         zoom={6.0} // 초기 줌 레벨
@@ -96,10 +96,11 @@ export default function Leaflet () {
         zoomControl={false}
         style={{
           // flex 1 1 auto 적용 해제시
-          // width: "calc(100vw - 66px)",
+          width: "calc(100vw - 66px)",
           // width: "calc(100vw - 7em)",
-          width: "100vw",
-          height: "100vh",
+          // width: "100vw",
+          // height: "100vh", 
+           height: "100%",
           // position: "relative",
           zIndex: 0,
         }}
@@ -142,7 +143,7 @@ export default function Leaflet () {
           </Popup>
         </Marker>
         <AddMarker markers={markers} setMarkers={setMarkers} useform={useForm} reset={reset} setValue={setValue} getValues={getValues} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} setPlace={setPlace}/>
-        <NewMarker  setMarkers={setMarkers} useMap={useMap} setValue={setValue} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} newMarker={place} setPlace={setPlace} setPlaceList={setPlaceList}/>
+        <NewMarker L={L}    setMarkers={setMarkers} useMap={useMap} setValue={setValue} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} place={place} setPlace={setPlace} />
         <ZoomControl position="topright" />
       </MapContainer>
     </>

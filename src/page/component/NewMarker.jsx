@@ -1,20 +1,29 @@
 
-  import { Marker, Popup,  uuidv4 } from "./index.js";
-  
-  function NewMarker({ newMarker, useMap, setMarkers, setValue, sidebarEl, asideEl, buttonEl, setPlace,}) {
+import { Marker, Popup,  uuidv4 ,useState} from "./index.js";
 
-    if (!newMarker) {
+//Leaflet.js api css 적용 
+import "leaflet/dist/leaflet.css";
+  function NewMarker({ L, place, useMap, setMarkers, setValue, sidebarEl, asideEl, buttonEl, setPlace,}) {
+
+
+    if (!place) {
       return;
     }
     
     const map = useMap();
 
-    map.setView([newMarker.lat, newMarker.lon], 13);
+    map.setView([place.lat, place.lon], 13);
     console.log(map.getZoom());
+    const {lat,lon} = place;
+    
+  var infoPopup = L.popup({closeButton: false}) 
+  .setLatLng([Number(place.lat) + 0.025, lon  ])
+  .setContent('새로운 마커로 등록은 우측버튼을 클릭해주세요!')
+  .openOn(map);
 
     return (
       <Marker
-        position={[newMarker.lat, newMarker.lon]}
+        position={[place.lat, place.lon]}
         onContextMenu={(event) => {
           event.preventDefault();
           console.log;
@@ -24,6 +33,8 @@
           contextmenu: (e) => {
             event.preventDefault();
             if (confirm("마커로 등록 하시겠습니까?")) {
+              console
+              infoPopup.closePopup();
               const { lat, lng } = e.latlng;
               const uuid = uuidv4();
               setMarkers((prevMarkers) => ({
@@ -93,9 +104,13 @@
               buttonEl.setAttribute("aria-controls", "true");
             }
           },
+          mouseover: (e) => {
+            // console.log("over", e.target.openPopup);
+            e.target.openPopup();
+          },
         }}
       >
-        <Popup>{newMarker.display_name}</Popup>
+        <Popup>{place.display_name}</Popup>
       </Marker>
     );
   }

@@ -22,7 +22,7 @@ import { Marker, Popup, useMapEvents, uuidv4 } from "./index.js";
           setValue("lat", e.latlng.lat);
         setValue("lng", e.latlng.lng);
 
-        // console.log("add");
+        console.log("add");
         // map.setView(e.latlng, 13);
         setPlace(null);
       },
@@ -65,7 +65,7 @@ import { Marker, Popup, useMapEvents, uuidv4 } from "./index.js";
                   if (
                     sidebarEl.style.transform == `translateX(0%)` &&
                     asideEl.style.transform == `translateX(0%)`
-                  ) {
+                  ) { 
                     if (uuid != getValues("id")) {
                       console.log(
                         uuid != getValues("id"),
@@ -86,12 +86,13 @@ import { Marker, Popup, useMapEvents, uuidv4 } from "./index.js";
                     buttonEl.setAttribute("aria-controls", "true");
                     return;
                   }
+                  
 
                   if (
                     sidebarEl.style.transform == `translateX(0%)` &&
                     asideEl.style.transform == `translateX(-100%)`
                   ) {
-                    setValue("id", uuid);
+                    setValue("id", uuid); 
                     asideEl.style.transform = `translateX(0%)`;
                     // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
                     // sidebarEl.style.transform = `translateX(100%)`
@@ -121,12 +122,15 @@ import { Marker, Popup, useMapEvents, uuidv4 } from "./index.js";
                     return;
                   }
 
+                  // 새로운 마커 추가
                   if (
                     sidebarEl.style.transform == `translateX(-100%)` &&
                     asideEl.style.transform == `translateX(-100%)`
                   ) {
                     setValue("id", uuid);
                     asideEl.style.transform = `translateX(0%)`;
+                    console.log(uuid)
+
                     // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
                     // sidebarEl.style.transform = `translateX(100%)`
                   }

@@ -3,8 +3,12 @@ import { Box, Button, Menu, MenuItem  } from '@mui/material';
 import { Modal, Paper,Typography  } from '@mui/material';
 import { css } from '@emotion/react';
 
+import Leaflet from "../component/Leaflet.jsx";
+import Header from "../component/Header"
+import SideBar from "../component/SideBar"
+
 import {
-  MapContainer,
+  MapContainer, 
   TileLayer,
   Marker,
   Popup,
@@ -111,6 +115,10 @@ const Maps = () => {
   const asideEl = document.querySelector(".aside");
   const buttonEl = document.querySelector("button[aria-expanded]");
 
+  const [placeList, setPlaceList] = useState([]);
+
+  const [place, setPlace] = useState();
+
   useEffect(() => {
     // axios.get("test").then((res) => {
     //   setTests(res.data);
@@ -175,7 +183,9 @@ const Maps = () => {
             <img src="" alt="sddddd" style={{ width: "60px" }}></img>sdfsdf
           </div>{" "}
         </div> */}
-        <header
+
+        <Header sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl}/>
+        {/* <header
           id="header"
           style={{
             // width: "64px",
@@ -298,7 +308,7 @@ const Maps = () => {
               </li>
             </ul>
           </nav>
-        </header>
+        </header> */}
 
         <div
           style={
@@ -310,430 +320,49 @@ const Maps = () => {
             }
           }
         >
-          {/* <div className='side' style={{ position: "absolute", top:'0', bottom: '0', transition: "0.4s", transform: "translateX(-100%)",width: "inherit", zIndex: " 2",}}> */}
-          <div 
-            className='sidebar' 
-            style={{ 
-              /*transform: "translateX(-100%)", display: 'flex', */ 
-              width: '13em',
-              boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 8px 0px', 
-              display: 'flex', transform: "translateX(-100%)",transition: "0.4s",position: "absolute", top:'0', bottom: '0', zIndex:1, 
-           }}>
-            <div
-              className='search'
-              style={{
-                width: "inherit",
-                // height: "100vh",
-                position: "relative",
-                // padding: "60px 20px",
-                // transition: "0.4s",
-                // transform: "translateX(-100%)",
-                // transform: "translateX(0%)",
-                // position: "absolute",
-                // float: "left",
-                backgroundColor: "rgb(255, 255, 255)",
-                zIndex: " 2",
-                boxShadow: 'inherit',
-                // border: "1px solid rgb(217, 217, 217)",
-                textAlign: 'center'
-              }}
+          <SideBar markers={markers} setMarkers={setMarkers} reset={reset} setValue={setValue} getValues={getValues} handleSubmit={handleSubmit}
+            register={register} errors={errors}
+            setPlace={setPlace} placeList={placeList} setPlaceList={setPlaceList} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} 
+          /> 
+            {/* <Nav className="header-nav">
+              <Box component='ul' sx={{ textAlign: 'center' }}>
+                <Li>
+                  <MenuBtn
+                  variant='contained'
+                    onClick={(event) =>{
+                    setIsModalOpen(true)
+                    }}
+                  >
+                  지도 검색
+                  </MenuBtn>
+                </Li>
+                <Li>
+                  <MenuBtn
+                    variant='contained'
+                    // aria-expanded={'true'}
+                    onClick={(event) =>{
+                    console.log()
+                    }}
+                  >
+                    마커 리스트
+                  </MenuBtn>
+                </Li>
+              </Box>  
+            </Nav> */}
+            <CustomModal
+              isOpen={isModalOpen}
+              closeModal={() => setIsModalOpen(false)}
             >
-              <div style={{ padding: '15px 0px' }}>               
-                <input
-                type="text"
-                placeholder="장소 검색"
-                style={{ height: '32px' }}
-                // value="북한산"
-                onKeyDown={(e) => {
-                  if (e.keyCode == 13) {
-                    // console.log(e.target.value);
-                    axios
-                      .get("https://nominatim.openstreetmap.org/search", {
-                        params: {
-                          lon: "127.01",
-                          lat: "37.64",
-                          q: e.target.value,
-                          limit: 5,
-                          format: "json",
-                          exclude: "206494953,206604942,207242176",
-                        },
-                      })
-                      .then(function (res) {
-                        setMaps(
-                          res.data.map((item) => {
-                            // console.log(item);
-                            return {
-                              display_name: item.display_name,
-                              lat: item.lat,
-                              lon: item.lon,
-                            };
-                          })
-                        );
-                      });
-                  }
-                }}
-                />
-              </div>
-
-              <div id="searchList">
-                {/* {Object.entries(markers).map(
-                  ([key, value]) => (
-                    <div key={key}>
-                      {key} {markers[key].title} {markers[key].content}
-                    </div>
-                  )
-
-                  // {
-                  //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
-                  // }
-                )} */}
-                {maps?.map((item, index) => (
-                  <ul key={index} style={ul}>
-                    <li style={li}>
-                      <button
-                        style={button}
-                        data-lat={item.lat}
-                        data-lon={item.lon}
-                        onClick={() => {
-                          setKey(item);
-                          // console.log("클릭");
-                        }}
-                      >
-                        <a href="#" style={{ color: "inherit" }}>
-                          {item.display_name}
-                        </a>
-                      </button>
-                    </li>
-                    {/* {<li>{item.id}</li>} */}
-                  </ul>
-                ))}
-              </div>
-            </div>
-            <aside
-              className='aside'
-              style={{
-                width: "inherit",
-                // height: "100%",
-                // position: "relative",
-                // padding: "60px 20px",
-                transition: "0.4s",
-                transform: "translateX(-100%)",
-                position: "absolute",
-                top: "0px",
-                bottom: "0px",
-                left: "100%",
-                // float: "left",
-                backgroundColor: "rgb(255, 255, 255)",
-                zIndex: " 1",
-                boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 8px 0px',
-                // border: "1px solid rgb(217, 217, 217)",
-                textAlign: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                display:'flex',
-              }}
-            >
-<div style={{flexBasis: '100%'}}>
-                {" "}
-              <div style={{ padding: '15px 0px' }}>    
-                <input
-                  type="text"
-                  style={{...input,}}
-                  placeholder="제목"
-                  {...register("title", { required: "제목을 입력해주세요" })}
-                  onKeyUp={() => {
-                    // markers[getValues("id")].title = getValues("title");
-                    // markers[getValues("id")].content = getValues("content");
-                    if(!markers[getValues("id")] ) {
-                      alert('지도에서 좌표를 클릭해주세요')
-                      return
-                    }
-                    setMarkers((prev) => ({
-                      ...prev,
-                      [getValues("id")]: {
-                        position: markers[getValues("id")].position,
-                        title: getValues("title"),
-                        content: getValues("content"),
-                      },
-                    }));
-                  }}
-                />
-                
-              </div>
-              <span>{errors.title?.message}</span>
-              <textarea
-                style={{...input,height: '60px'}}
-                placeholder="내용"
-                {...register("content", { required: "내용을 입력해주세요" })}
-                onKeyUp={(e) => {
-                  // var keycode = e.keyCode;
-                  // console.log(e.target.value);
-
-                  // markers[getValues("id")].title = getValues("title");
-                  // markers[getValues("id")].content = getValues("content");
-                  if(!markers[getValues("id")] ) {
-                    alert('지도에서 좌표를 클릭해주세요')
-                    return
-                  }
-                  setMarkers((prev) => ({
-                    ...prev,
-                    [getValues("id")]: {
-                      position: markers[getValues("id")].position,
-                      title: getValues("title"),
-                      content: getValues("content"),
-                    },
-                  }));
-                }}
-              />
-              {" "}
-              <span>{errors.content?.message}</span>
-              <br />
-              <input type="text" hidden placeholder="id" {...register("id")} />
-              <input type="text" hidden placeholder="lat" {...register("lat")} />
-              <input type="text" hidden placeholder="lng" {...register("lng")} />
-              <div style={{ width: '7em', float: "right" }}>
-                {" "}
-                <button
-                  className="btn btn-primary"
-                  // style={button}
-                  style={{...button, borderRadius: 0 , padding: "1px 6px", background: '#f0f0f0',border: '1px solid rgb(0, 0, 0)'}}
-                  onClick={() => {
-                    handleSubmit(
-                      function (param) {
-                        // if (data.id) console.log("데이타 id", id);
-                        console.log(param);
-                        // param.id = Number(param.id) + 1 ? param.id : "";
-
-                        axios
-                          .post("api/test", {
-                            ...param,
-                            id: Number(param.id) + 1 ? param.id : "",
-                          })
-                          .then(async (res) => {
-                            // console.log(res.data);
-                            // console.log(res);
-                            refreshFn();
-
-                            if (!Number(param.id) + 0) {
-                              console.log(data, getValues("id"), "들어옴1");
-                              setMarkers((prev) => {
-                                const { [param.id]: $, ...rest } = prev;
-                                console.log(prev, param.id, rest, "rest");
-                                return rest;
-                              });
-                            }
-
-                            if (!Number(param.id) + 0) {
-                              console.log(data, "데이타");
-                              Object.entries(res.data).forEach(
-                                ([key, value]) => {
-                                  // console.log(`${key}: ${value}`);
-                                  setValue(key, value);
-                                }
-                              );
-                            }
-                          });
-                      },
-                      function (e) {
-                        const errorlist = Object.values(e);
-                        console.log(errorlist[0].message);
-                        // console.log(errorlist);
-                      }
-                    )();
-                  }}
-                >
-                  저장
-                </button>{" "}
-                <button
-                  className="btn btn-primary"
-                  style={{...button, borderRadius: 0 , padding: "1px 6px", background: '#f0f0f0',border: '1px solid rgb(0, 0, 0)'}}
-                  onClick={() => {
-                    // console.log("삭제", getValues("id"));
-                    if (Number(getValues("id")) + 0) {
-                      console.log("값있음");
-                      axios.delete(`api/test/${getValues("id")}`);
-                      setMarkers((prev) => {
-                        const { [getValues("id")]: _, ...rest } = prev;
-                        // console.log(rest, "rest");
-
-                        return rest;
-                      });
-                      // refreshFn();
-                      reset();
-                    } else {
-                      alert("저장 후 삭제 하실수 있습니다");
-                    }
-                  }}
-                >
-                  삭제
-                </button>
-                {/* {Number(getValues("id")) + 0}
-                {typeof (Number(getValues("id")) + 0)} */}
-                {/* {typeof (Number(getValues("id")) + 0) === "number"} */}
-              </div>
-</div>
-              <button
-                type="button"
-                aria-expanded="false"
-                className="fold-button"
-                style={{
-                  ...button,
-                  display: "block",
-                  padding: "2em 0.5em",
-                  width: "30px",
-                  height: "30px",
-                  position: "absolute",
-                  left: "100%",
-                  top: "40%",
-                  cursor: "pointer",
-                  backgroundColor: 'inherit',
-                  border: 'none',
-                  outline: 'none',
-                  borderRadius: '0px 9px 9px 0px',
-                  border: '1px solid rgba(0, 0, 0, 0.15)',
-                  zIndex:'4',
-                }}
-                onClick={() => {
-                  
-                  if (!buttonEl.getAttribute("aria-controls")) return;
-                  
-                  // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                  
-                  if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(0%)`){
-                    asideEl.style.transform = `translateX(-100%)`
-                    buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                    return
-                  }
-
-                  if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform == `translateX(0%)` || asideEl.style.transform == `translateX(-100%)`){
-                    // sidebarEl.style.transform = `translateX(0%)`
-                    sidebarEl.style.transform = 'translateX(-100%)';
-                    asideEl.style.transform = 'translateX(-100%)'
-                    buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                    return
-                  }
-
-                }}
-              >
-                {" "}
-                <span
-                  style={{
-                    border: "solid currentcolor",
-                    borderWidth: "2px  2px 0 0",
-                    position: "absolute",
-                    width: "0.5em",
-                    height: "0.5em",
-                    left: "0.5em",
-                    top: "50%",
-                    transform: "translateY(-60%) rotate(45deg)",
-                  }}
-                ></span>
-                {/* <span class="blind">패널 접기</span> */}
-              </button>
-            </aside>
-          </div>
-      <Nav className="header-nav">
-        <Box component='ul' sx={{ textAlign: 'center' }}>
-          <Li>
-            <MenuBtn
-            variant='contained'
-              onClick={(event) =>{
-              setIsModalOpen(true)
-              }}
-            >
-            지도 검색
-            </MenuBtn>
-          </Li>
-          <Li>
-            <MenuBtn
-              variant='contained'
-              // aria-expanded={'true'}
-              onClick={(event) =>{
-              console.log()
-              }}
-            >
-              마커 리스트
-            </MenuBtn>
-          </Li>
-        </Box>  
-      </Nav>
-       <CustomModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-      >
-        <Box>
-          <Typography variant="h6" component="h2">
-            hi
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            it's me
-          </Typography>
-        </Box>
-      </CustomModal>
-          <MapContainer
-            center={[36.17, 127.83]} // 초기 중심 좌표
-            zoom={6.0} // 초기 줌 레벨
-            zoomSnap={0.5} // 줌 레벨 스냅
-            // maxBounds={L.latLngBounds(
-            //   [32.5, 123.5], // 남서 좌표 (제주 남서쪽)
-            //   [39.0, 132.0] // 북동 좌표 (강원도 북동쪽)
-            // )} // 최대 경계 설정
-            maxBoundsViscosity={1.0} // 경계의 견고 정도 제어 (1.0일 경우 완전히 견고해져 경계 밖으로 드래그 불가)
-            zoomControl={false}
-            style={{
-              // flex 1 1 auto 적용 해제시
-              width: 'calc(100vw - 66px)',
-              // width: "calc(100vw - 7em)",
-              // width: "100vw",
-              height: "100%",
-              // position: "relative",
-              zIndex: 0,
-            }}
-          >
-            {" "}
-            <TileLayer
-              // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker
-              position={[36.17, 127.83]}
-              // icon = {new L.Icon({
-              //   ...L.Icon.Default.prototype.options,
-              //   // className: "blink", // 선택된 마커에 애니메이션 적용
-              // })}
-              // icon={L.icon({ iconUrl: markerIcon })}
-              // eventHandlers={{ click: tooltipClick.bind(this, "TEST Message") }}
-              eventHandlers={{
-                click: (e) => {
-                  console.log(
-                    "click",
-                    e.target,
-                    e.layerPoint,
-                    e.containerPoint,
-                    e.originalEvent
-                  );
-                },
-                mouseover: (e) => {
-                  // console.log("over", e.target.openPopup());
-                  e.target.openPopup();
-                },
-                mouseout: (e) => {
-                  // console.log("out", e.target.closePopup());
-                  e.target.closePopup();
-                },
-              }}
-            >
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-
-              <NewMarker data={key} />
-            </Marker>
-            <AddMarker />
-            {/* <LocationMarker /> */}
-            {/* <SetViewOnClick animateRef={animateRef} /> */}
-            <ZoomControl position="topright" />
-          </MapContainer>
+              <Box>
+                <Typography variant="h6" component="h2">
+                  hi
+                </Typography>
+                <Typography sx={{ mt: 2 }}>
+                  it's me
+                </Typography>
+              </Box>
+            </CustomModal>
+            <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} ></Leaflet>
         </div>
       </div>
     </>
@@ -773,287 +402,8 @@ const Maps = () => {
 
     return data;
   }
-  function AddMarker() {
-    // console.info("AddMarker loading complete!");
-
-    const map = useMapEvents({
-      click: (e) => {
-        // console.log(e.target, "맵 클릭");
-        const uuid = uuidv4();
-        // console.log(uuid);
-        setMarkers((prevMarkers) => ({
-          // 이전 상태를 기반으로 markers 업데이트 (비동기 처리 고려)
-          ...prevMarkers,
-          [uuid]: {
-            position: e.latlng,
-          },
-        }));
-        reset()
-        setValue("id", uuid),
-          setValue("title", ""),
-          setValue("content", ""),
-          setValue("lat", e.latlng.lat);
-        setValue("lng", e.latlng.lng);
-
-        // console.log("add");
-        // map.setView(e.latlng, 13);
-        setKey(null);
-      },
-    });
-
-    return (
-      <>
-        {Object.keys(markers)?.map((uuid, idx) => {
-          const icon = new L.Icon({
-            ...L.Icon.Default.prototype.options,
-            // className: "blink", // 선택된 마커에 애니메이션 적용
-          });
-          return (
-            <Marker
-              key={uuid}
-              // icon={icon}
-              position={markers[uuid].position}
-              eventHandlers={{
-                click: (e) => {
-                  // 등록된 마커 클릭 이벤트
-                  // console.log("clickEventHandlers loading complete!");
-                  // console.log("테스트", markers[uuid].title);
-                  const { lat, lng } = e.latlng;
-
-                  // setValue("id", uuid);
-                  setValue("lat", lat); // 위도
-                  setValue("lng", lng); // 경도
-                  setValue("title", markers[uuid].title); // 제목
-                  setValue("content", markers[uuid].content); // 내용
-
-                  // console.log(
-                  //   document.getElementsByClassName("sidebar")[0],
-                  //   document.querySelector(".sidebar")
-                  // );
-                  // map.setView(e.latlng, 13);
-
-                  // sidebarEl.style.transform = `translateX(-50%)`;
-                  // sidebarEl.style.transition = `0.4s`
-
-                  if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(0%)`){
-
-                    if(uuid != getValues("id")){
-                      console.log(uuid != getValues("id"),'두개다 오픈',uuid,getValues('id'))
-                      setValue("id", uuid);
-                      return
-                    } 
-                  
-                    setValue("id", uuid);
-                  
-                    asideEl.style.transform = `translateX(-100%)`
-                    buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                    buttonEl.setAttribute("aria-controls", "true");
-                    return
-                  }
-
-                  if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(-100%)`){
-
-                   setValue("id", uuid);
-                    asideEl.style.transform = `translateX(0%)`
-                    // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                    // sidebarEl.style.transform = `translateX(100%)`
-                  }
-                  
-                  if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(0%)`){
-                    if(uuid != getValues("id")){
-                      console.log(uuid != getValues("id"),'마커만클릭',uuid,getValues('id'))
-                      setValue("id", uuid);
-                      return
-                    } 
-
-                   setValue("id", uuid);
-                    asideEl.style.transform = `translateX(-100%)`
-                    buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                    buttonEl.setAttribute("aria-controls", "true");
-                    return
-                  }
-                  
-                  if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(-100%)`){
-                    setValue("id", uuid);
-                    asideEl.style.transform = `translateX(0%)`
-                    // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                    // sidebarEl.style.transform = `translateX(100%)`
-                  }
-
-                  // asideEl.style.transform = `translateX(-100%)`;
-                  // asideEl.style.transition = `0.4s`
-                  
-                  buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                  buttonEl.setAttribute("aria-controls", "true");
-                },
-                mouseover: (e) => {
-                  // console.log("over", e.target.openPopup);
-                  e.target.openPopup();
-                },
-                mouseout: (e) => {
-                  // console.log("out", e.target.closePopup());
-                  e.target.closePopup();
-                  // document.querySelector(
-                  //   ".sidebar"
-                  // ).style.transform = `translateX(-100%)`;
-                },
-              }}
-            >
-              <Popup closeButton={false}>
-                {markers[uuid] && markers[uuid].title
-                  ? markers[uuid].title
-                  : "제목을 입력해 주세요"}
-              </Popup>
-            </Marker>
-          );
-        })}
-      </>
-    );
-  }
-  function SetViewOnClick({ animateRef }) {
-    const map = useMapEvent("click", (e) => {
-      map.setView(e.latlng, map.getZoom(), {
-        animate: animateRef.current || false,
-      });
-    });
-
-    return null;
-  }
-
-  function NewMarker({ data }) {
-    const element = document.querySelector("button[data-lat][data-lon]");
-    // console.log(element);
-    // console.log(data, typeof data);
-    if (!data) {
-      return;
-    }
-    // const position = [data.lat, data.lon];
-    // console.log(position, "위치");
-
-    // console.log(
-    //   element,
-    //   element.getAttribute("data-lat"),
-    //   element.getAttribute("data-lon")
-    // );
-    // return;
-
-    const map = useMap();
-    // console.log(map.getCenter());
-    map.setView([data.lat, data.lon], 13);
-    console.log(map.getZoom());
-    // map.setZoom(13);
-    // console.log(useMap().setView(position).setZoom(13));
-    // console.log(map.getCenter());
-    // console.log([data.lat, data.lon], "위치");
-
-    // console.log(map.setZoom(13));
-    // console.log(map.getCenter());
-    // console.log("map center:", map.getCenter());
-    // setKey(null);
-    return (
-      <Marker
-        position={[data.lat, data.lon]}
-        onContextMenu={(event) => {
-          event.preventDefault();
-          console.log;
-          console.log("마커");
-        }}
-        eventHandlers={{
-          contextmenu: (e) => {
-            event.preventDefault();
-            if (confirm("마커로 등록 하시겠습니까?")) {
-              const { lat, lng } = e.latlng;
-              const uuid = uuidv4();
-              setMarkers((prevMarkers) => ({
-                // 이전 상태를 기반으로 markers 업데이트 (비동기 처리 고려)
-                ...prevMarkers,
-                [uuid]: {
-                  position: e.latlng,
-                },
-              }));
-              setValue("id", uuid),
-                setValue("title", ""),
-                setValue("content", ""),
-                setValue("lat", e.latlng.lat);
-              setValue("lng", e.latlng.lng);
-              console.log("add");
-              map.setView(e.latlng, 13);
-              setKey(null);
-
-              if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(0%)`){
-                asideEl.style.transform = `translateX(-100%)`
-                buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                buttonEl.setAttribute("aria-controls", "true");
-                return
-              }
-
-              if(sidebarEl.style.transform == `translateX(0%)` && asideEl.style.transform==`translateX(-100%)`){
-                asideEl.style.transform = `translateX(0%)`
-                // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                // sidebarEl.style.transform = `translateX(100%)`
-              }
-              
-              if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(0%)`){
-                asideEl.style.transform = `translateX(-100%)`
-                buttonEl.querySelector("span").style.transform = `translateY(-60%) rotate(45deg)`;
-                buttonEl.setAttribute("aria-controls", "true");
-                return
-              }
-              
-              if(sidebarEl.style.transform == `translateX(-100%)` && asideEl.style.transform==`translateX(-100%)`){
-                asideEl.style.transform = `translateX(0%)`
-                // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-                // sidebarEl.style.transform = `translateX(100%)`
-              }
-
-              // asideEl.style.transform = `translateX(-100%)`;
-              // asideEl.style.transition = `0.4s`
-              
-              buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-              buttonEl.setAttribute("aria-controls", "true");
-            }
-          },
-        }}
-      >
-        <Popup>{data.display_name}</Popup>
-      </Marker>
-    );
-  }
-
-  function LocationMarker() {
-    const [position, setPosition] = useState(null);
-    const map = useMapEvents({
-      click() {
-        console.log(map.setPosition([36.17, 127.83]));
-        // map.locate();
-      },
-      locationfound(e) {
-        setPosition(e.latlng);
-        map.flyTo(e.latlng, map.getZoom());
-      },
-    });
-
-    return position === null ? null : (
-      <Marker position={position}>
-        <Popup>You are here</Popup>
-      </Marker>
-    );
-  }
+ 
 };
-
-function sidbarBtn (){
-  const element = createElement(
-        "div",
-        { id: "app" },
-        createElement("h1", null, "Hello, World!"),
-        createElement(
-          "button",
-          { onClick: () => alert("Clicked!") },
-          "Click me"
-        )
-      );
-  document.querySelector('.search').append(element)
-}
 
 export default Maps;
 
