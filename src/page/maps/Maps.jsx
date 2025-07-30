@@ -159,7 +159,7 @@ const Maps = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <>
+    <ResponsiveDiv>
       <div
         style={{
           width: "100vw",
@@ -324,7 +324,7 @@ const Maps = () => {
             register={register} errors={errors}
             setPlace={setPlace} placeList={placeList} setPlaceList={setPlaceList} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} 
           /> 
-            {/* <Nav className="header-nav">
+            <Nav className="header-nav">
               <Box component='ul' sx={{ textAlign: 'center' }}>
                 <Li>
                   <MenuBtn
@@ -348,7 +348,7 @@ const Maps = () => {
                   </MenuBtn>
                 </Li>
               </Box>  
-            </Nav> */}
+            </Nav>
             <CustomModal
               isOpen={isModalOpen}
               closeModal={() => setIsModalOpen(false)}
@@ -365,7 +365,7 @@ const Maps = () => {
             <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} ></Leaflet>
         </div>
       </div>
-    </>
+    </ResponsiveDiv>
   );
 
   function updateMarkers(data) {
@@ -487,7 +487,7 @@ const ResponsiveDiv = styled.div`
         width: 100vw;
         height: 100vh;
         display: flex;
-        font-size: 20px;
+        // font-size: 16px;
     }
 
     @media (prefers-color-scheme: light) {
