@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 import { Box, Button, Menu, MenuItem  } from '@mui/material';
 import { Modal, Paper,Typography  } from '@mui/material';
-import { css } from '@emotion/react';
+
+import {AppBar,Toolbar,TextField, IconButton,     InputBase,  Divider, } from '@mui/material';
+
+// import {Menu as MenuIcon, Search as SearchIcon, Directions as DirectionsIcon  } from '@mui/icons-material';
+// 속도 저하로 import 방식 변경 이유 확인중
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon  from'@mui/icons-material/Search';
+import DirectionsIcon from '@mui/icons-material/Directions';
+
+
+
 
 import Leaflet from "../component/Leaflet.jsx";
 import Header from "../component/Header"
@@ -349,19 +359,31 @@ const Maps = () => {
                 </Li>
               </Box>  
             </Nav>
-            <CustomModal
-              isOpen={isModalOpen}
-              closeModal={() => setIsModalOpen(false)}
-            >
-              <Box>
-                <Typography variant="h6" component="h2">
-                  hi
-                </Typography>
-                <Typography sx={{ mt: 2 }}>
-                  it's me
-                </Typography>
-              </Box>
-            </CustomModal>
+
+      <CustomModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
+      <AppBar position="static" width="100%">
+        <Toolbar>
+          {/*  display : flex 적용 되어 있으므로 justifyContent : 'center' css 추가  */}
+          <Box sx={{ width: '5em', textAlign: 'center', justifyContent : 'center'}}>장소 찾기</Box>
+        </Toolbar>
+      </AppBar>
+      <Paper
+        component="form"
+        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '29.5em' }}
+      >
+      <IconButton sx={{ p: '10px' }} aria-label="menu">
+        <MenuIcon />
+      </IconButton>
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search Google Maps"
+        inputProps={{ 'aria-label': 'search google maps' }}
+      />
+      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </Paper>
+      </CustomModal>
             <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} ></Leaflet>
         </div>
       </div>
@@ -551,6 +573,17 @@ const ResponsiveDiv = styled.div`
 
     }
 `
+
+const SearchDiv = styled.div`
+  background-color:  #fff;
+`
+
+const SearchInput = styled(InputBase)`
+color: inherit;
+& .MuiInputBase-input {
+  padding : 1, 1, 0 !important;
+}
+`
 export const CustomModal= ({ isOpen, closeModal, children }) => {
   return (
     <Modal open={isOpen} onClose={closeModal}>
@@ -558,10 +591,10 @@ export const CustomModal= ({ isOpen, closeModal, children }) => {
         elevation={2}
         sx={{
           position: "absolute",
-          top: "50%",
+          top: "10%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 800,
+          width: '30em',
           maxWidth: "100%",
           maxHeight: "90%",
           overflowY: "auto",
