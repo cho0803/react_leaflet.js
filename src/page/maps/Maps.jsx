@@ -335,7 +335,7 @@ const Maps = () => {
             setPlace={setPlace} placeList={placeList} setPlaceList={setPlaceList} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} 
           /> 
             <Nav className="header-nav">
-              <Box component='ul' sx={{ textAlign: 'center' }}>
+              <Ul component='ul' sx={{ textAlign: 'center' }}>
                 <Li>
                   <MenuBtn
                   variant='contained'
@@ -357,7 +357,7 @@ const Maps = () => {
                     마커 리스트
                   </MenuBtn>
                 </Li>
-              </Box>  
+              </Ul>  
             </Nav>
 
       <CustomModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
@@ -470,7 +470,7 @@ const input = {
 }
 
 const Nav = styled.div`
-  width: calc(100vw - 4em - 2.8em);
+  // width: calc(100vw - 4em - 2.8em);
   height: 2em;
   position: absolute;
   top: 0;
@@ -478,7 +478,13 @@ const Nav = styled.div`
   // left: 0;
   z-index: 999;
 `
+const Ul = styled.ul`
+  text-align: center;
+  display: ruby-text;
+`
+
 const Li = styled.li`
+    display: ruby-text;
   display: inline-block;
   position: relative;
   margin: 0 1%;
