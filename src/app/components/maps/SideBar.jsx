@@ -89,26 +89,7 @@ export default function Sidebar({markers, setMarkers, setValue, getValues, reset
                     //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
                     // }
                   )} */}
-                  {placeList?.map((item, index) => (
-                    <ul key={index} style={ul}>
-                      <li style={li}>
-                        <button
-                          style={button}
-                          data-lat={item.lat}
-                          data-lon={item.lon}
-                          onClick={() => {
-                            setPlace(item);
-                            // console.log("클릭");
-                          }}
-                        >
-                          <a href="#" style={{ color: "inherit" }}>
-                            {item.display_name}
-                          </a>
-                        </button>
-                      </li>
-                      {/* {<li>{item.id}</li>} */}
-                    </ul>
-                  ))}
+                  {PlaceList(placeList)}
                 </div>
               </div>
               <aside
@@ -371,6 +352,32 @@ export default function Sidebar({markers, setMarkers, setValue, getValues, reset
   )
 }
 
+const PlaceList = function ({placeList}) {
+  return (
+    <>
+      {placeList?.map((item, index) => (
+        <ul key={index} style={ul}>
+          <li style={li}>
+            <button
+              style={button}
+              data-lat={item.lat}
+              data-lon={item.lon}
+              onClick={() => {
+                setPlace(item);
+                // console.log("클릭");
+              }}
+            >
+              <a href="#" style={{ color: "inherit" }}>
+                {item.display_name}
+              </a>
+            </button>
+          </li>
+          {/* {<li>{item.id}</li>} */}
+        </ul>
+      ))}
+    </>
+  )
+}
 const h1 = {
   listStyle: "none",
   /* margin: 0; */
