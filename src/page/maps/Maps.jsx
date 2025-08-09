@@ -335,7 +335,7 @@ const Maps = () => {
             setPlace={setPlace} placeList={placeList} setPlaceList={setPlaceList} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} 
           /> 
             <Nav className="header-nav">
-              <Ul component='ul' sx={{ textAlign: 'center' }}>
+              <Ul>
                 <Li>
                   <MenuBtn
                   variant='contained'
