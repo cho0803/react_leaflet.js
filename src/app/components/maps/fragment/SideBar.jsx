@@ -1,10 +1,14 @@
 import axios from "axios";
 
-  import { Marker, Popup, useMap, uuidv4, styled, } from "..";
+import { Marker, Popup, useMap, uuidv4, styled, } from "..";
 
-  import { Box,Button, Menu, MenuItem } from "..";
+import { Box,Button, Menu, MenuItem } from "..";
 
-export default function Sidebar({markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,}){
+//전역 데이터 받아오기
+import { MapsContext, useContext } from "..";
+
+export default function Sidebar(){
+   const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
   return (
             <div
               className="sidebar"
@@ -89,7 +93,7 @@ export default function Sidebar({markers, setMarkers, setValue, getValues, reset
                     //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
                     // }
                   )} */}
-                  {PlaceList(placeList)}
+                  {PlaceList({placeList, setPlace})}
                 </div>
               </div>
               <aside
@@ -352,7 +356,8 @@ export default function Sidebar({markers, setMarkers, setValue, getValues, reset
   )
 }
 
-const PlaceList = function ({placeList}) {
+const PlaceList = function ({placeList, setPlace}) {
+  // console.log(placeList)
   return (
     <>
       {placeList?.map((item, index) => (

@@ -7,77 +7,32 @@ import Header from "./Header"
 import SideBar from "./SideBar"
 
 
-import { useForm } from "react-hook-form";
-
-/* eslint-disable */
-import React, { useEffect, useState, useMemo, useRef, createElement } from "react";
 
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMapEvent, useMap, ZoomControl } from "react-leaflet";
 
 
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+// import L from "leaflet";
+// import "leaflet/dist/leaflet.css";
 
-import { v4 as uuidv4 } from "uuid";
+// import iconUrl from "leaflet/dist/images/marker-icon.png";
+// import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-import iconUrl from "leaflet/dist/images/marker-icon.png";
-import shadowUrl from "leaflet/dist/images/marker-shadow.png";
+// // 마커 아이콘 경로 설정
+// delete L.Icon.Default.prototype._getIconUrl;
+// L.Icon.Default.mergeOptions({
+//   // iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+//   // iconUrl: require("leaflet/dist/images/marker-icon.png"),
+//   iconUrl: iconUrl,
+//   // shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+//   shadowUrl: shadowUrl,
+//   // iconSize: [25, 30], // 마커의 가로, 세로 크기
+//   // iconAnchor: [32, 64], // 마커 포인트
+//   // shadowAnchor: [32, 64], // 그림자 포인트 위치
+//   // popupAnchor: [0, -60], // 팝업 위치
+// });
 
-// 마커 아이콘 경로 설정
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  // iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  // iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  iconUrl: iconUrl,
-  // shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-  shadowUrl: shadowUrl,
-  // iconSize: [25, 30], // 마커의 가로, 세로 크기
-  // iconAnchor: [32, 64], // 마커 포인트
-  // shadowAnchor: [32, 64], // 그림자 포인트 위치
-  // popupAnchor: [0, -60], // 팝업 위치
-});
-
-export default function Leaflet ({markers, setMarkers, place, setPlace, reset, setValue, getValues}) {
+export default function Leaflet ({markers, setMarkers, place, setPlace, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, }) {
   
-//  const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//     // reset,
-//     // setValue,
-//     // getValues,
-//   } = useForm();
-
-  const [key, setKey] = useState();
-
-  const sidebarEl = document.querySelector(".sidebar");
-  const asideEl = document.querySelector(".aside");
-  const buttonEl = document.querySelector("button[aria-expanded]");
-
-  // const [placeList, setPlaceList] = useState([]);
-
-  // const [place, setPlace] = useState();
-  
-  // const [markers, setMarkers] = useState({
-  //   1: {
-  //     position: {
-  //       lat: 37.57,
-  //       lng: 127.26,
-  //     },
-  //     title: "기본",
-  //     content: "기본내용",
-  //     status: 1,
-  //   },
-  //   2: {
-  //     position: {
-  //       lat: 38.22,
-  //       lng: 126.58,
-  //     },
-  //     title: "테스트",
-  //     content: "테스트 내용",
-  //     status: 1,
-  //   },
-  // });
   
   
   return (
@@ -145,8 +100,11 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-        <AddMarker markers={markers} setMarkers={setMarkers} useform={useForm} reset={reset} setValue={setValue} getValues={getValues} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} setPlace={setPlace}/>
-        <NewMarker L={L}    setMarkers={setMarkers} useMap={useMap} setValue={setValue} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} place={place} setPlace={setPlace} />
+        
+        {/* <AddMarker markers={markers} setMarkers={setMarkers} reset={reset} setValue={setValue} getValues={getValues} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} setPlace={setPlace}/> */}
+        <AddMarker/>
+        {/* <NewMarker L={L} setMarkers={setMarkers} useMap={useMap} setValue={setValue} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} place={place} setPlace={setPlace} /> */}
+        <NewMarker/>
         <ZoomControl position="topright" />
       </MapContainer>
     </>

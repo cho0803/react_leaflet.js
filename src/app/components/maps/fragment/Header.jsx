@@ -1,9 +1,13 @@
   import { Marker, Popup, useMap, uuidv4, styled, } from "..";
   import { Box,Button, Menu, MenuItem } from "..";
 
-export default function Header({ sidebarEl, asideEl, buttonEl,}){
+  //전역 데이터 받아오기
+  import { MapsContext, useContext } from "..";
+ 
+export default function Header(){
+    const { sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
     return (
-                <header
+        <header
           id="header"
           style={{
             // width: "64px",
@@ -141,8 +145,6 @@ export default function Header({ sidebarEl, asideEl, buttonEl,}){
         </header>
     )
 }
-
-
 
 const h1 = {
   listStyle: "none",

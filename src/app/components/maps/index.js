@@ -16,6 +16,9 @@ export  {default as Header} from "./fragment/Header"
 export  {default as SideBar} from "./fragment/SideBar"
 export  {default as Leaflet} from "./fragment/Leaflet"
 
+export { MapsContext} from "../../context/MapsContext";
+
+export { useContext } from "react";
 // export {L} from "leaflet";
 
 // export Menu  from '@mui/icons-material/Menu';
