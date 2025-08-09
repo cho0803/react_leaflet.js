@@ -5,145 +5,171 @@ import axios from "axios";
   import { Box,Button, Menu, MenuItem } from ".";
 
 export default function Sidebar({markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,}){
-return (
-          <div
-            className="sidebar"
-            style={{
-              /*transform: "translateX(-100%)", display: 'flex', */
-              width: "13em",
-              boxShadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px",
-              display: "flex",
-              transform: "translateX(-100%)",
-              transition: "0.4s",
-              position: "absolute",
-              top: "0",
-              bottom: "0",
-              zIndex: 1,
-            }}
-          >
+  return (
             <div
-              className="search"
+              className="sidebar"
               style={{
-                width: "inherit",
-                // height: "100vh",
-                position: "relative",
-                // padding: "60px 20px",
-                // transition: "0.4s",
-                // transform: "translateX(-100%)",
-                // transform: "translateX(0%)",
-                // position: "absolute",
-                // float: "left",
-                backgroundColor: "rgb(255, 255, 255)",
-                zIndex: " 2",
-                boxShadow: "inherit",
-                // border: "1px solid rgb(217, 217, 217)",
-                textAlign: "center",
-              }}
-            >
-              <div style={{ padding: "15px 0px" }}>
-                <input
-                  type="text"
-                  placeholder="장소 검색"
-                  style={{ height: "32px" }}
-                  // value="북한산"
-                  onKeyDown={(e) => {
-                    if (e.keyCode == 13) {
-                      // console.log(e.target.value);
-                      axios
-                        .get("https://nominatim.openstreetmap.org/search", {
-                          params: {
-                            lon: "127.01",
-                            lat: "37.64",
-                            q: e.target.value,
-                            limit: 5,
-                            format: "json",
-                            exclude: "206494953,206604942,207242176",
-                          },
-                        })
-                        .then(function (res) {
-                          setPlaceList(
-                            res.data.map((item) => {
-                              // console.log(item);
-                              return {
-                                display_name: item.display_name,
-                                lat: item.lat,
-                                lon: item.lon,
-                              };
-                            })
-                          );
-                        });
-                    }
-                  }}
-                />
-              </div>
-
-              <div id="searchList">
-                {/* {Object.entries(markers).map(
-                  ([key, value]) => (
-                    <div key={key}>
-                      {key} {markers[key].title} {markers[key].content}
-                    </div>
-                  )
-
-                  // {
-                  //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
-                  // }
-                )} */}
-                {placeList?.map((item, index) => (
-                  <ul key={index} style={ul}>
-                    <li style={li}>
-                      <button
-                        style={button}
-                        data-lat={item.lat}
-                        data-lon={item.lon}
-                        onClick={() => {
-                          setPlace(item);
-                          // console.log("클릭");
-                        }}
-                      >
-                        <a href="#" style={{ color: "inherit" }}>
-                          {item.display_name}
-                        </a>
-                      </button>
-                    </li>
-                    {/* {<li>{item.id}</li>} */}
-                  </ul>
-                ))}
-              </div>
-            </div>
-            <aside
-              className="aside"
-              style={{
-                width: "inherit",
-                // height: "100%",
-                // position: "relative",
-                // padding: "60px 20px",
-                transition: "0.4s",
-                transform: "translateX(-100%)",
-                position: "absolute",
-                top: "0px",
-                bottom: "0px",
-                left: "100%",
-                // float: "left",
-                backgroundColor: "rgb(255, 255, 255)",
-                zIndex: " 1",
+                /*transform: "translateX(-100%)", display: 'flex', */
+                width: "13em",
                 boxShadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px",
-                // border: "1px solid rgb(217, 217, 217)",
-                textAlign: "center",
-                justifyContent: "center",
-                alignItems: "center",
                 display: "flex",
+                transform: "translateX(-100%)",
+                transition: "0.4s",
+                position: "absolute",
+                top: "0",
+                bottom: "0",
+                zIndex: 1,
               }}
             >
-              <div style={{ flexBasis: "100%" }}>
-                {" "}
+              <div
+                className="search"
+                style={{
+                  width: "inherit",
+                  // height: "100vh",
+                  position: "relative",
+                  // padding: "60px 20px",
+                  // transition: "0.4s",
+                  // transform: "translateX(-100%)",
+                  // transform: "translateX(0%)",
+                  // position: "absolute",
+                  // float: "left",
+                  backgroundColor: "rgb(255, 255, 255)",
+                  zIndex: " 2",
+                  boxShadow: "inherit",
+                  // border: "1px solid rgb(217, 217, 217)",
+                  textAlign: "center",
+                }}
+              >
                 <div style={{ padding: "15px 0px" }}>
                   <input
                     type="text"
-                    style={{ ...input }}
-                    placeholder="제목"
-                    {...register("title", { required: "제목을 입력해주세요" })}
-                    onKeyUp={() => {
+                    placeholder="장소 검색"
+                    style={{ height: "32px" }}
+                    // value="북한산"
+                    onKeyDown={(e) => {
+                      if (e.keyCode == 13) {
+                        // console.log(e.target.value);
+                        axios
+                          .get("https://nominatim.openstreetmap.org/search", {
+                            params: {
+                              lon: "127.01",
+                              lat: "37.64",
+                              q: e.target.value,
+                              limit: 5,
+                              format: "json",
+                              exclude: "206494953,206604942,207242176",
+                            },
+                          })
+                          .then(function (res) {
+                            setPlaceList(
+                              res.data.map((item) => {
+                                // console.log(item);
+                                return {
+                                  display_name: item.display_name,
+                                  lat: item.lat,
+                                  lon: item.lon,
+                                };
+                              })
+                            );
+                          });
+                      }
+                    }}
+                  />
+                </div>
+
+                <div id="searchList">
+                  {/* {Object.entries(markers).map(
+                    ([key, value]) => (
+                      <div key={key}>
+                        {key} {markers[key].title} {markers[key].content}
+                      </div>
+                    )
+
+                    // {
+                    //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
+                    // }
+                  )} */}
+                  {placeList?.map((item, index) => (
+                    <ul key={index} style={ul}>
+                      <li style={li}>
+                        <button
+                          style={button}
+                          data-lat={item.lat}
+                          data-lon={item.lon}
+                          onClick={() => {
+                            setPlace(item);
+                            // console.log("클릭");
+                          }}
+                        >
+                          <a href="#" style={{ color: "inherit" }}>
+                            {item.display_name}
+                          </a>
+                        </button>
+                      </li>
+                      {/* {<li>{item.id}</li>} */}
+                    </ul>
+                  ))}
+                </div>
+              </div>
+              <aside
+                className="aside"
+                style={{
+                  width: "inherit",
+                  // height: "100%",
+                  // position: "relative",
+                  // padding: "60px 20px",
+                  transition: "0.4s",
+                  transform: "translateX(-100%)",
+                  position: "absolute",
+                  top: "0px",
+                  bottom: "0px",
+                  left: "100%",
+                  // float: "left",
+                  backgroundColor: "rgb(255, 255, 255)",
+                  zIndex: " 1",
+                  boxShadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px",
+                  // border: "1px solid rgb(217, 217, 217)",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                <div style={{ flexBasis: "100%" }}>
+                  {" "}
+                  <div style={{ padding: "15px 0px" }}>
+                    <input
+                      type="text"
+                      style={{ ...input }}
+                      placeholder="제목"
+                      {...register("title", { required: "제목을 입력해주세요" })}
+                      onKeyUp={() => {
+                        // markers[getValues("id")].title = getValues("title");
+                        // markers[getValues("id")].content = getValues("content");
+                        if (!markers[getValues("id")]) {
+                          alert("지도에서 좌표를 클릭해주세요");
+                          return;
+                        }
+                        setMarkers((prev) => ({
+                          ...prev,
+                          [getValues("id")]: {
+                            position: markers[getValues("id")].position,
+                            title: getValues("title"),
+                            content: getValues("content"),
+                          },
+                        }));
+                      }}
+                    />
+                  </div>
+                  <span>{errors.title?.message}</span>
+                  <textarea
+                    style={{ ...input, height: "60px" }}
+                    placeholder="내용"
+                    {...register("content", { required: "내용을 입력해주세요" })}
+                    onKeyUp={(e) => {
+                      // var keycode = e.keyCode;
+                      // console.log(e.target.value);
+
                       // markers[getValues("id")].title = getValues("title");
                       // markers[getValues("id")].content = getValues("content");
                       if (!markers[getValues("id")]) {
@@ -159,216 +185,190 @@ return (
                         },
                       }));
                     }}
+                  />{" "}
+                  <span>{errors.content?.message}</span>
+                  <br />
+                  <input
+                    type="text"
+                    hidden
+                    placeholder="id"
+                    {...register("id")}
                   />
-                </div>
-                <span>{errors.title?.message}</span>
-                <textarea
-                  style={{ ...input, height: "60px" }}
-                  placeholder="내용"
-                  {...register("content", { required: "내용을 입력해주세요" })}
-                  onKeyUp={(e) => {
-                    // var keycode = e.keyCode;
-                    // console.log(e.target.value);
+                  <input
+                    type="text"
+                    hidden
+                    placeholder="lat"
+                    {...register("lat")}
+                  />
+                  <input
+                    type="text"
+                    hidden
+                    placeholder="lng"
+                    {...register("lng")}
+                  />
+                  <div style={{ width: "7em", float: "right" }}>
+                    {" "}
+                    <button
+                      className="btn btn-primary"
+                      // style={button}
+                      style={{
+                        ...button,
+                        borderRadius: 0,
+                        padding: "1px 6px",
+                        background: "#f0f0f0",
+                        border: "1px solid rgb(0, 0, 0)",
+                      }}
+                      onClick={() => {
+                        handleSubmit(
+                          function (param) {
+                            // if (data.id) console.log("데이타 id", id);
+                            console.log(param);
+                            // param.id = Number(param.id) + 1 ? param.id : "";
 
-                    // markers[getValues("id")].title = getValues("title");
-                    // markers[getValues("id")].content = getValues("content");
-                    if (!markers[getValues("id")]) {
-                      alert("지도에서 좌표를 클릭해주세요");
+                            axios
+                              .post("api/test", {
+                                ...param,
+                                id: Number(param.id) + 1 ? param.id : "",
+                              })
+                              .then(async (res) => {
+                                // console.log(res.data);
+                                // console.log(res);
+                              //   refreshFn();
+
+                                if (!Number(param.id) + 0) {
+                                  // console.log(data, getValues("id"), "들어옴1");
+                                  setMarkers((prev) => {
+                                    const { [param.id]: $, ...rest } = prev;
+                                    console.log(prev, param.id, rest, "rest");
+                                    return rest;
+                                  });
+                                }
+
+                                if (!Number(param.id) + 0) {
+                                  // console.log(data, "데이타"); 
+                                  Object.entries(res.data).forEach(
+                                    ([key, value]) => {
+                                      // console.log(`${key}: ${value}`);
+                                      setValue(key, value);
+                                    }
+                                  );
+                                }
+                              });
+                          },
+                          function (e) {
+                            const errorlist = Object.values(e);
+                            console.log(errorlist[0].message);
+                            // console.log(errorlist);
+                          }
+                        )();
+                      }}
+                    >
+                      저장
+                    </button>{" "}
+                    <button
+                      className="btn btn-primary"
+                      style={{
+                        ...button,
+                        borderRadius: 0,
+                        padding: "1px 6px",
+                        background: "#f0f0f0",
+                        border: "1px solid rgb(0, 0, 0)",
+                      }}
+                      onClick={() => {
+                        // console.log("삭제", getValues("id"));
+                        if (Number(getValues("id")) + 0) {
+                          console.log("값있음");
+                          axios.delete(`api/test/${getValues("id")}`);
+                          setMarkers((prev) => {
+                            const { [getValues("id")]: _, ...rest } = prev;
+                            // console.log(rest, "rest");
+
+                            return rest;
+                          });
+                          // refreshFn();
+                          reset();
+                        } else {
+                          alert("저장 후 삭제 하실수 있습니다");
+                        }
+                      }}
+                    >
+                      삭제
+                    </button>
+                    {/* {Number(getValues("id")) + 0}
+                  {typeof (Number(getValues("id")) + 0)} */}
+                    {/* {typeof (Number(getValues("id")) + 0) === "number"} */}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  aria-expanded="false"
+                  className="fold-button"
+                  style={{
+                    ...button,
+                    display: "block",
+                    padding: "2em 0.5em",
+                    width: "30px",
+                    height: "30px",
+                    position: "absolute",
+                    left: "100%",
+                    top: "40%",
+                    cursor: "pointer",
+                    backgroundColor: "inherit",
+                    border: "none",
+                    outline: "none",
+                    borderRadius: "0px 9px 9px 0px",
+                    border: "1px solid rgba(0, 0, 0, 0.15)",
+                    zIndex: "4",
+                  }}
+                  onClick={() => {
+                    if (!buttonEl.getAttribute("aria-controls")) return;
+
+                    // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
+
+                    if (
+                      sidebarEl.style.transform == `translateX(-100%)` &&
+                      asideEl.style.transform == `translateX(0%)`
+                    ) {
+                      asideEl.style.transform = `translateX(-100%)`;
+                      buttonEl.querySelector(
+                        "span"
+                      ).style.transform = `translateY(-60%) rotate(45deg)`;
                       return;
                     }
-                    setMarkers((prev) => ({
-                      ...prev,
-                      [getValues("id")]: {
-                        position: markers[getValues("id")].position,
-                        title: getValues("title"),
-                        content: getValues("content"),
-                      },
-                    }));
+
+                    if (
+                      (sidebarEl.style.transform == `translateX(0%)` &&
+                        asideEl.style.transform == `translateX(0%)`) ||
+                      asideEl.style.transform == `translateX(-100%)`
+                    ) {
+                      // sidebarEl.style.transform = `translateX(0%)`
+                      sidebarEl.style.transform = "translateX(-100%)";
+                      asideEl.style.transform = "translateX(-100%)";
+                      buttonEl.querySelector(
+                        "span"
+                      ).style.transform = `translateY(-60%) rotate(45deg)`;
+                      return;
+                    }
                   }}
-                />{" "}
-                <span>{errors.content?.message}</span>
-                <br />
-                <input
-                  type="text"
-                  hidden
-                  placeholder="id"
-                  {...register("id")}
-                />
-                <input
-                  type="text"
-                  hidden
-                  placeholder="lat"
-                  {...register("lat")}
-                />
-                <input
-                  type="text"
-                  hidden
-                  placeholder="lng"
-                  {...register("lng")}
-                />
-                <div style={{ width: "7em", float: "right" }}>
+                >
                   {" "}
-                  <button
-                    className="btn btn-primary"
-                    // style={button}
+                  <span
                     style={{
-                      ...button,
-                      borderRadius: 0,
-                      padding: "1px 6px",
-                      background: "#f0f0f0",
-                      border: "1px solid rgb(0, 0, 0)",
+                      border: "solid currentcolor",
+                      borderWidth: "2px  2px 0 0",
+                      position: "absolute",
+                      width: "0.5em",
+                      height: "0.5em",
+                      left: "0.5em",
+                      top: "50%",
+                      transform: "translateY(-60%) rotate(45deg)",
                     }}
-                    onClick={() => {
-                      handleSubmit(
-                        function (param) {
-                          // if (data.id) console.log("데이타 id", id);
-                          console.log(param);
-                          // param.id = Number(param.id) + 1 ? param.id : "";
-
-                          axios
-                            .post("api/test", {
-                              ...param,
-                              id: Number(param.id) + 1 ? param.id : "",
-                            })
-                            .then(async (res) => {
-                              // console.log(res.data);
-                              // console.log(res);
-                            //   refreshFn();
-
-                              if (!Number(param.id) + 0) {
-                                // console.log(data, getValues("id"), "들어옴1");
-                                setMarkers((prev) => {
-                                  const { [param.id]: $, ...rest } = prev;
-                                  console.log(prev, param.id, rest, "rest");
-                                  return rest;
-                                });
-                              }
-
-                              if (!Number(param.id) + 0) {
-                                // console.log(data, "데이타"); 
-                                Object.entries(res.data).forEach(
-                                  ([key, value]) => {
-                                    // console.log(`${key}: ${value}`);
-                                    setValue(key, value);
-                                  }
-                                );
-                              }
-                            });
-                        },
-                        function (e) {
-                          const errorlist = Object.values(e);
-                          console.log(errorlist[0].message);
-                          // console.log(errorlist);
-                        }
-                      )();
-                    }}
-                  >
-                    저장
-                  </button>{" "}
-                  <button
-                    className="btn btn-primary"
-                    style={{
-                      ...button,
-                      borderRadius: 0,
-                      padding: "1px 6px",
-                      background: "#f0f0f0",
-                      border: "1px solid rgb(0, 0, 0)",
-                    }}
-                    onClick={() => {
-                      // console.log("삭제", getValues("id"));
-                      if (Number(getValues("id")) + 0) {
-                        console.log("값있음");
-                        axios.delete(`api/test/${getValues("id")}`);
-                        setMarkers((prev) => {
-                          const { [getValues("id")]: _, ...rest } = prev;
-                          // console.log(rest, "rest");
-
-                          return rest;
-                        });
-                        // refreshFn();
-                        reset();
-                      } else {
-                        alert("저장 후 삭제 하실수 있습니다");
-                      }
-                    }}
-                  >
-                    삭제
-                  </button>
-                  {/* {Number(getValues("id")) + 0}
-                {typeof (Number(getValues("id")) + 0)} */}
-                  {/* {typeof (Number(getValues("id")) + 0) === "number"} */}
-                </div>
-              </div>
-              <button
-                type="button"
-                aria-expanded="false"
-                className="fold-button"
-                style={{
-                  ...button,
-                  display: "block",
-                  padding: "2em 0.5em",
-                  width: "30px",
-                  height: "30px",
-                  position: "absolute",
-                  left: "100%",
-                  top: "40%",
-                  cursor: "pointer",
-                  backgroundColor: "inherit",
-                  border: "none",
-                  outline: "none",
-                  borderRadius: "0px 9px 9px 0px",
-                  border: "1px solid rgba(0, 0, 0, 0.15)",
-                  zIndex: "4",
-                }}
-                onClick={() => {
-                  if (!buttonEl.getAttribute("aria-controls")) return;
-
-                  // buttonEl.querySelector("span").style.transform = `translate(40%,-50%) rotate(-135deg)`;
-
-                  if (
-                    sidebarEl.style.transform == `translateX(-100%)` &&
-                    asideEl.style.transform == `translateX(0%)`
-                  ) {
-                    asideEl.style.transform = `translateX(-100%)`;
-                    buttonEl.querySelector(
-                      "span"
-                    ).style.transform = `translateY(-60%) rotate(45deg)`;
-                    return;
-                  }
-
-                  if (
-                    (sidebarEl.style.transform == `translateX(0%)` &&
-                      asideEl.style.transform == `translateX(0%)`) ||
-                    asideEl.style.transform == `translateX(-100%)`
-                  ) {
-                    // sidebarEl.style.transform = `translateX(0%)`
-                    sidebarEl.style.transform = "translateX(-100%)";
-                    asideEl.style.transform = "translateX(-100%)";
-                    buttonEl.querySelector(
-                      "span"
-                    ).style.transform = `translateY(-60%) rotate(45deg)`;
-                    return;
-                  }
-                }}
-              >
-                {" "}
-                <span
-                  style={{
-                    border: "solid currentcolor",
-                    borderWidth: "2px  2px 0 0",
-                    position: "absolute",
-                    width: "0.5em",
-                    height: "0.5em",
-                    left: "0.5em",
-                    top: "50%",
-                    transform: "translateY(-60%) rotate(45deg)",
-                  }}
-                ></span>
-                {/* <span class="blind">패널 접기</span> */}
-              </button>
-            </aside>
-          </div>
-)
+                  ></span>
+                  {/* <span class="blind">패널 접기</span> */}
+                </button>
+              </aside>
+            </div>
+  )
 }
 
 const h1 = {
