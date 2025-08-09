@@ -13,9 +13,9 @@ import DirectionsIcon from '@mui/icons-material/Directions';
 
 
 
-import Leaflet from "../component/Leaflet.jsx";
-import Header from "../component/Header"
-import SideBar from "../component/SideBar"
+import Leaflet from "../../app/components/maps/Leaflet.jsx";
+import Header from "../../app/components/maps/Header.jsx"
+import SideBar from "../../app/components/maps/SideBar.jsx"
 
 import {
   MapContainer, 
@@ -360,30 +360,30 @@ const Maps = () => {
               </Ul>  
             </Nav>
 
-      <CustomModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-      <AppBar position="static" width="100%">
-        <Toolbar>
-          {/*  display : flex 적용 되어 있으므로 justifyContent : 'center' css 추가  */}
-          <Box sx={{ width: '5em', textAlign: 'center', justifyContent : 'center'}}>장소 찾기</Box>
-        </Toolbar>
-      </AppBar>
-      <Paper
-        component="form"
-        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '29.5em' }}
-      >
-      <IconButton sx={{ p: '10px' }} aria-label="menu">
-        <MenuIcon />
-      </IconButton>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Search Google Maps"
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-    </Paper>
-      </CustomModal>
+            <CustomModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
+              <AppBar position="static" width="100%">
+                <Toolbar>
+                  {/*  display : flex 적용 되어 있으므로 justifyContent : 'center' css 추가  */}
+                  <Box sx={{ width: '5em', textAlign: 'center', justifyContent : 'center'}}>장소 찾기</Box>
+                </Toolbar>
+              </AppBar>
+              <Paper
+                component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '29.5em' }}
+              >
+              <IconButton sx={{ p: '10px' }} aria-label="menu">
+                <MenuIcon />
+              </IconButton>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search Google Maps"
+                inputProps={{ 'aria-label': 'search google maps' }}
+              />
+              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+              </Paper>
+            </CustomModal>
             <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} ></Leaflet>
         </div>
       </div>

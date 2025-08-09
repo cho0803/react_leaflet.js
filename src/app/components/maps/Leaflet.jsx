@@ -1,5 +1,8 @@
-import  AddMarker from "./AddMarker"
-import  NewMarker from "./NewMarker"
+// import  AddMarker from "./AddMarker"
+
+//현대 디렉토리에 index.jsx 파일가져옴
+import {AddMarker, NewMarker} from ".";
+// import {AddMarker, NewMarker} from "../../components/maps";
 import Header from "./Header"
 import SideBar from "./SideBar"
 

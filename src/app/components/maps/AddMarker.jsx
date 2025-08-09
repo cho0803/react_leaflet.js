@@ -1,4 +1,4 @@
-import { Marker, Popup, useMapEvents, uuidv4 } from "./index.js";
+import { Marker, Popup, useMapEvents, uuidv4 } from ".";
 
   function AddMarker({markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, setPlace,}) {
     // console.info("AddMarker loading complete!");
@@ -168,29 +168,5 @@ import { Marker, Popup, useMapEvents, uuidv4 } from "./index.js";
     );
   }
 
-export { AddMarker as default, Page006, Page007 };
+export { AddMarker as default };
 
-
-function Page005() {
-  return (
-    <div>
-      <h1>Page005 컴포넌트</h1>
-    </div>
-  )
-}
-
-function Page006() {
-  return (
-    <div>
-      <h1>Page006 컴포넌트</h1>
-    </div>
-  )
-}
-
-function Page007() {
-  return (
-    <div>
-      <h1>Page007 컴포넌트</h1>
-    </div>
-  )
-}

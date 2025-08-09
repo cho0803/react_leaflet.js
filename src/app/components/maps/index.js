@@ -9,6 +9,9 @@ export {Box,Button, Menu, MenuItem  } from '@mui/material';
 
 export { Modal, Paper ,Divider, IconButton, InputBase  } from '@mui/material';
 
+export  {default as AddMarker} from "./AddMarker"
+export  {default as NewMarker} from "./NewMarker"
+
 // export {L} from "leaflet";
 
 // export Menu  from '@mui/icons-material/Menu';

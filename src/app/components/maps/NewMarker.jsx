@@ -1,5 +1,5 @@
 
-import { Marker, Popup,  uuidv4 ,useState} from "./index.js";
+import { Marker, Popup,  uuidv4 ,useState} from ".";
 
 //Leaflet.js api css 적용 
 import "leaflet/dist/leaflet.css";
@@ -115,4 +115,6 @@ import "leaflet/dist/leaflet.css";
     );
   }
 
-export {NewMarker as default}
+// export {NewMarker as default}; 
+
+export default NewMarker;

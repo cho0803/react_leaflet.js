@@ -1,5 +1,5 @@
-  import { Marker, Popup, useMap, uuidv4, styled, } from "./index.js";
-  import { Box,Button, Menu, MenuItem } from "./index.js";
+  import { Marker, Popup, useMap, uuidv4, styled, } from ".";
+  import { Box,Button, Menu, MenuItem } from ".";
 
 export default function Header({ sidebarEl, asideEl, buttonEl,}){
     return (
