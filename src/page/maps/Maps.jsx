@@ -1,21 +1,18 @@
-import styled from 'styled-components';
-import { Box, Button, Menu, MenuItem  } from '@mui/material';
-import { Modal, Paper,Typography  } from '@mui/material';
+// import styled from 'styled-components';
+// import { Box, Button,  Modal, Paper  } from '@mui/material';
+import { styled, Box, Button,  Modal, Paper  } from '../../app/components/maps';
 
-import {AppBar,Toolbar,TextField, IconButton,     InputBase,  Divider, } from '@mui/material';
+
+import {AppBar,Toolbar, IconButton, InputBase, } from '@mui/material';
 
 // import {Menu as MenuIcon, Search as SearchIcon, Directions as DirectionsIcon  } from '@mui/icons-material';
-// 속도 저하로 import 방식 변경 이유 확인중
+// 속도 저하로 import 방식 변경 이유 확인필요
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon  from'@mui/icons-material/Search';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
 
-
-
-import Leaflet from "../../app/components/maps/Leaflet.jsx";
-import Header from "../../app/components/maps/Header.jsx"
-import SideBar from "../../app/components/maps/SideBar.jsx"
+import {Header, SideBar, Leaflet} from "../../app/components/maps/";
 
 import {
   MapContainer, 

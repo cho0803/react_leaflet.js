@@ -5,12 +5,16 @@ export  {React, useEffect, useState, useMemo, useRef, createElement } from "reac
 export { v4 as uuidv4 } from "uuid";
 
 export {styled} from 'styled-components';
-export {Box,Button, Menu, MenuItem  } from '@mui/material';
+export {Box, Button, Menu, MenuItem  } from '@mui/material';
 
 export { Modal, Paper ,Divider, IconButton, InputBase  } from '@mui/material';
 
 export  {default as AddMarker} from "./AddMarker"
 export  {default as NewMarker} from "./NewMarker"
+
+export  {default as Header} from "./fragment/Header"
+export  {default as SideBar} from "./fragment/SideBar"
+export  {default as Leaflet} from "./fragment/Leaflet"
 
 // export {L} from "leaflet";
 

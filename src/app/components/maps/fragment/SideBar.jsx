@@ -1,8 +1,8 @@
 import axios from "axios";
 
-  import { Marker, Popup, useMap, uuidv4, styled, } from ".";
+  import { Marker, Popup, useMap, uuidv4, styled, } from "..";
 
-  import { Box,Button, Menu, MenuItem } from ".";
+  import { Box,Button, Menu, MenuItem } from "..";
 
 export default function Sidebar({markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,}){
   return (
