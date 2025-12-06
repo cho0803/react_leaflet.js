@@ -52,31 +52,9 @@ export default function Sidebar(){
                     // value="북한산"
                     onKeyDown={(e) => {
                       if (e.keyCode == 13) {
-                        // console.log(e.target.value);
-                        axios
-                          .get("https://nominatim.openstreetmap.org/search", {
-                            params: {
-                              lon: "127.01",
-                              lat: "37.64",
-                              q: e.target.value,
-                              limit: 5,
-                              format: "json",
-                              exclude: "206494953,206604942,207242176",
-                            },
-                          })
-                          .then(function (res) {
-                            setPlaceList(
-                              res.data.map((item) => {
-                                // console.log(item);
-                                return {
-                                  display_name: item.display_name,
-                                  lat: item.lat,
-                                  lon: item.lon,
-                                };
-                              })
-                            );
-                          });
+                        MapApi(e,setPlaceList)
                       }
+
                     }}
                   />
                 </div>
@@ -356,7 +334,33 @@ export default function Sidebar(){
   )
 }
 
-const PlaceList = function ({placeList, setPlace}) {
+export const MapApi = function(e ,setPlaceList) {
+  console.log(e.target.value);
+  axios.get("https://nominatim.openstreetmap.org/search", {
+      params: {
+        lon: "127.01",
+        lat: "37.64",
+        q: e.target.value,
+        limit: 5,
+        format: "json",
+        exclude: "206494953,206604942,207242176",
+      },
+    })
+    .then(function (res) {
+      setPlaceList(
+        res.data.map((item) => {
+          // console.log(item);
+          return {
+            display_name: item.display_name,
+            lat: item.lat,
+            lon: item.lon,
+          };
+        })
+      );
+    });
+}
+
+export const PlaceList = function ({placeList, setPlace}) {
   // console.log(placeList)
   return (
     <>

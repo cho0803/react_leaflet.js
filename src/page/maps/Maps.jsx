@@ -3,7 +3,7 @@
 import { styled, Box, Button, Modal, Paper  } from '../../app/components/maps';
 
 
-import {AppBar,Toolbar, IconButton, InputBase, } from '@mui/material';
+import {AppBar,Toolbar, IconButton, InputBase, Grid, Typography, List, ListItem  } from '@mui/material';
 
 // import {Menu as MenuIcon, Search as SearchIcon, Directions as DirectionsIcon  } from '@mui/icons-material';
 // 속도 저하로 import 방식 변경 이유 확인필요
@@ -12,6 +12,8 @@ import SearchIcon  from'@mui/icons-material/Search';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
 import {Header, SideBar, Leaflet} from "../../app/components/maps/";
+
+import {MapApi,PlaceList} from "../../app/components/maps/fragment/SideBar"
 
 import {
   MapContainer, 
@@ -218,7 +220,7 @@ const Maps = () => {
               </Ul>  
             </Nav>
 
-            <CustomModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
+            <CustomModal isOpen={isModalOpen} closeModal={() => {setIsModalOpen(false); setPlaceList([]) }}>
               <AppBar position="static" width="100%">
                 <Toolbar>
                   {/*  display : flex 적용 되어 있으므로 justifyContent : 'center' css 추가  */}
@@ -226,21 +228,39 @@ const Maps = () => {
                 </Toolbar>
               </AppBar>
               <Paper
-                component="form"
+                // component="form"
                 sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '29.5em' }}
               >
-              <IconButton sx={{ p: '10px' }} aria-label="menu">
-                <MenuIcon />
-              </IconButton>
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search Google Maps"
-                inputProps={{ 'aria-label': 'search google maps' }}
-              />
-              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
+                <IconButton sx={{ p: '10px' }} aria-label="menu">
+                  <MenuIcon />
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search Google Maps"
+                  inputProps={{ 'aria-label': 'search google maps' }}
+                  onKeyDown={ (e) => {
+                    console.log(placeList)
+                    if (e.keyCode == 13) {
+                      MapApi(e,setPlaceList)
+                    }
+                  }}
+                />
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                  <SearchIcon  onClick={(e) =>{
+                      e.target.value = document.querySelector(".MuiInputBase-input").value
+                    MapApi(e,setPlaceList)
+                  }}/>
+                </IconButton>
+                <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                </Typography>
+              
               </Paper>
+              {placeList.length > 0 &&  <Box sx={{  maxWidth: 752 ,textAlign: 'center' }}>
+                  <List dense={false}>
+                    {PlaceList({placeList, setPlace})}
+                  </List>
+                      
+              </Box>}
             </CustomModal>
             <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl}></Leaflet>
         </div>
