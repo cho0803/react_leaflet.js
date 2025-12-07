@@ -2,13 +2,26 @@ import axios from "axios";
 
 import { Marker, Popup, useMap, uuidv4, styled, } from "..";
 
-import { Box,Button, Menu, MenuItem } from "..";
+import { Box,Button, Menu, MenuItem } from "../index.js";
 
+import {Modal, Paper} from "../../maps"
 //전역 데이터 받아오기
-import { MapsContext, useContext } from "..";
+import { MapsContext, useContext, useState } from "..";
 
+import {AppBar,Toolbar, IconButton, InputBase, Typography, List, } from '..';
+
+// import {Menu as MenuIcon, Search as SearchIcon, Directions as DirectionsIcon  } from '@mui/icons-material';
+// 속도 저하로 import 방식 변경 이유 확인필요
+import {MenuIcon} from '..';
+import {SearchIcon}  from'..';
+// import MenuIcon from '@mui/icons-material/Menu';
+// import SearchIcon  from'@mui/icons-material/Search';
+// import DirectionsIcon from '@mui/icons-material/Directions';
+
+import CustomModal from "../CustomModal.jsx";
 export default function Sidebar(){
-   const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
             <div
               className="sidebar"
@@ -329,6 +342,72 @@ export default function Sidebar(){
                   ></span>
                   {/* <span class="blind">패널 접기</span> */}
                 </button>
+                            <Nav className="header-nav">
+              <Ul>
+                <Li>
+                  <MenuBtn
+                  variant='contained'
+                    onClick={(event) =>{
+                    setIsModalOpen(true)
+                    }}
+                  >
+                  지도 검색
+                  </MenuBtn>
+                </Li>
+                <Li>
+                  <MenuBtn
+                    variant='contained'
+                    // aria-expanded={'true'}
+                    onClick={(event) =>{
+                    console.log()
+                    }}
+                  >
+                    마커 리스트
+                  </MenuBtn>
+                </Li>
+              </Ul>  
+            </Nav>
+            <CustomModal isOpen={isModalOpen} closeModal={() => {setIsModalOpen(false); setPlaceList([]) }}>
+              <AppBar position="static" width="100%">
+                <Toolbar>
+                  {/*  display : flex 적용 되어 있으므로 justifyContent : 'center' css 추가  */}
+                  <Box sx={{ width: '5em', textAlign: 'center', justifyContent : 'center'}}>장소 찾기</Box>
+                </Toolbar>
+              </AppBar>
+              <Paper
+                // component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '29.5em' }}
+              >
+                <IconButton sx={{ p: '10px' }} aria-label="menu">
+                  <MenuIcon />
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search Google Maps"
+                  inputProps={{ 'aria-label': 'search google maps' }}
+                  onKeyDown={ (e) => {
+                    if (e.keyCode == 13) {
+                      MapApi(e,setPlaceList)
+                    }
+                  }}
+                />
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                  <SearchIcon  onClick={(e) =>{
+                      e.target.value = document.querySelector(".MuiInputBase-input").value
+                    MapApi(e,setPlaceList)
+                  }}/>
+                </IconButton>
+                <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                </Typography>
+              
+              </Paper>
+              {placeList.length > 0 &&  <Box sx={{  maxWidth: 752 ,textAlign: 'center' }}>
+                  <List dense={false}>
+                    {PlaceList({placeList, setPlace})}
+                  </List>
+                      
+              </Box>}
+            </CustomModal>
               </aside>
             </div>
   )
@@ -435,7 +514,15 @@ const Nav = styled.div`
   bottom: 0;
   // left: 0;
   z-index: 999;
+  position: absolute;
+  left: 100%;
 `;
+
+const Ul = styled.ul`
+  text-align: center;
+  display: ruby-text;
+`
+
 const Li = styled.li`
   display: inline-block;
   position: relative;
@@ -449,3 +536,10 @@ const MenuBtn = styled(Button)`
   background-color: #ce93d8 !important;
   }
 `;
+
+const SearchInput = styled(InputBase)`
+color: inherit;
+& .MuiInputBase-input {
+  padding : 1, 1, 0 !important;
+}
+`
