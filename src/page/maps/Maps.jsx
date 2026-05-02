@@ -140,7 +140,7 @@ const Maps = () => {
   })
 
   return (
-    <MapsContext value={{L, useMap, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit,refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,}}>
+    <MapsContext value={{L, useMap, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,}}>
       <div
         style={{
           width: "100vw",
@@ -214,14 +214,14 @@ const Maps = () => {
     </MapsContext>
   );
 
-  function updateMarkers(data) {
+  function  updateMarkers(data) {
     // markers에 set을 하는 순간 전체적으로 리렌더링
     // console.log(data, "데이타");
     // console.log(data, "update");
 
     setMarkers((markers) => {
       // console.log(markers,data.length !=0);
-      if (markers && data.length != 0) {
+      if (!Number(getValues("id")) + 0  && markers && data.length != 0) {
         Object.entries(data[data.length - 1]).forEach(([key, value]) => {
           // console.log(`${key}: ${value}`);
           setValue(key, value);

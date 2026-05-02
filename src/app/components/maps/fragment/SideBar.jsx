@@ -19,9 +19,13 @@ import {SearchIcon}  from'..';
 // import DirectionsIcon from '@mui/icons-material/Directions';
 
 import CustomModal from "../CustomModal.jsx";
+import MapsList from "../MapsList.jsx"
+
 export default function Sidebar(){
   const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalListOpen, setIsModalListOpen] = useState(false);
+
   return (
             <div
               className="sidebar"
@@ -255,7 +259,7 @@ export default function Sidebar(){
                         // console.log("삭제", getValues("id"));
                         if (Number(getValues("id")) + 0) {
                           // console.log("값있음");
-                           axios.delete(`api/test/${getValues("id")}`)
+                          axios.delete(`api/test/${getValues("id")}`)
                            
                            await setMarkers((prev) => {
                               const { [getValues("id")]: _, ...rest } = prev;
@@ -263,8 +267,8 @@ export default function Sidebar(){
 
                               return rest;
                             });
-                          // refreshFn();
-                           reset();
+                            await refreshFn();
+                            reset();
                         } else {
                           alert("저장 후 삭제 하실수 있습니다");
                         }
@@ -362,6 +366,7 @@ export default function Sidebar(){
                     // aria-expanded={'true'}
                     onClick={(event) =>{
                     console.log()
+                    setIsModalListOpen(true);
                     }}
                   >
                     마커 리스트
@@ -385,7 +390,7 @@ export default function Sidebar(){
                 </IconButton>
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
-                  placeholder="Search Google Maps"
+                  placeholder="Search Leflet Maps"
                   inputProps={{ 'aria-label': 'search google maps' }}
                   onKeyDown={ (e) => {
                     if (e.keyCode == 13) {
@@ -410,6 +415,8 @@ export default function Sidebar(){
                       
               </Box>}
             </CustomModal>
+             <MapsList isModalListOpen = {isModalListOpen} setIsModalListOpen={setIsModalListOpen}/>
+
               </aside>
             </div>
   )
