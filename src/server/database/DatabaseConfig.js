@@ -24,7 +24,7 @@ const pool = new Pool({
   port: 5437, // 도커 PostgreSQL 포트
   database: "postgres", // 기본은 postgres
   user: "postgres",
-  password: "manager",
+  password: "postgres",
 });
 
 pool.connect((err) => {

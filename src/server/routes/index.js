@@ -27,6 +27,7 @@ router.get("/test", async (req, res) => {
 router.post("/test", async (req, res) => {
   // console.log(req.body, "파라미터");
   await queries.getModify(req, res);
+  await queries.getTest(res);
 });
 
 router.delete("/test/:id", async (req, res) => {
