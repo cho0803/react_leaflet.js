@@ -73,7 +73,7 @@ export default function Sidebar(){
                 </div>
 
                 <div id="searchList">
-                  {Object.entries(markers).map(
+                  {/* {Object.entries(markers).map(
                     ([key, value]) => (
                       <div key={key}>
                         {key} {markers[key].title} {markers[key].content}
@@ -83,7 +83,7 @@ export default function Sidebar(){
                     // {
                     //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
                     // }
-                  )}
+                  )} */}
                   {PlaceList({placeList, setPlace})}
                 </div>
               </div>
@@ -251,19 +251,20 @@ export default function Sidebar(){
                         background: "#f0f0f0",
                         border: "1px solid rgb(0, 0, 0)",
                       }}
-                      onClick={() => {
+                      onClick={ async () => {
                         // console.log("삭제", getValues("id"));
                         if (Number(getValues("id")) + 0) {
-                          console.log("값있음");
-                          axios.delete(`api/test/${getValues("id")}`);
-                          setMarkers((prev) => {
-                            const { [getValues("id")]: _, ...rest } = prev;
+                          // console.log("값있음");
+                           axios.delete(`api/test/${getValues("id")}`)
+                           
+                           await setMarkers((prev) => {
+                              const { [getValues("id")]: _, ...rest } = prev;
                             // console.log(rest, "rest");
 
-                            return rest;
-                          });
+                              return rest;
+                            });
                           // refreshFn();
-                          reset();
+                           reset();
                         } else {
                           alert("저장 후 삭제 하실수 있습니다");
                         }
@@ -404,7 +405,7 @@ export default function Sidebar(){
               </Paper>
               {placeList.length > 0 &&  <Box sx={{  maxWidth: 752 ,textAlign: 'center' }}>
                   <List dense={false}>
-                    {PlaceList({placeList, setPlace})}
+                    {PlaceList({placeList, setPlace,setIsModalOpen ,setPlaceList})}
                   </List>
                       
               </Box>}
@@ -440,7 +441,7 @@ export const MapApi = function(e ,setPlaceList) {
     });
 }
 
-export const PlaceList = function ({placeList, setPlace}) {
+export const PlaceList = function ({placeList, setPlace, setIsModalOpen, setPlaceList}) {
   // console.log(placeList)
   return (
     <>
@@ -453,6 +454,8 @@ export const PlaceList = function ({placeList, setPlace}) {
               data-lon={item.lon}
               onClick={() => {
                 setPlace(item);
+                setIsModalOpen(false);
+                setPlaceList([])
                 // console.log("클릭");
               }}
             >
