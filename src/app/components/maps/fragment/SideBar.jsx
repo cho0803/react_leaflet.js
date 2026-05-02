@@ -20,7 +20,7 @@ import {SearchIcon}  from'..';
 
 import CustomModal from "../CustomModal.jsx";
 export default function Sidebar(){
-  const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
             <div
@@ -73,7 +73,7 @@ export default function Sidebar(){
                 </div>
 
                 <div id="searchList">
-                  {/* {Object.entries(markers).map(
+                  {Object.entries(markers).map(
                     ([key, value]) => (
                       <div key={key}>
                         {key} {markers[key].title} {markers[key].content}
@@ -83,7 +83,7 @@ export default function Sidebar(){
                     // {
                     //   console.log(`${key}: ${JSON.stringify(markers[key])}`);
                     // }
-                  )} */}
+                  )}
                   {PlaceList({placeList, setPlace})}
                 </div>
               </div>
@@ -209,7 +209,6 @@ export default function Sidebar(){
                               .then(async (res) => {
                                 // console.log(res.data);
                                 // console.log(res);
-                              //   refreshFn();
 
                                 if (!Number(param.id) + 0) {
                                   // console.log(data, getValues("id"), "들어옴1");
@@ -218,6 +217,8 @@ export default function Sidebar(){
                                     console.log(prev, param.id, rest, "rest");
                                     return rest;
                                   });
+
+                                  refreshFn();
                                 }
 
                                 if (!Number(param.id) + 0) {

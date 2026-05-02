@@ -140,7 +140,7 @@ const Maps = () => {
   })
 
   return (
-    <MapsContext value={{L, useMap, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,}}>
+    <MapsContext value={{L, useMap, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit,refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,}}>
       <div
         style={{
           width: "100vw",
