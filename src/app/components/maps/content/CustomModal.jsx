@@ -1,5 +1,5 @@
 //전역 데이터 받아오기
-import { MapsContext, useContext, Modal, Paper } from ".";
+import { MapsContext, useContext, Modal, Paper } from "..";
 
 export default function CustomModal ({ isOpen, closeModal, children }) {
     // const {Modal, Paper} = useContext(MapsContext)

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 //전역 데이터 받아오기
-import { MapsContext, useContext, useState } from "."
+import { MapsContext, useContext, useState } from ".."
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -60,7 +60,7 @@ export default ({isModalListOpen, setIsModalListOpen}) => {
 }
 
 //전역 데이터 받아오기
-import { Modal, Paper } from ".";
+import { Modal, Paper } from "..";
 
 export  function CustomModal ({ isOpen, closeModal, children }) {
     // const {Modal, Paper} = useContext(MapsContext)

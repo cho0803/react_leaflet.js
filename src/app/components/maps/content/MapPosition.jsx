@@ -1,5 +1,5 @@
 //전역 데이터 받아오기
-import { MapsContext, useContext } from ".";
+import { MapsContext, useContext } from "..";
 
 export default  () =>{
 

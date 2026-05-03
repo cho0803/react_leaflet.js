@@ -2,10 +2,10 @@
 import "leaflet/dist/leaflet.css";
 //Leaflet.js api css 적용 
 
-import { Marker, Popup,  uuidv4 ,useState} from ".";
+import { Marker, Popup,  uuidv4 ,useState} from "..";
 
 //전역 데이터 받아오기
-import { MapsContext, useContext } from ".";
+import { MapsContext, useContext } from "..";
 
 function NewMarker() {
   
