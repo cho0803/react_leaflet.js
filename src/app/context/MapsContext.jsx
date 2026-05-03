@@ -149,12 +149,13 @@ export const MapsProvider = ({ children }) => {
 
   function  updateMarkers(data) {
     // markers에 set을 하는 순간 전체적으로 리렌더링
-    // console.log(data, "데이타");
+    console.log(data, "데이타");
     // console.log(data, "update");
 
     setMarkers((markers) => {
       // console.log(markers,data.length !=0);
-      if (!Number(getValues("id")) + 0  && markers && data.length != 0) {
+
+      if ( getValues("id") ? !Number(getValues("id")) + 0  : getValues("id")  && markers && data.length != 0) {
         Object.entries(data[data.length - 1]).forEach(([key, value]) => {
           // console.log(`${key}: ${value}`);
           setValue(key, value);

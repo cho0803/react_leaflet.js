@@ -221,10 +221,9 @@ export default function Sidebar(){
                                     console.log(prev, param.id, rest, "rest");
                                     return rest;
                                   });
-
-                                  refreshFn();
                                 }
-
+                                refreshFn();
+                                
                                 if (!Number(param.id) + 0) {
                                   // console.log(data, "데이타"); 
                                   Object.entries(res.data).forEach(
@@ -261,14 +260,14 @@ export default function Sidebar(){
                           // console.log("값있음");
                           axios.delete(`api/test/${getValues("id")}`)
                            
-                           await setMarkers((prev) => {
-                              const { [getValues("id")]: _, ...rest } = prev;
-                            // console.log(rest, "rest");
+                          await setMarkers((prev) => {
+                            const { [getValues("id")]: _, ...rest } = prev;
+                          // console.log(rest, "rest");
 
-                              return rest;
-                            });
-                            await refreshFn();
-                            reset();
+                            return rest;
+                          });
+                          refreshFn();
+                          reset();
                         } else {
                           alert("저장 후 삭제 하실수 있습니다");
                         }
@@ -367,6 +366,7 @@ export default function Sidebar(){
                     onClick={(event) =>{
                     console.log()
                     setIsModalListOpen(true);
+                    // refreshFn()
                     }}
                   >
                     마커 리스트

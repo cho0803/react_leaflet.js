@@ -31,7 +31,15 @@ const getModify = async (req, res) => {
 
   if (!id) {
     pool.query(
-      `INSERT INTO tbl_map(title, content, lat, lng) VALUES ( '${title}', '${content}', '${lat}',' ${lng}')`
+      `INSERT INTO tbl_map(title, content, lat, lng) VALUES ( '${title}', '${content}', '${lat}',' ${lng}')`,
+      (err, data) => {
+        if (!err) {
+          // console.log(data, "insert");
+          res.send(data);
+        } else {
+          res.send(err);
+        }
+      }
     );
   } else {
     pool.query(
