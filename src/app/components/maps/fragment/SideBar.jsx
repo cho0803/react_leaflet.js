@@ -18,8 +18,8 @@ import {SearchIcon}  from'..';
 // import SearchIcon  from'@mui/icons-material/Search';
 // import DirectionsIcon from '@mui/icons-material/Directions';
 
-import CustomModal from "../CustomModal.jsx";
-import MapsList from "../MapsList.jsx"
+import CustomModal from "../content/CustomModal.jsx";
+import MapsList from "../content/MapsList.jsx"
 
 export default function Sidebar(){
   const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
