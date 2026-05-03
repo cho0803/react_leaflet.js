@@ -1,7 +1,7 @@
 // import  AddMarker from "./AddMarker"
 
 //현대 디렉토리에 index.jsx 파일가져옴
-import {AddMarker, NewMarker} from "..";
+import {AddMarker, NewMarker, MapPosition} from "..";
 // import {AddMarker, NewMarker} from "../../components/maps";
 import Header from "./Header"
 import SideBar from "./SideBar"
@@ -105,6 +105,7 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
         <AddMarker/>
         {/* <NewMarker L={L} setMarkers={setMarkers} useMap={useMap} setValue={setValue} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} place={place} setPlace={setPlace} /> */}
         <NewMarker/>
+        <MapPosition/>
         <ZoomControl position="topright" />
       </MapContainer>
     </>

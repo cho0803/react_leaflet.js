@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { Marker, Popup, useMap, uuidv4, styled, } from "..";
 
-import { Box,Button, Menu, MenuItem } from "../index.js";
+import { Box, Button, RefreshIcon, Menu, MenuItem } from "../index.js";
 
 import {Modal, Paper} from "../../maps"
 //전역 데이터 받아오기
@@ -22,7 +22,7 @@ import CustomModal from "../CustomModal.jsx";
 import MapsList from "../MapsList.jsx"
 
 export default function Sidebar(){
-  const {markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalListOpen, setIsModalListOpen] = useState(false);
 
@@ -370,6 +370,18 @@ export default function Sidebar(){
                     }}
                   >
                     마커 리스트
+                  </MenuBtn>
+                </Li>
+                <Li>
+                  <MenuBtn
+                    variant='contained'
+                    // aria-expanded={'true'}
+                    onClick={async(event) =>{
+                      await setPosition([36.17, 127.83]);
+                      setPosition('');
+                    }}
+                  >
+                    <RefreshIcon />
                   </MenuBtn>
                 </Li>
               </Ul>  
