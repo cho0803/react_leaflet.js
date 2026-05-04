@@ -379,8 +379,10 @@ export default function Sidebar(){
                     onClick={async(event) =>{
                       await setPosition([36.17, 127.83]);
                       setPosition('');
+                      setPlace('')
                     }}
                   >
+                    초기화
                     <RefreshIcon />
                   </MenuBtn>
                 </Li>

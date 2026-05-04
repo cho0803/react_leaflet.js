@@ -2,7 +2,7 @@
 import "leaflet/dist/leaflet.css";
 //Leaflet.js api css 적용 
 
-import { Marker, Popup,  uuidv4 ,useState} from "..";
+import { Marker, Popup,  uuidv4 , useRef} from "..";
 
 //전역 데이터 받아오기
 import { MapsContext, useContext } from "..";
@@ -21,8 +21,10 @@ function NewMarker() {
   console.log(map.getZoom());
   const {lat,lon} = place;
   
-var infoPopup = L.popup({closeButton: false}) 
-.setLatLng([Number(place.lat) + 0.025, lon])
+var infoPopup = L.popup({closeButton: false})
+//전체 화면 설정시
+//.setLatLng([Number(place.lat) + 0.025, lon]) 
+.setLatLng([Number(place.lat) + 0.010, lon])
 .setContent('새로운 마커 등록은 마우스 우측버튼을 클릭해주세요!')
 .openOn(map);
 
