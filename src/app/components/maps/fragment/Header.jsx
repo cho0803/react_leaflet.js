@@ -37,10 +37,10 @@ export default function Header(){
                   display: "inline-block",
                   height: "1em",
                   // overflow: "hidden",
-                  width: "2em",
+                  width: "0.05em",
                 }}
               >
-                산행 지도
+                Leaflet Map
               </span>
             </a>
           </h1>
@@ -149,9 +149,9 @@ export default function Header(){
 const h1 = {
   listStyle: "none",
   /* margin: 0; */
-  padding: 0,
+  padding: 3,
   borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
-  fontSize: "2em",
+  fontSize: "1em",
 
   lineHeight: 1,
 };
