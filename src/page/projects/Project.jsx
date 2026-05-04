@@ -236,7 +236,7 @@ export default () => {
                     '&:last-child': { pb: { xs: 1.5, sm: 2 } }
                 }}>
                     <Typography variant="caption" color="primary" sx={{ fontWeight: 'bold', fontSize: '0.7rem' }}>
-                        PROJECT {index + 1}
+                        {/* PROJECT {index + 1} */}
                     </Typography>
                     
                     <Box sx={{ flex: 1, mt: 1, overflow: 'hidden' }}>
