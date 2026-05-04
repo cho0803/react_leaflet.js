@@ -6,7 +6,7 @@ import { ProfileContext } from '../../app/context/PortfolioContext';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import { useTheme } from '@mui/material/styles'; // 1. useTheme 임포트
+import { useTheme } from '@mui/material/styles'; 
 
 const projectPages = [
     {
@@ -121,7 +121,7 @@ export default () => {
 
     return (
 <Dialog 
-    // [중요] viewMode가 바뀔 때 Dialog를 새로 그려서 크기 계산을 초기화합니다.
+    // viewMode가 변경시 Dialog를 새로  랜더링
     key={viewMode}
     open={modalOpen} 
     onClose={handleClose}
@@ -172,7 +172,7 @@ export default () => {
         </IconButton>
     </Box>
 
-    {/* 컨텐츠 영역: flex: 1과 overflowY: 'auto'가 있어야 창 크기 조절 시 내용이 보존됩니다 */}
+    {/* 컨텐츠 영역: flex: 1과 overflowY: 'auto'가 있어야 창 크기 조절 시 크기 유지 */}
     <DialogContent sx={{ 
         p: { xs: 2, sm: 3 }, 
         flex: 1, 
@@ -180,7 +180,6 @@ export default () => {
         bgcolor: isDarkMode ? 'background.default' : '#f8f9fa' 
     }}>
         {viewMode === 'list' ? (
-            /* --- 1. 프로젝트 리스트 모드 (한 줄에 2개) --- */
 <Grid 
     container 
     spacing={2} 
@@ -211,7 +210,6 @@ export default () => {
                     width: { xs: '150px', sm: '200px' }, 
                     height: { xs: '150px', sm: '180px' },
                     
-                    // 늘어나거나 줄어들지 못하게 방어
                     flexShrink: 0,
                     flexGrow: 0,
 
@@ -266,7 +264,7 @@ export default () => {
     ))}
 </Grid>
         ) : (
-            /* --- 2. 상세 보기 모드 --- */
+            /* ---  상세 보기 모드 --- */
             <Box sx={{ 
                 bgcolor: 'background.paper', 
                 p: { xs: 2, sm: 3 }, 
