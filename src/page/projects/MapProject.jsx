@@ -47,6 +47,8 @@ export default  ({  locationName }) => {
     };
 
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
+
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -62,7 +64,9 @@ export default  ({  locationName }) => {
           backgroundImage: 'none',     // 다크모드 시 MUI 기본 elevation 효과 제거
           borderRadius: { xs: 0, sm: 3 }, // 모바일은 꽉 차게, 데스크탑은 둥글게
           position: 'relative',
-          margin: { xs: 0, sm: 2 }      // 모바일 여백 제거
+          margin: { xs: 0, sm: 2 },      // 모바일 여백 제거
+          border: theme.palette.mode === 'dark' ? `1px solid ${theme.palette.divider}` : 'none',
+          boxShadow: theme.palette.mode === 'dark' ? '0px 8px 32px rgba(0, 0, 0, 0.8)' : theme.shadows[5],
         }
       }}
       fullScreen={isMobile} // 모바일에서는 전체화면으로 전환하여 사용성 향상
@@ -100,13 +104,13 @@ export default  ({  locationName }) => {
           </Box> */}
         </MapContainer>
 
-        {/* 하단 주소 설명 정보 */}
+        {/* 프로젝트 설명*/}
         <Box sx={{ mt: 3, px: 1 }}>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-            서울특별시 중구 을지로 100
+            Leaflet.js 라이브러리 활용 프로젝트
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            IBK기업은행 본점 (백엔드: Spring Boot / DB: Oracle 환경 연동 가능)
+            기술스택 (백엔드: Docker, Spring Boot, express.js / DB: Postgresql  )
           </Typography>
         </Box>
       </DialogContent>

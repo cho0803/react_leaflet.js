@@ -3,7 +3,6 @@ import { Container, Typography, Box, Grid, Card, CardContent, Avatar, Button, St
 
 import GitHub from '@mui/icons-material/GitHub';
 import Email from '@mui/icons-material/Email';
-import Language from '@mui/icons-material/Language';
 import DarkMode from '@mui/icons-material/DarkMode';
 
 import Project from './Project';
@@ -59,7 +58,7 @@ const Portfolio = () => {
    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
  };
 
- const skills = ["React", "JavaScript", "MUI", "Node.js", "Git"];
+ const skills = ["React", "ES6", "MUI", "Node.js", "Express.js","Git","SVN"];
 
  return (
    <>
@@ -102,7 +101,7 @@ const Portfolio = () => {
                 setModalOpen(true),setViewMode('list')
                } }>경력기술서</Button>
                <Project/>
-               <Button variant='contained' onClick={() => {setMapOpen(true)}}>사이드 프로젝트</Button>
+               <Button variant='contained' onClick={() => {setMapOpen(true)}}>개인 프로젝트</Button>
                <MapProject/>
                <Button variant="outlined" startIcon={<GitHub />}   >Github</Button>
                <Button variant="outlined" startIcon={<Email />} onClick={() =>{
@@ -155,7 +154,7 @@ const Portfolio = () => {
 
            <Grid size={{xs: 12}}>
                <Divider sx={{ my: 4 }} />
-               <Typography variant="h5" sx={{ mb: 3, fontWeight: 'medium' }}>Featured Project</Typography>
+               <Typography variant="h5" sx={{ mb: 3, fontWeight: 'medium' }}>개인 프로젝트</Typography>
                <Card elevation={mode === 'dark' ? 8 : 2} sx={{ borderRadius: 4, overflow: 'hidden' }}>
                <Grid container>
                    {/* <Grid size={{ xs: 12, md: 4 }}>
@@ -165,14 +164,14 @@ const Portfolio = () => {
                        sx={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: 200 }}
                    />
                    </Grid> */}
-                   <Grid size={{ xs: 12, md: 8 }}>
+                   <Grid size={{ xs: 12, md: 12 }}>
                    <CardContent>
-                       <Typography variant="h6">반응형 포트폴리오 웹사이트</Typography>
-                       <Typography variant="body2" color="text.secondary" sx={{ my: 1 }}>
-                       React와 MUI를 사용하여 제작한 개인 포트폴리오입니다. 
-                       다크모드와 반응형 레이아웃이 완벽하게 지원됩니다.
+                       <Typography variant="h5"> Leaflet.js 프로젝트</Typography>
+                       <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 , whiteSpace: 'pre-line', wordBreak: 'keep-all'  }}>
+                            <Box component="span" sx={{ fontWeight: 'bold' }}>Props Drilling 해결 :</Box> 부모에서 자식의 자식까지 데이터를 전달해야 하는 Props Drilling 문제를 Context API로 해결해 코드 가독성을 높임{"\n"}
+                            <Box component="span" sx={{ fontWeight: 'bold' }}>관심사 분리 :</Box> API 호출 로직과 상태 업데이트 로직을 별도의 Provider 컴포넌트로 분리하여 UI 컴포넌트의 복잡도를 낮춤{"\n"}
+                            <Box component="span" sx={{ fontWeight: 'bold' }}>최적화 경험 :</Box> Context 값이 바뀔 때마다 하위 컴포넌트가 불필요하게 리렌더링되는 문제를 방지하기 위해 useMemo 활용
                        </Typography>
-                       <Button size="small" endIcon={<Language />} sx={{ mt: 1 }}>Live Demo</Button>
                    </CardContent>
                    </Grid>
                </Grid>
