@@ -347,7 +347,7 @@ export default function Sidebar(){
                   ></span>
                   {/* <span class="blind">패널 접기</span> */}
                 </button>
-                            <Nav className="header-nav">
+            <Nav className="header-nav">
               <Ul>
                 <Li>
                   <MenuBtn
@@ -530,8 +530,12 @@ const input = {
 };
 
 const Nav = styled.div`
-  width: calc(100vw - 4em - 2.8em);
+// 전체화면 기준일때
+// width: calc(100vw - 4em - 2.8em);
+// Dialog 기준 css
+width: calc(100vw - 67.5em);
   height: 2em;
+  // height: 2em;
   position: absolute;
   top: 0;
   bottom: 0;

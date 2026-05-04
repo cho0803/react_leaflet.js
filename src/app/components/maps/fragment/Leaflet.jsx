@@ -54,11 +54,17 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
         zoomControl={false}
         style={{
           // flex 1 1 auto 적용 해제시
-          width: "calc(100vw - 66px)",
+          // 전체화면 설정 
+          //  width: "calc(100vw - 66px)",
+          // Dialog 기준 css
+          width: "65.5em",
           // width: "calc(100vw - 7em)",
           // width: "100vw",
           // height: "100vh", 
-           height: "100%",
+          //  height: "100%",
+          // 전체화면 설정
+          // Dialog 기준 css
+           height: "40em",
           // position: "relative",
           zIndex: 0,
         }}
