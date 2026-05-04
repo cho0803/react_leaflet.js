@@ -8,7 +8,14 @@ export const ProfileContext = createContext(null);
 export default ({children}) =>{
         
     const [modalOpen, setModalOpen] = useState(false);
-    const value={ modalOpen, setModalOpen}
+    const [viewMode, setViewMode] = useState('list'); 
+    const [mapOpen,setMapOpen] = useState(false); 
+
+    const value = useMemo(() => ({ 
+        modalOpen, setModalOpen, 
+        viewMode, setViewMode,
+        mapOpen, setMapOpen 
+    }), [modalOpen,  viewMode, mapOpen]);
     
     return (
         <ProfileContext value={value}>

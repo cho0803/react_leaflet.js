@@ -8,6 +8,9 @@ import DarkMode from '@mui/icons-material/DarkMode';
 
 import Project from './Project';
 
+
+import MapProject from './MapProject.jsx';
+
 //전역 데이터 받아오기
 import ProfileProvider,{ProfileContext,} from '../../app/context/PortfolioContext'
 import { useContext } from "react";
@@ -22,7 +25,7 @@ export default () =>{
     
 };
 const Portfolio = () => {
- const { modalOpen, setModalOpen}  = useContext(ProfileContext)   
+ const { setModalOpen, setViewMode, setMapOpen}  = useContext(ProfileContext)   
 
  // 1. 다크모드 상태 관리
  const [mode, setMode] = useState('light');
@@ -95,10 +98,12 @@ const Portfolio = () => {
            </Typography>
            
            <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 2 }}>
-               <Button variant='contained' onClick={() => setModalOpen(true)}>경력기술서</Button>
-               <Button variant='contained' onClick={() => setModalOpen(true)}>사이드 프로젝트</Button>
+               <Button variant='contained' onClick={() => {
+                setModalOpen(true),setViewMode('list')
+               } }>경력기술서</Button>
                <Project/>
-               <Project/>
+               <Button variant='contained' onClick={() => {setMapOpen(true)}}>사이드 프로젝트</Button>
+               <MapProject/>
                <Button variant="outlined" startIcon={<GitHub />}   >Github</Button>
                <Button variant="outlined" startIcon={<Email />} onClick={() =>{
                    navigator.clipboard.writeText(email);
