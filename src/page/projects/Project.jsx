@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import { Grid, Card, CardContent, Dialog, DialogContent, DialogActions, Zoom, Typography, Box, Button, Chip, IconButton, Stack, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ProfileContext } from '../../app/context/PortfolioContext';
@@ -116,7 +116,18 @@ export default () => {
         setCurrentPage(index);
         setViewMode('detail');
     };
-
+    useMemo(() =>{
+        var intervalId = ""
+         if (modalOpen && viewMode === 'detail') {
+         intervalId = setInterval(() => {
+                setCurrentPage((prev) => {
+                    // 마지막 페이지면 다시 0번(처음)으로, 아니면 다음 페이지로
+                    return prev === projectPages.length - 1 ? 0 : prev + 1;
+                });
+            }, 3000); // 5초마다 자동 넘김 (시간 조절 가능)
+        }
+        return () => clearInterval(intervalId);
+    },[modalOpen, viewMode, setCurrentPage])
     const currentData = projectPages[currentPage];
 
     return (
@@ -132,7 +143,8 @@ export default () => {
     disableRestoreFocus 
     PaperProps={{ 
         sx: { 
-            borderRadius: { xs: 2, sm: 4 }, 
+             border: theme.palette.mode === 'dark' ? `1px solid ${theme.palette.divider}` : 'none',
+            boxShadow: theme.palette.mode === 'dark' ? '0px 8px 32px rgba(0, 0, 0, 0.8)' : theme.shadows[5],
             width: '70em',
             bgcolor: 'background.paper',
             // 높이 설정: auto를 쓰되 최소/최대치를 잡아주어 화면 밖 이탈 방지
