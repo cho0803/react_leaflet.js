@@ -384,17 +384,17 @@ export default function Sidebar(){
 
                         setPlace('')
 
-                        // 저장안한 marker 초기화
-                        setMarkers((prev) => {
-                        const rest = Object.keys(prev).reduce((acc, key) => {
-                          if (!isNaN(key)) {
-                            acc[key] = prev[key];
-                          }
-                          return acc;
-                        }, {});
-                          return rest;
-                        }); 
                       }
+                      // 저장안한 marker 초기화
+                      setMarkers((prev) => {
+                      const rest = Object.keys(prev).reduce((acc, key) => {
+                        if (!isNaN(key)) {
+                          acc[key] = prev[key];
+                        }
+                        return acc;
+                      }, {});
+                        return rest;
+                      }); 
                     }}
                   >
                     초기화
