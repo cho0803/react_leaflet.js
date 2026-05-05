@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext, useRef } from 'react';
 import { 
   Container, Typography, Box, Grid, Button, Stack, Chip, 
   Divider, IconButton, ThemeProvider, createTheme, CssBaseline, Paper 
@@ -22,9 +22,14 @@ import Project from './Project';
 import MapProject from './MapProject';
 
 const Portfolio = () => {
-  const {projectPages, currentPage, setProjOpen ,setMapOpen } = useContext(ProfileContext);
+  const {projectPages, currentPage, projOpen, setProjOpen ,setMapOpen } = useContext(ProfileContext);
   const [mode, setMode] = useState('dark');
- const project = projectPages[currentPage];
+
+ const projectRef = useRef(null);
+
+      projectRef.current  =  projOpen ?  projectRef.current : currentPage
+
+ const project = projOpen ? projectPages[projectRef.current]: projectPages[currentPage];
 
  const [open, setOpen] = useState(false);
 
