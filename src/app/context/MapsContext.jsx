@@ -100,7 +100,8 @@ export const MapsProvider = ({ children }) => {
 
   const [position, setPosition] = useState();
   
-  const[map, setMap] = useState();
+  const [map, setMap] = useState();
+
   useEffect(() => {
     // axios.get("test").then((res) => {
     //   setTests(res.data);
@@ -140,8 +141,8 @@ export const MapsProvider = ({ children }) => {
   })
 
   // 하위 컴포넌트에 전달할 값 (상태와 함수들)
-  const value= {L, map, setMap, position, setPosition, useMap, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,}
-
+  const value= useMemo(() => ({ L, map, setMap, useMap, position, setPosition, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace, sidebarEl, asideEl, buttonEl }), 
+                              [map, position, data, markers, errors, placeList, place, sidebarEl, asideEl, buttonEl]);
   return (
     <MapsContext value={value}>
         { children }    
