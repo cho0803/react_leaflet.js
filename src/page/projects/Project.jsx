@@ -8,107 +8,18 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import { useTheme } from '@mui/material/styles'; 
 
-const projectPages = [
-    {
-        title: "현대캐피탈 차세대 전환 프로젝트",
-        date: "2026.01 ~ 2026.04",
-        role: "개발",
-        // tech를 fe와 be로 분리
-        fe: ["Idesigner", "IBKS 프레임워크"],
-        be: ["Spring Boot", "Gradle", "Oracle"],
-        work: [
-            "채널계 (Online, Manager, AG, 카드 홈페이지)",
-            "계정계 (리테일 금융)",
-            "OZ, EIMS "
-        ]
-    },
-    {
-        title: "라이나생명 TMUI 플랫폼 전환 프로젝트",
-        date: "2025.09 ~ 2025.12",
-        role: "개발",
-        fe: ["Miplatform", "Exbuilder6"],
-        be: ["Ibatis", "DB2"],
-        work: [
-            "채널계 (보험 상품, 계약관리, 상담, 시스템공통, 권한 )",
-        ]
-    },
-    {
-        title: "국립 중앙 과학관 프로젝트",
-        date: "2025.01 ~ 2025.07",
-        role: "개발 및 운영",
-        fe: ["JSP", ],
-        be: ["전자정부 프레임워크", "Maven", "Ibatis", "Oracle",],
-        work: [
-            "권한, 메인페이지,  엑셀, 통계, 계정, 통합예약, 사용자 UI,UX 개선",
-        ]
-    },
-    {
-        title: "Naris 프로젝트",
-        date: "2025.01 ~ 2025.07",
-        role: "개발 및 운영",
-        fe: ["JSP",],
-        be: ["전자정부 프레임워크", "Maven", "Ibatis", "Oracle", "PostgreSQL"],
-        work: [
-            "권한, 메인페이지, Elasticsearch 검색 시스템",
-        ]
-    },
-    {
-        title: "SK하이이엔지 고도화 프로젝트",
-        date: "2023.08 ~ 2024.12",
-        role: "개발 및 운영",
-        fe: ["Thymeleaf", "Billboard.js", "Handlebars.js", "Inpsect.js"],
-        be: ["Spring Boot", "Gradle", "JPA", "Oracle"],
-        work: [
-            "계정, 배치, 권한, 시스템공통, 협력사 , 보고서",
-            "사용자 UI/UX 개선 및 협력사 ERP 시스템 개발",
-        ]
-    },
-    {
-        title: "System ic(Wuxi) 프로젝트",
-        date: "2024.01 ~ 2024.06",
-        role: "보안 로직 개발 및 운영",
-        fe: ["FTL 템플릿 엔진"],
-        be: ["Spring Boot", "Gradle", "Oracle"],
-        work: [
-            "보안 취약점 분석 및 대응 로직 개발",
-            "OWASP 기준 시큐어 코딩 적용 및 보안 고도화"
-        ]
-    },
-    {
-        title: "Skhwaks 전환 프로젝트",
-        date: "2023.08 ~ 2024.12",
-        role: "컨버징 및 보안 적용",
-        fe: ["Mustache 탬플릿 엔진", "Thymeleaf", "Handlebars.js", "Inpsect.js"],
-        be: ["Spring", "Maven", "MSSQL", "Spring Boot", "Gradle", "Oracle"],
-        work: [
-            "기존 레거시 프로젝트 FE,BE 컨버징",
-            "FE/BE 영역에 OWASP 기준 시큐어 코딩 적용"
-        ]
-    },
-    {
-        title: "Wellness 프로젝트",
-        date: "2023.08 ~ 2024.12",
-        role: "개발 및 운영",
-        fe: ["Thymeleaf", "Billboard.js", "Handlebars.js", "Inpsect.js"],
-        be: ["Spring Boot", "Gradle", "JPA", "Oracle"],
-        work: [
-            "로그인, 권한 관리 및 예약 시스템 개발",
-            "상담, 여행상품 관리 및 이메일 "
-        ]
-    }
-];
+
 export default () => {
-    const { modalOpen, setModalOpen, viewMode, setViewMode } = useContext(ProfileContext);
-    const [currentPage, setCurrentPage] = useState(0);
+    const { currentPage, setCurrentPage, projOpen, setProjOpen, viewMode, setViewMode, projectPages } = useContext(ProfileContext);
 
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
 
     const handleClose = () => {
-        setModalOpen(false);
+        setProjOpen(false);
         setTimeout(() => {
             setViewMode('list');
-            setCurrentPage(0);
+            // setCurrentPage(0);
         }, 300);
     };
 
@@ -118,7 +29,7 @@ export default () => {
     };
     useEffect(() =>{
         var intervalId = ""
-         if (modalOpen && viewMode === 'detail') {
+         if (projOpen && viewMode === 'detail') {
          intervalId = setInterval(() => {
                 setCurrentPage((prev) => {
                     // 마지막 페이지면 다시 0번(처음)으로, 아니면 다음 페이지로
@@ -127,16 +38,16 @@ export default () => {
             }, 3000); // 5초마다 자동 넘김 (시간 조절 가능)
         }
         return () => clearInterval(intervalId);
-    },[modalOpen, viewMode, setCurrentPage])
+    },[projOpen, viewMode, setCurrentPage])
     const currentData = projectPages[currentPage];
 
     return (
 <Dialog 
     // viewMode가 변경시 Dialog를 새로  랜더링
     key={viewMode}
-    open={modalOpen} 
+    open={projOpen} 
     onClose={handleClose}
-    // TransitionComponent={Zoom}
+    TransitionComponent={Zoom}
     fullWidth
     // 모드에 따라 최대 너비 유동적 조절
     maxWidth={viewMode === 'list' ? 'lg' : 'sm'} 
@@ -155,7 +66,7 @@ export default () => {
             display: 'flex',
             flexDirection: 'column',
             // 창 크기 조절 시 부드럽게 반응하도록 설정
-            // transition: 'all 0.5s ease-in-out',
+            transition: 'all 3s ease-in-out',
             overflow: 'visible' // 화살표 버튼을 위해 보임 유지
         } 
     }}
@@ -169,15 +80,15 @@ export default () => {
         display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, position: 'relative'
     }}>
         {viewMode === 'detail' && (
-            <Button 
+            <Button  
                 onClick={() => setViewMode('list')} 
-                sx={{ color: 'white', position: 'absolute', left: 16, fontWeight: 'bold' }}
+                sx={{ color: 'white', position: 'absolute', left: 16, fontWeight: 'bold',  fontSize: { xs: '0.9rem', sm: '1.1rem' }, }}
             >
                 목록보기
             </Button>
         )}
         <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem' } }}>
-            {viewMode === 'list' ? `프로젝트 목록 ` : '경력기술서 상세'}
+            {viewMode === 'list' ? `프로젝트 목록 ` : '프로젝트 상세'}
         </Typography>
         <IconButton onClick={handleClose} sx={{ position: 'absolute', right: 8, color: 'white' }}>
             <CloseIcon fontSize="small" />
@@ -233,7 +144,7 @@ export default () => {
                     bgcolor: 'background.paper',
                     borderRadius: 3,
                     border: isDarkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.05)',
-                    // transition: 'transform 1s, box-shadow s', 
+                    transition: 'transform 3s, box-shadow s', 
                     '&:hover': { 
                         transform: 'translateY(-5px)', 
                         boxShadow: isDarkMode ? '0 8px 20px rgba(0,0,0,0.4)' : 4 
