@@ -31,9 +31,13 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMapEvent, useM
 //   // popupAnchor: [0, -60], // 팝업 위치
 // });
 
+import { MapsContext, useContext, useState } from "..";
+
 export default function Leaflet ({markers, setMarkers, place, setPlace, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, }) {
   
-  
+  const {map, useMap} = useContext(MapsContext)
+
+  // console.log(map ? map.getCenter() : null,"map")
   
   return (
     <>
@@ -52,6 +56,7 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
         // )} // 최대 경계 설정
         maxBoundsViscosity={1.0} // 경계의 견고 정도 제어 (1.0일 경우 완전히 견고해져 경계 밖으로 드래그 불가)
         zoomControl={false}
+        ref={useMap}             // Leaflet 지도 인스턴스(L.Map)에 직접 접근하여 외부에서 지도를 조작하기 위한 ref 연결
         style={{
           // flex 1 1 auto 적용 해제시
           // 전체화면 설정 
