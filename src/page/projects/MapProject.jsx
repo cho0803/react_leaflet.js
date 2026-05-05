@@ -40,10 +40,6 @@ export default  ({  locationName }) => {
  
     const handleClose = () => {
         setMapOpen(false);
-        setTimeout(() => {
-            setViewMode('list');
-            setCurrentPage(0);
-        }, 300);
     };
 
   const theme = useTheme();
