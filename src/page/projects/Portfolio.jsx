@@ -6,8 +6,6 @@ import Email from '@mui/icons-material/Email';
 import DarkMode from '@mui/icons-material/DarkMode';
 
 import Project from './Project';
-
-
 import MapProject from './MapProject.jsx';
 
 //전역 데이터 받아오기
