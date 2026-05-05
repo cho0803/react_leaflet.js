@@ -116,7 +116,7 @@ export default () => {
         setCurrentPage(index);
         setViewMode('detail');
     };
-    useMemo(() =>{
+    useEffect(() =>{
         var intervalId = ""
          if (modalOpen && viewMode === 'detail') {
          intervalId = setInterval(() => {
@@ -204,10 +204,12 @@ export default () => {
 >
     {projectPages.map((project, index) => (
         <Grid 
-            item 
-            xs={6}  // 모바일: 한 줄에 2개 (12 / 6 = 2)
-            sm={4}  // 태블릿: 한 줄에 3개 (12 / 4 = 3)
-            md={4}  // 데스크탑: 한 줄에 4개 (12 / 3 = 4)
+            // 개별 prop 대신 size 객체로 통합
+            size={{ 
+                xs: 6,  // 모바일: 한 줄에 2개
+                sm: 4,  // 태블릿: 한 줄에 3개
+                md: 3   // 데스크탑: 한 줄에 4개 (12 / 3 = 4이므로 3으로 수정)
+            }}
             key={index} 
             sx={{ 
                 display: 'flex', 
