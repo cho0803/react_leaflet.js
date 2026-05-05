@@ -377,14 +377,12 @@ export default function Sidebar(){
                     variant='contained'
                     // aria-expanded={'true'}
                     onClick={async(event) =>{
+                      
+                      if(place && !confirm("이 페이지를 벗어나면 저장되지 않은 정보가 사라집니다.")) return
+                      
                       await setPosition([36.17, 127.83]);
                       setPosition('');
-
-                      if(place && window.confirm("이 페이지를 벗어나면 저장되지 않은 정보가 사라집니다.")) {
-
-                        setPlace('')
-
-                      }
+                      setPlace('')
                       // 저장안한 marker 초기화
                       setMarkers((prev) => {
                       const rest = Object.keys(prev).reduce((acc, key) => {
