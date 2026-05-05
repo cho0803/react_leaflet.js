@@ -22,7 +22,7 @@ import CustomModal from "../content/CustomModal.jsx";
 import MapsList from "../content/MapsList.jsx"
 
 export default function Sidebar(){
-  const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalListOpen, setIsModalListOpen] = useState(false);
 
@@ -379,7 +379,22 @@ export default function Sidebar(){
                     onClick={async(event) =>{
                       await setPosition([36.17, 127.83]);
                       setPosition('');
-                      setPlace('')
+
+                      if(place && window.confirm("이 페이지를 벗어나면 저장되지 않은 정보가 사라집니다.")) {
+
+                        setPlace('')
+
+                        // 저장안한 marker 초기화
+                        setMarkers((prev) => {
+                        const rest = Object.keys(prev).reduce((acc, key) => {
+                          if (!isNaN(key)) {
+                            acc[key] = prev[key];
+                          }
+                          return acc;
+                        }, {});
+                          return rest;
+                        }); 
+                      }
                     }}
                   >
                     초기화
