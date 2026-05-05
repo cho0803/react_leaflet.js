@@ -1,188 +1,228 @@
-import React, { useState, useMemo } from 'react';
-import { Container, Typography, Box, Grid, Card, CardContent, Avatar, Button, Stack, Chip, Divider, IconButton, ThemeProvider, createTheme, CssBaseline, Snackbar } from '@mui/material';
+import React, { useState, useMemo, useContext } from 'react';
+import { 
+  Container, Typography, Box, Grid, Button, Stack, Chip, 
+  Divider, IconButton, ThemeProvider, createTheme, CssBaseline, Paper 
+} from '@mui/material';
 
 import GitHub from '@mui/icons-material/GitHub';
 import Email from '@mui/icons-material/Email';
 import DarkMode from '@mui/icons-material/DarkMode';
+import LightMode from '@mui/icons-material/LightMode';
+import SchoolIcon from '@mui/icons-material/School';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import CodeIcon from '@mui/icons-material/Code';
+import StarsIcon from '@mui/icons-material/Stars';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PersonIcon from '@mui/icons-material/Person';
+
+import ProfileProvider, { ProfileContext } from '../../app/context/PortfolioContext';
 
 import Project from './Project';
-import MapProject from './MapProject.jsx';
+import MapProject from './MapProject';
 
-//전역 데이터 받아오기
-import ProfileProvider,{ProfileContext,} from '../../app/context/PortfolioContext'
-import { useContext } from "react";
-
-
-export default () =>{
-    return(
-        <ProfileProvider>
-            <Portfolio/>
-        </ProfileProvider>
-    )
-    
-};
 const Portfolio = () => {
- const { setModalOpen, setViewMode, setMapOpen}  = useContext(ProfileContext)   
-
- // 1. 다크모드 상태 관리
- const [mode, setMode] = useState('light');
+  const {projectPages, currentPage, setProjOpen ,setMapOpen } = useContext(ProfileContext);
+  const [mode, setMode] = useState('dark');
+ const project = projectPages[currentPage];
 
  const [open, setOpen] = useState(false);
+
  const email = "cho0807s@naver.com";
-
- // 2. 테마 설정 (모드가 바뀔 때마다 테마 객체 재생성)
- const theme = useMemo(
-   () =>
-     createTheme({
-       palette: {
-         mode,
-         ...(mode === 'light'
-           ? {
-               // 라이트 모드 커스텀 색상 (선택사항)
-               primary: { main: '#1976d2' },
-               background: { default: '#f5f5f5', paper: '#ffffff' },
-             }
-           : {
-               // 다크 모드 커스텀 색상 (선택사항)
-               primary: { main: '#90caf9' },
-               background: { default: '#121212', paper: '#1e1e1e' },
-             }),
-       },
-     }),
-   [mode]
- );
-
- const toggleColorMode = () => {
-   setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
- };
-
  const skills = ["React", "ES6", "MUI", "Node.js", "Express.js","Git","SVN"];
 
- return (
-   <>
-       <ThemeProvider theme={theme}>
-       {/* CssBaseline은 다크모드 배경색을 브라우저에 바로 적용해줍니다 */}
-       <CssBaseline />
-       <Box sx={{ 
-           width: '100vw',
-       }}>
-           
-       <Container maxWidth="md" >
-           {/* 상단 테마 토글 버튼 */}
-           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-           <IconButton onClick={toggleColorMode} color="inherit">
-               <DarkMode sx={{ color: '#f1c40f' }} /> 
-           </IconButton>
-           <Typography sx={{ alignSelf: 'center', ml: 1 }}>
-               {mode === 'dark' ? 'Dark Mode' : 'Light Mode'}
-           </Typography>
-           </Box>
+  // [변수화] 인덱스 n을 받아 프로젝트를 렌더링하는 컴포넌트
+  const ProjectItem = ({ n }) => {
+    
+    const project = projectPages[n];
+    if (!project) return null;
 
-           {/* 히어로 섹션 */}
-           <Box sx={{ textAlign: 'center', mb: 6 }}>
-           {/* <Avatar
-               src="https://placeholder.com"
-               sx={{ 
-               width: 120, height: 120, mx: 'auto', mb: 2, 
-               border: `4px solid ${theme.palette.primary.main}` 
-               }}
-           /> */}
-           <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
-               안녕하세요, 조현우 개발자입니다
-           </Typography>
-           <Typography variant="h6" color="text.secondary" gutterBottom>
-               성장을 즐기며 사용자 중심의 가치를 만드는 개발자입니다.
-           </Typography>
-           
-           <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 2 }}>
-               <Button variant='contained' onClick={() => {
-                setModalOpen(true),setViewMode('list')
-               } }>수행 프로젝트</Button>
-               <Project/>
-               <Button variant='contained' onClick={() => {setMapOpen(true)}}>개인 프로젝트</Button>
-               <MapProject/>
-               <Button variant="outlined" startIcon={<GitHub />}   >Github</Button>
-               <Button variant="outlined" startIcon={<Email />} onClick={() =>{
-                   navigator.clipboard.writeText(email);
-                   setOpen(true); // 복사 성공 시 알림 표시
+    return (
+      
+      <Box sx={{ mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+          <Box>
+            <Typography variant="h6" fontWeight="bold" color="text.primary">{project.title}</Typography>
+            <Typography variant="body2" color="primary" fontWeight="600">{project.role}</Typography>
+          </Box>
+          <Typography variant="caption" sx={{ bgcolor: 'action.selected', px: 1, py: 0.5, borderRadius: 1, height: 'fit-content' }}>
+            {project.date}
+          </Typography>
+        </Box>
 
-               }}>Contact Me</Button>
+        <Stack spacing={2.5}>
+          <Box>
+            <Typography variant="caption" fontWeight="bold" color="text.secondary" sx={{ display: 'block', mb: 1 }}>TECH STACK</Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {project.fe.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />)}
+              <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
+              {project.be.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />)}
+            </Stack>
+          </Box>
+          <Box>
+            <Typography variant="caption" fontWeight="bold" color="text.secondary" sx={{ display: 'block', mb: 1 }}>MAIN WORK</Typography>
+            <Stack spacing={0.5}>
+              {project.work.map((w, i) => (
+                <Typography key={i} variant="body2" color="text.secondary" sx={{ display: 'flex', gap: 1 }}>
+                  {"*"} {w}
+                </Typography>
+              ))}
+            </Stack>
+          </Box>
+        </Stack>
 
-               {/* 복사 완료 알림 메시지 */}
-               <Snackbar
-                   open={open}
-                   autoHideDuration={2000}
-                   onClose={() => setOpen(false)}
-                   message="이메일 주소가 복사되었습니다!"
-                   anchorOrigin={{ vertical: 'middle', horizontal: 'center' }}
-                   sx={{ 
-                       top: '50% !important', 
-                       left: '50% !important', 
-                       transform: 'translate(-50%, -90%) !important' 
-                   }}
-               />
-           </Stack>
-           </Box>
 
-           <Grid container spacing={4}>
-           <Grid container spacing={2}>
-               <Grid  size={{ xs: 12, md: 6 }}>
-                   <Card variant="outlined" sx={{ width: '25em',p: 3, height: '100%', borderRadius: 3 }}>
-                   <Typography variant="h5" sx={{ mb: 2, fontWeight: 'medium' }}>About Me</Typography>
-                   <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 }}>
-                       새로운 기술을 배우고 적용하는 과정에서 즐거움을 느낍니다. 
-                       MUI와 같은 UI 라이브러리를 활용해 반응형 웹을 구축할 수 있습니다.
-                   </Typography>
-                   </Card>
-                   
-               </Grid>
+                
+      </Box>
+    );
+  };
+  
+  const theme = useMemo(() => createTheme({
+    palette: {
+      mode,
+      primary: { main: mode === 'light' ? '#1976d2' : '#90caf9' },
+      background: {
+        default: mode === 'light' ? '#f5f5f5' : '#0a1929',
+        paper: mode === 'light' ? '#ffffff' : '#132f4c',
+      },
+    },
+    typography: { fontFamily: '"Pretendard", "Roboto", sans-serif' },
+  }), [mode]);
 
-               <Grid size={{ xs: 12, md: 6 }}>
-                   <Card variant="outlined" sx={{  width: '25em', p: 3, height: '100%', borderRadius: 3 }}>
-                   <Typography variant="h5" sx={{ mb: 2, fontWeight: 'medium' }}>Skills</Typography>
-                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                       {skills.map((skill) => (
-                       <Chip key={skill} label={skill} color="primary" variant="filled" />
-                       ))}
-                   </Box>
-                   </Card>
-               </Grid>
-           
-           </Grid>  
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      
+      {/* 전전 코드 기준 최상단 Box CSS 적용 */}
+      <Box sx={{ 
+        width: '100%',
+        minWidth: '100vw',
+        minHeight: '100vh', 
+        bgcolor: 'background.default',
+        p: { xs: 2, sm: 3, md: 5 },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        boxSizing: 'border-box'
+      }}>
+        
+        <Container maxWidth="lg" disableGutters sx={{ width: '100%' }}>
+          
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 4 }}>
+            <IconButton onClick={() => setMode(mode === 'light' ? 'dark' : 'light')} color="inherit">
+              {mode === 'dark' ? <LightMode /> : <DarkMode />}
+            </IconButton>
+          </Box>
 
-           <Grid size={{xs: 12}}>
-               <Divider sx={{ my: 4 }} />
-               <Typography variant="h5" sx={{ mb: 3, fontWeight: 'medium' }}>개인 프로젝트</Typography>
-               <Card elevation={mode === 'dark' ? 8 : 2} sx={{ borderRadius: 4, overflow: 'hidden' }}>
-               <Grid container>
-                   {/* <Grid size={{ xs: 12, md: 4 }}>
-                   <Box 
-                       component="img"
-                       src="https://placeholder.com"
-                       sx={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: 200 }}
-                   />
-                   </Grid> */}
-                   <Grid size={{ xs: 12, md: 12 }}>
-                   <CardContent>
-                       <Typography variant="h5"> Leaflet.js 프로젝트</Typography>
-                       <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 , whiteSpace: 'pre-line', wordBreak: 'keep-all'  }}>
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>Props Drilling 해결 :</Box> 부모에서 자식의 자식까지 데이터를 전달해야 하는 Props Drilling 문제를 Context API로 해결해 코드 가독성을 높임{"\n"}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>관심사 분리 :</Box> API 호출 로직과 상태 업데이트 로직을 별도의 Provider 컴포넌트로 분리하여 UI 컴포넌트의 복잡도를 낮춤{"\n"}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>최적화 경험 :</Box> Context 값이 바뀔 때마다 하위 컴포넌트가 불필요하게 리렌더링되는 문제를 방지하기 위해 useMemo 활용
-                       </Typography>
-                   </CardContent>
-                   </Grid>
-               </Grid>
-               </Card>
-           </Grid>
-           </Grid>
+          <Grid container spacing={4} sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+            
+            {/* [왼쪽 영역] */}
+            <Grid item xs={12} md={4.2} sx={{ width: '100%' }}>
+              <Stack spacing={3} sx={{ position: { md: 'sticky' }, top: '40px', maxHeight: { md: 'calc(100vh - 100px)' }, overflowY: 'auto', pr: { md: 1 }, '&::-webkit-scrollbar': { width: '4px' }, '&::-webkit-scrollbar-thumb': { bgcolor: 'divider', borderRadius: '4px' } }}>
+                
+                <Paper elevation={4} sx={{ p: 3, borderRadius: 3 }}>
+                  <Typography variant="h4" fontWeight="900" color="primary" sx={{ mb: 1.5 }}>리액트 개발자 조현우</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.6 }}>사용자 중심의 가치를 실현하는 프론트엔드 개발자입니다. </Typography>
+                  <Divider sx={{ mb: 2.5 }} />
+                  <Stack spacing={2}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><PersonIcon fontSize="small" color="primary" /><Typography variant="body2">조현우 </Typography></Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><LocationOnIcon fontSize="small" color="primary" /><Typography variant="body2">서울시 성동구</Typography></Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><Email fontSize="small" color="primary" /><Typography variant="body2">{email}</Typography></Box>
+                  </Stack>
+                  <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
+                    <Button fullWidth variant="outlined" size="small" startIcon={<Email />}>Email</Button>
+                    <Button fullWidth variant="outlined" size="small" startIcon={<GitHub />}>GitHub</Button>
+                  </Stack>
+                </Paper>
 
-           <Box sx={{ mt: 10, textAlign: 'center', color: 'text.disabled' }}>
-           <Typography variant="caption">© 2026 My Portfolio. Built with React & MUI.</Typography>
-           </Box>
-       </Container>
-       </Box>
-       </ThemeProvider>
-   </>
- );
+                <Paper sx={{ p: 4, borderRadius: 3 }}>
+                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><CodeIcon color="primary" /> 전문 기술 스택</Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {skills.map(s => <Chip key={s} label={s} size="small" color="primary" variant="outlined" sx={{ fontWeight: 600 }} />)}
+                  </Box>
+                </Paper>
+
+                <Paper sx={{ p: 4, borderRadius: 3 }}>
+                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><VerifiedIcon color="primary" /> 자격증</Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
+                    <Box sx={{ flex: '1 1 calc(50% - 12px)', minWidth: '130px', p: 1.5, bgcolor: 'action.hover', borderRadius: 2, borderLeft: '4px solid', borderColor: 'primary.main' }}>
+                      <Typography variant="body2" fontWeight="bold">정보처리기사</Typography>
+                    </Box>
+                    <Box sx={{ flex: '1 1 calc(50% - 12px)', minWidth: '130px', p: 1.5, bgcolor: 'action.hover', borderRadius: 2, borderLeft: '4px solid', borderColor: 'primary.main' }}>
+                      <Typography variant="body2" fontWeight="bold">SQLD</Typography>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Stack>
+            </Grid>
+
+            {/* [오른쪽 영역] */}
+            <Grid item xs={12} md={7.8} sx={{ width: '100%' }}>
+              <Stack spacing={3}>
+                
+                <Paper sx={{ p: 4, borderRadius: 3 }}>
+                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 4 }}>
+                    <StarsIcon color="primary" /> 
+                    <Box onClick={() => setProjOpen(true)} sx={hover}>
+                      수행 프로젝트
+                    </Box>
+                    <Project/>
+                  </Typography>
+                  <Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                      <Typography variant="subtitle1" fontWeight="bold">{project.title}</Typography>
+                      <Typography variant="caption" color="primary" fontWeight="bold">{project.date}</Typography>
+                    </Box>
+                    <Stack variant="body2" color="text.secondary" sx={{ mb: 2, lineHeight: 1.6 }}>
+                      {project.work.map((w, i) => (
+                        <Typography key={i} variant="body2" color="text.secondary" sx={{ display: 'flex', gap: 1 }}>
+                          {"*"} {w}
+                        </Typography>
+                      ))}
+                    </Stack>
+                    {project.fe.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />)}
+                    <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
+                    {project.be.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />)}
+                  </Box>
+                  {/* n 변수를 활용한 프로젝트 호출 */}
+                  {/* <ProjectItem n={0} /> */}
+                  {/* <Divider sx={{ my: 4, borderStyle: 'dashed' }} /> */}
+                  
+                </Paper>
+
+                <Paper sx={{ p: 4, borderRadius: 3 }}>
+                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><AccountTreeIcon color="primary" /> 
+                  <Box onClick={() => {setMapOpen(true)}} sx={hover}>
+                    개인 프로젝트
+                  </Box>
+                  {/* <Button variant='contained' sx={hover} onClick={() => {setMapOpen(true)}}>개인 프로젝트</Button> */}
+                  <MapProject/>
+                  </Typography>
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="bold">Leaflet.js 프로젝트</Typography>
+                    <Typography variant="body2" color="text.secondary">React, Leaflet 활용 위치 기반 서비스</Typography>
+                  </Box>
+                </Paper>
+
+                <Paper sx={{ p: 4, borderRadius: 3 }}>
+                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><SchoolIcon color="primary" /> 교육</Typography>
+                  <Typography variant="subtitle1" fontWeight="bold">오산대학교 - 컴퓨터공학 전공</Typography>
+                  <Typography variant="body2" color="text.secondary">2015.03 ~ 2020.02 졸업</Typography>
+                </Paper>
+
+              </Stack>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    </ThemeProvider>
+  );
 };
+
+export default () => (
+  <ProfileProvider>
+    <Portfolio />
+  </ProfileProvider>
+);
+
+const hover = { cursor: 'pointer', px: 1.5, py: 0.5, borderRadius: 1, border: '1px solid transparent', transition: '0.2s', '&:hover': { bgcolor: 'rgba(144, 202, 249, 0.08)', border: '1px solid #90caf9', color: '#90caf9' }}
