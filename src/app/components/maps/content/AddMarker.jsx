@@ -6,10 +6,12 @@ import { MapsContext, useContext } from "..";
 function AddMarker() {
   // console.info("AddMarker loading complete!");
 
-  const {markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, setPlace,}  = useContext(MapsContext)
-
+  const { markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, place, setPlace,}  = useContext(MapsContext)
+  console.log(place ? '있다': '없다',"position")
   const map = useMapEvents({
     click: (e) => {
+      if(place && !confirm("계속하시면 검색한 마커는 사라집니다 계속하시겠습니까?")) retrun
+
       // console.log(e.target, "맵 클릭");
       const uuid = uuidv4();
       // console.log(uuid);
@@ -28,7 +30,7 @@ function AddMarker() {
       setValue("lng", e.latlng.lng);
 
       console.log("add");
-      // map.setView(e.latlng, 13);
+      map.setView(e.latlng, place ?  13 : 6);
       setPlace(null);
     },
   });
