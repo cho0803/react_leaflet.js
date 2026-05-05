@@ -294,16 +294,17 @@ export default () => {
                 <Typography variant="body2" sx={{ mb: 3 }}>{currentData.role}</Typography>
 
                 <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 1.5, color: 'primary.main' }}>기술스택</Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-                    {currentData.fe.map(t => <Chip key={t} label={t} size="small" color="primary" variant="outlined" />)}
-                    {currentData.be.map(t => <Chip key={t} label={t} size="small" color="info" variant="outlined" />)}
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, mb: 3 }}>
+                    {currentData.fe.map(t => <Chip key={t} label={t} size="small" variant="outlined" sx={{ color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'text.primary', border: '1px solid', borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.5)' : '#ccc', bgcolor: 'transparent' }} />)}
+                    <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
+                    {currentData.be.map(t => <Chip key={t} label={t} size="small" variant="outlined" sx={{ color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'text.primary', border: '1px solid', borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.5)' : '#ccc', bgcolor: 'transparent' }} />)}
                 </Box>
 
-                <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 1.5, color: 'primary.main' }}>주요업무</Typography>
+                <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 1.5, color: isDarkMode ? 'primary.light' : 'primary.main' }}>주요업무</Typography>
                 <Stack spacing={1}>
                     {currentData.work.map((w, i) => (
-                        <Box key={i} sx={{ p: 1.5, bgcolor: isDarkMode ? 'rgba(255,255,255,0.05)' : 'grey.50', borderRadius: 2, border: '1px solid', borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : '#eee' }}>
-                            <Typography variant="body2" color="text.secondary">{w}</Typography>
+                        <Box key={i} sx={{ p: 1.5, bgcolor: isDarkMode ? 'rgba(255,255,255,0.05)' : 'grey.50', borderRadius: 2, border: '1px solid', borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : '#ddd' }}>
+                            <Typography variant="body2" sx={{ color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'text.secondary' }}>{w}</Typography>
                         </Box>
                     ))}
                 </Stack>

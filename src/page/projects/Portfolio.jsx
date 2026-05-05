@@ -99,7 +99,7 @@ const Portfolio = () => {
            <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 2 }}>
                <Button variant='contained' onClick={() => {
                 setModalOpen(true),setViewMode('list')
-               } }>경력기술서</Button>
+               } }>수행 프로젝트</Button>
                <Project/>
                <Button variant='contained' onClick={() => {setMapOpen(true)}}>개인 프로젝트</Button>
                <MapProject/>
