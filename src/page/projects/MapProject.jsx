@@ -31,20 +31,14 @@ const MapContainer = styled(Box)(({ theme }) => ({
   filter: theme.palette.mode === 'dark' ? 'grayscale(0.2) contrast(1.1) brightness(0.8)' : 'none',
 }));
 
+export default ({ locationName }) => {
+  const { mapOpen, setMapOpen } = useContext(ProfileContext);
 
-import Maps from "../maps/Maps.jsx";
-
-export default  ({  locationName }) => {
-     const { mapOpen, setMapOpen } = useContext(ProfileContext);
-
- 
-    const handleClose = () => {
-        setMapOpen(false);
-    };
+  const handleClose = () => {
+    setMapOpen(false);
+  };
 
   const theme = useTheme();
-  const isDarkMode = theme.palette.mode === 'dark';
-
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -52,7 +46,7 @@ export default  ({  locationName }) => {
       open={mapOpen}
       onClose={handleClose}
       fullWidth
-      maxWidth="md" // 지도는 넓게 보는 것이 좋으므로 md 권장
+      maxWidth="md" 
       scroll="paper"
       PaperProps={{
         sx: {
@@ -60,12 +54,13 @@ export default  ({  locationName }) => {
           backgroundImage: 'none',     // 다크모드 시 MUI 기본 elevation 효과 제거
           borderRadius: { xs: 0, sm: 3 }, // 모바일은 꽉 차게, 데스크탑은 둥글게
           position: 'relative',
-          margin: { xs: 0, sm: 2 },      // 모바일 여백 제거
+          margin: { xs: 0, sm: 2 },
           border: theme.palette.mode === 'dark' ? `1px solid ${theme.palette.divider}` : 'none',
           boxShadow: theme.palette.mode === 'dark' ? '0px 8px 32px rgba(0, 0, 0, 0.8)' : theme.shadows[5],
+          transition: 'width 0.3s ease-in-out', // 너비 변화 시 부드러운 전환
         }
       }}
-      fullScreen={isMobile} // 모바일에서는 전체화면으로 전환하여 사용성 향상
+      fullScreen={isMobile}
     >
       {/* 헤더 영역 */}
       <DialogTitle sx={{ 
@@ -89,15 +84,7 @@ export default  ({  locationName }) => {
       {/* 지도 컨텐츠 영역 */}
       <DialogContent sx={{ p: { xs: 1, sm: 3 }, mt: 2 }}>
         <MapContainer>
-            <Maps/>
-          {/* <Box 
-            id="map" 
-            sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            <Typography variant="body2" color="text.secondary">
-               지도를 불러오는 중입니다...
-            </Typography>
-          </Box> */}
+          <Maps />
         </MapContainer>
 
         {/* 프로젝트 설명*/}
