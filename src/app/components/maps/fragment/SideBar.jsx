@@ -19,12 +19,12 @@ import {SearchIcon}  from'..';
 // import DirectionsIcon from '@mui/icons-material/Directions';
 
 import CustomModal from "../content/CustomModal.jsx";
-import MapsList from "../content/MapsList.jsx"
+import MarkerList from "../content/comModal.jsx"
 
 export default function Sidebar(){
-  const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  const {isMarkerListOpen, setIsMarkerListOpen, setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
   const [isMapOpen, setIsMapOpen] = useState(false);
-  const [isMarkerListOpen, setIsMarkerListOpen] = useState(false);
+  // const [isMarkerListOpen, setIsMarkerListOpen] = useState(false);
 
   return (
             <div
@@ -364,8 +364,9 @@ export default function Sidebar(){
                     variant='contained'
                     // aria-expanded={'true'}
                     onClick={(event) =>{
-                    console.log()
+                    console.log("리스트")
                     setIsMarkerListOpen(true);
+                    console.log(isMarkerListOpen)
                     // refreshFn()
                     }}
                   >
@@ -442,8 +443,8 @@ export default function Sidebar(){
                       
               </Box>}
             </CustomModal>
-             <MapsList isMarkerListOpen = {isMarkerListOpen} setIsMarkerListOpen={setIsMarkerListOpen}/>
-
+             {/* <MarkerList isMarkerListOpen = {isMarkerListOpen} setIsMarkerListOpen={setIsMarkerListOpen}/> */}
+                <MarkerList/>
               </aside>
             </div>
   )

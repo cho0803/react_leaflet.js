@@ -1,3 +1,5 @@
+import { useTheme, useMediaQuery } from "../components/maps";
+
 import { createContext } from "react";
 
 // 기본값으로는 null을 넣어준다.
@@ -102,6 +104,14 @@ export const MapsProvider = ({ children }) => {
   
   const [map, setMap] = useState();
 
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  
+  const [isMarkerListOpen, setIsMarkerListOpen] = useState(false);
+
+  const theme = useTheme();
+  // 모바일(sm 미만) 여부 체크
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   useEffect(() => {
     // axios.get("test").then((res) => {
     //   setTests(res.data);
@@ -141,8 +151,8 @@ export const MapsProvider = ({ children }) => {
   })
 
   // 하위 컴포넌트에 전달할 값 (상태와 함수들)
-  const value= useMemo(() => ({ L, map, setMap, useMap, position, setPosition, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace, sidebarEl, asideEl, buttonEl }), 
-                              [map, position, data, markers, errors, placeList, place, sidebarEl, asideEl, buttonEl]);
+  const value= useMemo(() => ({ L, map, setMap, useMap, position, setPosition, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace, sidebarEl, asideEl, buttonEl,isMapOpen, setIsMapOpen, isMarkerListOpen, setIsMarkerListOpen, isMobile }), 
+                              [map, position, data, markers, errors, placeList, place, sidebarEl, asideEl, buttonEl, isMapOpen, isMarkerListOpen, isMobile]);
   return (
     <MapsContext value={value}>
         { children }    
