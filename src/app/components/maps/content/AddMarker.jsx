@@ -30,7 +30,8 @@ function AddMarker() {
       setValue("lng", e.latlng.lng);
 
       console.log("add");
-      map.setView(e.latlng, place ?  13 : 6);
+      // map.setView(e.latlng, place ?  13 : 6);
+      map.setView(e.latlng, );
       setPlace(null);
     },
   });
