@@ -1,248 +1,218 @@
-// import styled from 'styled-components';
-// import { Box, Button,  Modal, Paper  } from '@mui/material';
-import { styled, Box, Button, Modal, Paper  } from '../../app/components/maps';
+import React, { useState } from 'react';
+import { Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, CssBaseline, Divider, Typography, Paper, useTheme, useMediaQuery } from '@mui/material';
+import { Menu, ChevronLeft, RestartAlt, Search, Map, Home, List as ListIcon, Add } from '@mui/icons-material';
+import 'leaflet/dist/leaflet.css';
 
-import {Header, SideBar, Leaflet} from "../../app/components/maps/";
+import { MapsProvider } from '../../app/context/MapsContext';
+import { Leaflet } from '../../app/components/maps';
 
-import React, { useEffect, useState, useMemo, useRef, createElement } from "react";
-//전역 데이터 관리 생성
-import {MapsContext,MapsProvider} from '../../app/context/MapsContext';
+export default () => {
+  const theme = useTheme();
+  // 모바일(sm 미만) 여부 체크
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  console.log(isMobile,"isMobile")
+  const [isExpanded, setIsExpanded] = useState(false);
 
-const Maps = () => {
+  const centerMenuItems = [
+    { text: '탐색', icon: <Search /> },
+    { text: '리스트', icon: <ListIcon /> },
+    { text: '추가', icon: <Add /> },
+    { text: '초기화', icon: <RestartAlt /> },
+  ];
 
   return (
-    // <MapsProvider value={{L, useMap, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,}}>
-     <MapsProvider> 
-      <div
-        style={{
-          width: "100vw",
-          height: '100vh',
-          // height: 'calc(100 * var(--vh)',
-          display: "flex",
-          color: "inherit",
-          fontSize: '100%',
+    <Box sx={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
+      <CssBaseline />
+
+      {/* 1. 사이드바 */}
+      <Box
+        sx={{
+          position: 'relative',
+          width: { xs: '64px', md: isExpanded ? '240px' : '64px' },
+          height: '100%',
+          backgroundColor: 'background.paper',
+          borderRight: '1px solid',
+          borderColor: 'divider',
+          transition: (theme) =>
+            theme.transitions.create('width', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+          display: 'flex',
+          flexDirection: 'column',
+          zIndex: 1001,
         }}
       >
-        {/* {Object.entries(markers).forEach((key, value) => {
-          console.log(`sdf ${key} : ${value}`);
-        })}{" "} */}
-        {/* <div
-          style={{ display: "flex", flexDirection: "column", minWidth: "1em" }}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            height: 64,
+            px: 2,
+            cursor: isMobile ? 'default' : 'pointer',
+            justifyContent: { xs: 'center', md: isExpanded ? 'space-between' : 'center' },
+          }}
+          onClick={() => { if (!isMobile) setIsExpanded(!isExpanded);}}
         >
-          <div style={{ minWidth: "1em" }}>
-            <img src="" alt="sddddd" style={{ width: "60px" }}></img>sdfsdf
-          </div>{" "}
-          <div style={{ minWidth: "60px" }}>
-            <img src="" alt="sddddd" style={{ width: "60px" }}></img>sdfsdf
-          </div>{" "}
-        </div> */}
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 'bold',
+              fontSize: '1.1rem',
+              display: { xs: 'none', md: isExpanded ? 'block' : 'none' },
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Leaflet Map
+          </Typography>
+          <IconButton 
+            disableRipple 
+            disabled={isMobile} // 모바일 버튼 비활성화
+            sx={{ p: 0, '&:focus': { outline: 'none' }, '&.Mui-disabled': { color: 'inherit', opacity: 1 } }}
+          >
+            {isExpanded ? <ChevronLeft /> : <Menu />}
+          </IconButton>
+        </Box>
+        <Divider />
+        <List>
+          {[
+            { text: '홈', icon: <Home /> },
+            { text: '전체지도', icon: <Map /> },
+          ].map((item) => (
+            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  px: 2.5,
+                  justifyContent: isExpanded ? 'initial' : 'center',
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isExpanded ? 3 : 'auto',
+                    justifyContent: 'center',
+                    color: 'primary.main',
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                {isExpanded && <ListItemText primary={item.text} />}
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
 
-        {/* <Header sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl}/> */}
-       <Header/>
-        <div
-          style={
-            {
-              // display: "flex",
-              flex: "1 1 auto"
-              // position: "relative",width: "inherit"
-              // zIndex: 0,
-            }
-          }
+      {/* 2. 메인 영역 */}
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          height: '100%',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {/* 상단 네비게이션: 지도가 좁아지면 자동으로 메뉴 크기를 압축함 */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            left: 0,
+            width: '100%',
+            maxWidth: { md: isExpanded ? '604px' : '780px' },
+            display: 'flex',
+            justifyContent: 'center',
+            zIndex: 1000,
+            pointerEvents: 'none',
+            transition: (theme) =>
+              theme.transitions.create('max-width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+              }),
+          }}
         >
-          {/* <SideBar markers={markers} setMarkers={setMarkers} reset={reset} setValue={setValue} getValues={getValues} handleSubmit={handleSubmit}
-            register={register} errors={errors}
-            setPlace={setPlace} placeList={placeList} setPlaceList={setPlaceList} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl} 
-          />  */}
-          <SideBar />
-            {/* <Nav className="header-nav">
-              <Ul>
-                <Li>
-                  <MenuBtn
-                  variant='contained'
-                    onClick={(event) =>{
-                    setIsModalOpen(true)
-                    }}
-                  >
-                  지도 검색
-                  </MenuBtn>
-                </Li>
-                <Li>
-                  <MenuBtn
-                    variant='contained'
-                    // aria-expanded={'true'}
-                    onClick={(event) =>{
-                    console.log()
-                    }}
-                  >
-                    마커 리스트
-                  </MenuBtn>
-                </Li>
-              </Ul>  
-            </Nav> */}
+          <Paper
+            elevation={2}
+            sx={{
+              display: 'flex',
+              pointerEvents: 'auto',
+              borderRadius: '24px',
+              width: 'auto',
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'dark' ? 'rgba(30, 30, 30, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+              backdropFilter: 'blur(4px)',
+              border: '1px solid',
+              borderColor: 'divider',
+              p: 0.3,
+            }}
+          >
+            {centerMenuItems.map((menu) => (
+              <ListItemButton
+                key={menu.text}
+                sx={{
+                  py: 0.5,
+                  px: isExpanded ? 1.2 : 2, // 사이드바 확장 시 패딩 축소
+                  gap: isExpanded ? 0 : 1, // 사이드바 확장 시 간격 제거
+                  borderRadius: '20px',
+                  justifyContent: 'center',
+                  minWidth: isExpanded ? '40px' : '80px',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    color: 'primary.main',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {React.cloneElement(menu.icon, { sx: { fontSize: 20 } })}
+                </ListItemIcon>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '0.7rem',
+                    whiteSpace: 'nowrap',
+                    color: 'text.primary',
+                    // 모바일이거나 사이드바가 열려 지도가 좁아지면 글자 숨김 (반응형 복구)
+                    display: { xs: 'none', sm: isExpanded ? 'none' : 'block' },
+                  }}
+                >
+                  {menu.text}
+                </Typography>
+              </ListItemButton>
+            ))}
+          </Paper>
+        </Box>
 
-            {/* <Leaflet markers={markers} setMarkers={setMarkers} place={place} setPlace={setPlace} setValue={setValue} getValues={getValues} reset={reset} sidebarEl={sidebarEl} asideEl={asideEl} buttonEl={buttonEl}></Leaflet> */}
-            <Leaflet/>
-        </div>
-      </div>
-    </MapsProvider>
+        {/* 3. 지도 컨테이너 */}
+        <Box
+          sx={{
+            position: 'relative',
+            zIndex: 1,
+            overflow: 'hidden',
+            width: { xs: '25em', md: '100%' },
+            maxWidth: { md: isExpanded ? '604px' : '780px' },
+            height: { xs: '31em', sm: '60vh', md: '100%' },
+            maxHeight: { md: '30em' },
+            borderRadius: 0,
+            transition: (theme) =>
+              theme.transitions.create('max-width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+              }),
+          }}
+        >
+          <MapsProvider>
+            <Leaflet />
+          </MapsProvider>
+        </Box>
+      </Box>
+    </Box>
   );
-
-};
-
-export default Maps;
-
-const h1 = {
-  listStyle: 'none',
-  /* margin: 0; */
-  padding: 0,
-  borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
-  fontSize: "2em",
-
-  lineHeight: 1,
 }
-
-const button ={
-  padding: 0,
-  margin: 0,
-
-  border: 'none',
-  outline: 'none',
- 
-  //  backgroundColor: 'transparent', 
-
-  /* 마우스 올렸을 때 마우스 스타일 지정 -> 손모양 */
-  cursor: 'pointer',
-  backgroundColor: 'inherit',
-  fontSize: '0.8333em'
-}
-
-const ul = {
-   padding: 0,
-}
-
-const li = {
-  listStyle: 'none',
-  // padding: 0,
-}
-
-const input = {
-  width: '13em',
-  height: '32px',
-  // padding: 0,
-}
-
-const Nav = styled.div`
-  // width: calc(100vw - 4em - 2.8em);
-  height: 2em;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  // left: 0;
-  z-index: 999;
-`
-const Ul = styled.ul`
-  text-align: center;
-  display: ruby-text;
-`
-
-const Li = styled.li`
-    display: ruby-text;
-  display: inline-block;
-  position: relative;
-  margin: 0 1%;
-`
-const MenuBtn = styled(Button)`
- width: 8em
- margin: 0 1% !important;
- background-color: #90caf9 !important;
- outline: none !important;
- &:hover {
-  background-color: #ce93d8 !important;
-  }
-`
-
-// 화면 크기에 따라 글꼴 크기를 설정하는 ResponsiveDiv 컴포넌트
-const ResponsiveDiv = styled.div`
-
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    color: inherit;
-    font-size: 14px; // 기본 모바일 글꼴 크기
-
-    @media (min-width: 768px) { // 태블릿
-    font-size: 16px;
-    }
-
-    @media (min-width: 1224px) { // 데스크탑
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        // font-size: 16px;
-    }
-
-    @media (prefers-color-scheme: light) {
-        /* 라이트 모드에 적용할 스타일 정의 */
-        color: #000;
-        background-color: #fff;
-
-    }
-        
-    @media (prefers-color-scheme: dark) {
-        /* 다크 모드에 적용할 스타일 정의 */
-        color: #fff  !important;
-        background-color: #121212 !important;
-
-        h1, h2, h3, .navbar_text {
-            color: #ffffff;
-        }
-
-        .search, .aside {
-        color: #fff  !important;
-        background-color: #121212 !important;
-        border: 1px solid rgb(217, 217, 217) !important;
-        }
-
-        .aside {
-        color: #fff  !important;
-        background-color: #121212 !important;
-        border: 1px solid rgb(217, 217, 217) !important;
-        border-left: none !important;
-        }
-
-        p {
-            color: #dbdbdb;
-        }
-
-        a {
-            // color: #41adff;
-        }
-
-        button {
-          outline: none;
-        }
-
-        .fold-button {
-            border-left: 1px solid  rgb(217, 217, 217) !important;  
-        }
-            
-        .fold-button > span {
-          border: solid  #fff !important;  
-          border-width: 2px 2px 0 0 !important;
-        }
-
-        header {
-          background-color: #121212 !important;
-        
-        }
-
-        .icon_inner > svg {
-          fill: rgb(217, 217, 217);
-        }
-
-    }
-`
-
-const SearchDiv = styled.div`
-  background-color:  #fff;
-`

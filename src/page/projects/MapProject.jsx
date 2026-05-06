@@ -1,38 +1,24 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Typography,
-  Box,
-  useTheme,
-  useMediaQuery,
-  styled
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, CssBaseline, Divider, Typography, Paper, useTheme, useMediaQuery, Dialog, DialogTitle, DialogContent, styled } from '@mui/material';
+import { Menu, ChevronLeft, RestartAlt, Search, Map, Home, List as ListIcon, Add, Close as CloseIcon, LocationOn as LocationOnIcon } from '@mui/icons-material';
+import { MapsProvider } from '../../app/context/MapsContext';
 
-import React, { useState, useContext } from 'react';
-import { ProfileContext } from '../../app/context/PortfolioContext';
+//전역 데이터 받아오기
+import { MapsContext, useContext, useState } from "../../app/components/maps";
 
-// 지도 영역을 위한 Styled Component (다크모드 시 필터 적용 가능)
-const MapContainer = styled(Box)(({ theme }) => ({
-  width: '100%',
-  backgroundColor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f0f0f0',
-  borderRadius: theme.spacing(1),
-  overflow: 'hidden',
-  position: 'relative',
-  // 반응형 높이 설정 (모바일은 1:1에 가깝게, 데스크탑은 16:9 비율)
-  aspectRatio: '16 / 9',
-  [theme.breakpoints.down('sm')]: {
-    aspectRatio: '1 / 1',
-  },
-  // 다크모드일 때 지도 색감을 어둡게 조정하고 싶다면 필터 추가
-  filter: theme.palette.mode === 'dark' ? 'grayscale(0.2) contrast(1.1) brightness(0.8)' : 'none',
-}));
+import { ProfileContext } from '../../app/context/PortfolioContext'; 
+import 'leaflet/dist/leaflet.css';
 
-export default ({ locationName }) => {
+import Maps from "../maps/Maps"
+
+export default () => (
+  <MapsProvider>
+    <MapProject />
+  </MapsProvider>
+);
+
+export function MapProject() {
   const { mapOpen, setMapOpen } = useContext(ProfileContext);
+   const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
 
   const handleClose = () => {
     setMapOpen(false);
@@ -40,6 +26,14 @@ export default ({ locationName }) => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const centerMenuItems = [
+    { text: '탐색', icon: <Search /> },
+    { text: '리스트', icon: <ListIcon /> },
+    { text: '추가', icon: <Add /> },
+    { text: '초기화', icon: <RestartAlt /> },
+  ];
 
   return (
     <Dialog
@@ -60,7 +54,7 @@ export default ({ locationName }) => {
           transition: 'width 0.3s ease-in-out', // 너비 변화 시 부드러운 전환
         }
       }}
-      fullScreen={isMobile}
+      // fullScreen={isMobile}
     >
       {/* 헤더 영역 */}
       <DialogTitle sx={{ 
@@ -73,7 +67,7 @@ export default ({ locationName }) => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <LocationOnIcon color="primary" />
           <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-            {locationName || 'Leaflet.js 프로젝트'}
+            {'Leaflet.js 프로젝트'}
           </Typography>
         </Box>
         <IconButton onClick={handleClose} aria-label="close" sx={{ color: theme.palette.grey[500] }}>
@@ -83,10 +77,28 @@ export default ({ locationName }) => {
 
       {/* 지도 컨텐츠 영역 */}
       <DialogContent sx={{ p: { xs: 1, sm: 3 }, mt: 2 }}>
-        <MapContainer>
-          <Maps />
-        </MapContainer>
-
+      <Box
+        sx={{
+          // 기본 스타일 및 가로 세로 설정
+          width: { xs: '25em', md: '100%' },
+          height: { xs: '31em', md: 'auto' },
+          aspectRatio: { md: '16 / 9' },
+          
+          // 배경색 (다크모드 분기)
+          bgcolor: (theme) => theme.palette.mode === 'dark' ? '#1e1e1e' : '#f0f0f0',
+          
+          // 기타 디자인 스타일
+          borderRadius: 1,
+          overflow: 'hidden',
+          position: 'relative',
+          
+          // 다크모드일 때 지도 색감 조정 필터
+          filter: (theme) => theme.palette.mode === 'dark' ? 'grayscale(0.2) contrast(1.1) brightness(0.8)' : 'none',
+        }}
+      >  
+        <Maps />
+        {/* 지도 컴포넌트 삽입 */}
+      </Box>
         {/* 프로젝트 설명*/}
         <Box sx={{ mt: 3, px: 1 }}>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
