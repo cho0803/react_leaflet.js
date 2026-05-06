@@ -23,8 +23,8 @@ import MapsList from "../content/MapsList.jsx"
 
 export default function Sidebar(){
   const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalListOpen, setIsModalListOpen] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isMarkerListOpen, setIsMarkerListOpen] = useState(false);
 
   return (
             <div
@@ -353,10 +353,10 @@ export default function Sidebar(){
                   <MenuBtn
                   variant='contained'
                     onClick={(event) =>{
-                    setIsModalOpen(true)
+                    setIsMapOpen(true)
                     }}
                   >
-                  지도 검색
+                  검색
                   </MenuBtn>
                 </Li>
                 <Li>
@@ -365,11 +365,11 @@ export default function Sidebar(){
                     // aria-expanded={'true'}
                     onClick={(event) =>{
                     console.log()
-                    setIsModalListOpen(true);
+                    setIsMarkerListOpen(true);
                     // refreshFn()
                     }}
                   >
-                    마커 리스트
+                    리스트
                   </MenuBtn>
                 </Li>
                 <Li>
@@ -401,7 +401,7 @@ export default function Sidebar(){
                 </Li>
               </Ul>  
             </Nav>
-            <CustomModal isOpen={isModalOpen} closeModal={() => {setIsModalOpen(false); setPlaceList([]) }}>
+            <CustomModal isOpen={isMapOpen} closeModal={() => {setIsMapOpen(false); setPlaceList([]) }}>
               <AppBar position="static" width="100%">
                 <Toolbar>
                   {/*  display : flex 적용 되어 있으므로 justifyContent : 'center' css 추가  */}
@@ -437,12 +437,12 @@ export default function Sidebar(){
               </Paper>
               {placeList.length > 0 &&  <Box sx={{  maxWidth: 752 ,textAlign: 'center' }}>
                   <List dense={false}>
-                    {PlaceList({placeList, setPlace,setIsModalOpen ,setPlaceList})}
+                    {PlaceList({placeList, setPlace,setIsMapOpen ,setPlaceList})}
                   </List>
                       
               </Box>}
             </CustomModal>
-             <MapsList isModalListOpen = {isModalListOpen} setIsModalListOpen={setIsModalListOpen}/>
+             <MapsList isMarkerListOpen = {isMarkerListOpen} setIsMarkerListOpen={setIsMarkerListOpen}/>
 
               </aside>
             </div>
@@ -475,7 +475,7 @@ export const MapApi = function(e ,setPlaceList) {
     });
 }
 
-export const PlaceList = function ({placeList, setPlace, setIsModalOpen, setPlaceList}) {
+export const PlaceList = function ({placeList, setPlace, setIsMapOpen, setPlaceList}) {
   // console.log(placeList)
   return (
     <>
@@ -488,7 +488,7 @@ export const PlaceList = function ({placeList, setPlace, setIsModalOpen, setPlac
               data-lon={item.lon}
               onClick={() => {
                 setPlace(item);
-                setIsModalOpen(false);
+                setIsMapOpen(false);
                 setPlaceList([])
                 // console.log("클릭");
               }}
