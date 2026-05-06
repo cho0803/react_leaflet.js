@@ -7,7 +7,7 @@ export { v4 as uuidv4 } from "uuid";
 export {styled} from 'styled-components';
 export {Box, Button, Menu, MenuItem  } from '@mui/material';
 
-export { Modal, Paper ,Divider, } from '@mui/material';
+export { Modal, Paper ,Divider, useTheme, useMediaQuery} from '@mui/material';
 export {AppBar,Toolbar, IconButton, InputBase, Typography, List, } from '@mui/material';
 
 // 속도 저하로 import 방식 변경 이유 확인필요
