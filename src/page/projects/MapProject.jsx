@@ -8,6 +8,7 @@ import { MapsContext, useContext, useState } from "../../app/components/maps";
 import { ProfileContext } from '../../app/context/PortfolioContext'; 
 import 'leaflet/dist/leaflet.css';
 
+// import Maps from "../maps/Maps_bak2"
 import Maps from "../maps/Maps"
 
 export default () => (
