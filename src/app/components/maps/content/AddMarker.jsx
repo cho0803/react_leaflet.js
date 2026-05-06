@@ -6,8 +6,8 @@ import { MapsContext, useContext } from "..";
 function AddMarker() {
   // console.info("AddMarker loading complete!");
 
-  const { markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, place, setPlace,}  = useContext(MapsContext)
-  console.log(place ? '있다': '없다',"position")
+  const {setIsMarkerListOpen, markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, place, setPlace,}  = useContext(MapsContext)
+  // console.log(place ? '있다': '없다',"position")
   const map = useMapEvents({
     click: (e) => {
       if(place && !confirm("계속하시면 검색한 마커는 사라집니다 계속하시겠습니까?")) retrun

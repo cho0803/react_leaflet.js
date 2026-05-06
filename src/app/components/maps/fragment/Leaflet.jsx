@@ -41,7 +41,7 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
   const theme = useTheme();
   // 모바일(sm 미만) 여부 체크
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  console.log(isMobile,"isMobile")
+  // console.log(isMobile,"isMobile")
   
   
   return (

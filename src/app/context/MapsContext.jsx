@@ -160,8 +160,8 @@ export const MapsProvider = ({ children }) => {
   );
 
   function  updateMarkers(data) {
-    // markers에 set을 하는 순간 전체적으로 리렌더링
-    console.log(data, "데이타");
+    // markers에 비동기적 랜더링
+    // console.log(data, "데이타");
     // console.log(data, "update");
 
     setMarkers((markers) => {
