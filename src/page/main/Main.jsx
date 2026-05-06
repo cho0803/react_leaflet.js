@@ -1,7 +1,10 @@
 export default function Main() {
   return <Portfolio />;
 }
-import Maps from "../maps/Maps.jsx";
+import Maps from "../maps/Maps_bak2.jsx";
+
+import Test from "../maps/Maps.jsx";
+
 import Portfolio from "../projects/Portfolio.jsx";
 
 import Portfolio_bak from "../projects/Portfolio_bak.jsx";
