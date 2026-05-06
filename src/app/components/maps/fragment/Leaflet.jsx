@@ -31,13 +31,18 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMapEvent, useM
 //   // popupAnchor: [0, -60], // 팝업 위치
 // });
 
-import { MapsContext, useContext, useState } from "..";
+import { MapsContext, useContext, useState , useTheme, useMediaQuery} from "..";
 
 export default function Leaflet ({markers, setMarkers, place, setPlace, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, }) {
   
   const {map, setMap} = useContext(MapsContext)
-
   // console.log(map ? map.getCenter() : null,"map")
+
+  const theme = useTheme();
+  // 모바일(sm 미만) 여부 체크
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  console.log(isMobile,"isMobile")
+  
   
   return (
     <>
@@ -62,14 +67,14 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
           // 전체화면 설정 
           //  width: "calc(100vw - 66px)",
           // Dialog 기준 css
-          width: "65.5em",
+          width: isMobile ? '22em' : '65em',
           // width: "calc(100vw - 7em)",
           // width: "100vw",
           // height: "100vh", 
           //  height: "100%",
           // 전체화면 설정
           // Dialog 기준 css
-           height: "40em",
+          height: isMobile ? '41em' : '100%',
           // position: "relative",
           zIndex: 0,
         }}
