@@ -65,8 +65,6 @@ export default () => {
             
             display: 'flex',
             flexDirection: 'column',
-            // 창 크기 조절 시 부드럽게 반응하도록 설정
-            transition: 'all 3s ease-in-out',
             overflow: 'visible' // 화살표 버튼을 위해 보임 유지
         } 
     }}
