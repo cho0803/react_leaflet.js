@@ -87,7 +87,7 @@ const Portfolio = () => {
               <Stack spacing={3} sx={{ position: { md: 'sticky' }, top: '40px', maxHeight: { md: 'calc(100vh - 100px)' }, overflowY: 'auto', pr: { md: 1 }, '&::-webkit-scrollbar': { width: '4px' }, '&::-webkit-scrollbar-thumb': { bgcolor: 'divider', borderRadius: '4px' } }}>
                 
                 <Paper elevation={4} sx={{ p: 3, borderRadius: 3 }}>
-                  <Typography variant="h4" fontWeight="900" color="primary" sx={{ mb: 1.5 }}>리액트 개발자 조현우</Typography>
+                  <Typography variant="h4" fontWeight="900" color="primary" sx={{ mb: 1.5 }}>리액트 포트폴리오</Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.6 }}>사용자 중심의 가치를 실현하는 프론트엔드 개발자입니다. </Typography>
                   <Divider sx={{ mb: 2.5 }} />
                   <Stack spacing={2}>
@@ -132,7 +132,7 @@ const Portfolio = () => {
                         }
                       }}
                     />
-                    <Button component="a" href="https://placeholder.com" fullWidth variant="outlined" size="small" startIcon={<GitHub />}>GitHub</Button>
+                    <Button component="a" href="https://github.com/cho0803/react_leaflet.js" fullWidth variant="outlined" size="small" startIcon={<GitHub />}>GitHub</Button>
                   </Stack>
                 </Paper>
 
