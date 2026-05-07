@@ -195,4 +195,4 @@ export default () => (
 
 const hover = { cursor: 'pointer', px: 1.5, py: 0.5, borderRadius: 1, border: '1px solid transparent', transition: '0.2s', '&:hover': { bgcolor: 'rgba(144, 202, 249, 0.08)', border: '1px solid #90caf9', color: '#90caf9' }}
 
-const blink = { fontSize: '20px', fontWeight: 800, color: (theme) => theme.palette.mode === 'dark' ? '#90caf9' : '#1976d2', '@keyframes blink': { '0%': { filter: 'brightness(1)', opacity: (theme) => theme.palette.mode === 'dark' ? 0.4 : 0.6 }, '100%': { filter: 'brightness(1.5)', opacity: 1.5 } }, animation: 'blink 1s infinite alternate ease-in-out' };
+const blink = { fontSize: '20px', fontWeight: 800, color: (theme) => theme.palette.mode === 'dark' ? '#90caf9' : '#0d47a1', '@keyframes blink': { '0%': { filter: 'brightness(1)', opacity: (theme) => theme.palette.mode === 'dark' ? 0.4 : 0.6 }, '100%': { filter: 'brightness(1.5)', opacity: 1 } }, animation: 'blink 1s infinite alternate ease-in-out' };
