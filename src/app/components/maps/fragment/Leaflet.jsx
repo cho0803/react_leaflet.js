@@ -67,7 +67,7 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
           // 전체화면 설정 
           //  width: "calc(100vw - 66px)",
           // Dialog 기준 css
-          width: isMobile ? '22em' : '65em',
+          width: '100%',
           // width: "calc(100vw - 7em)",
           // width: "100vw",
           // height: "100vh", 

@@ -17,7 +17,6 @@ export default () => (
 
 export function MapProject() {
   const { mapOpen, setMapOpen } = useContext(ProfileContext);
-  //  const { markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
 
   const handleClose = () => {
     setMapOpen(false);
@@ -57,7 +56,7 @@ export function MapProject() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <LocationOnIcon color="primary" />
           <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-            {'Leaflet.js 프로젝트'}
+            Leaflet.js 프로젝트
           </Typography>
         </Box>
         <IconButton onClick={handleClose} aria-label="close" sx={{ color: theme.palette.grey[500] }}>
@@ -67,28 +66,24 @@ export function MapProject() {
 
       {/* 지도 컨텐츠 영역 */}
       <DialogContent sx={{ p: { xs: 1, sm: 3 }, mt: 2 }}>
-      <Box
-        sx={{
-          // 기본 스타일 및 가로 세로 설정
-          width: { xs: '25em', md: '100%' },
-          height: { xs: '31em', md: 'auto' },
-          aspectRatio: { md: '16 / 9' },
-          
-          // 배경색 (다크모드 분기)
-          bgcolor: (theme) => theme.palette.mode === 'dark' ? '#1e1e1e' : '#f0f0f0',
-          
-          // 기타 디자인 스타일
-          borderRadius: 1,
-          overflow: 'hidden',
-          position: 'relative',
-          
-          // 다크모드일 때 지도 색감 조정 필터
-          filter: (theme) => theme.palette.mode === 'dark' ? 'grayscale(0.2) contrast(1.1) brightness(0.8)' : 'none',
-        }}
-      >  
-        <Maps />
-        {/* 지도 컴포넌트 삽입 */}
-      </Box>
+<Box
+  sx={{
+    width: { xs: '100%', md: '100%' }, // 모바일에서도 찌그러지지 않게 100% 권장
+    height: { xs: '31em', md: 'auto' },
+    aspectRatio: { md: '16 / 9' },
+    bgcolor: (theme) => theme.palette.mode === 'dark' ? '#1e1e1e' : '#f0f0f0',
+    border: (theme) => theme.palette.mode === 'light' ? '1px solid rgba(0, 0, 0, 0.08)' : 'none', 
+    boxShadow: (theme) => theme.palette.mode === 'light' ? '0 10px 25px -5px rgba(0, 0, 0, 0.05)' : 'none',
+    borderRadius: 1,
+    overflow: 'hidden',
+    position: 'relative',
+    filter: (theme) => theme.palette.mode === 'dark' ? 'grayscale(0.2) contrast(1.1) brightness(0.8)' : 'none',
+    // Maps 컴포넌트가 부모 크기를 강제로 따라오게 만드는 핵심 설정
+    '& > *:first-of-type': { width: '100% !important', height: '100% !important', position: 'absolute', top: 0, left: 0 }
+  }}
+>  
+  <Maps />
+</Box>
         {/* 프로젝트 설명*/}
         <Box sx={{ mt: 3, px: 1 }}>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
