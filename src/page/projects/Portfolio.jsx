@@ -131,7 +131,7 @@ const Portfolio = () => {
                   <Divider sx={{ mb: 2.5 }} />
                   <Stack spacing={2}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><PersonIcon fontSize="small" color="primary" /><Typography variant="body2">조현우 </Typography></Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><LocationOnIcon fontSize="small" color="primary" /><Typography variant="body2">서울시 성동구</Typography></Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><LocationOnIcon fontSize="small" color="primary" /><Typography variant="body2">서울시 성동구 상왕십리동</Typography></Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><Email fontSize="small" color="primary" /><Typography variant="body2">{email}</Typography></Box>
                   </Stack>
                   <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
@@ -168,7 +168,7 @@ const Portfolio = () => {
                 <Paper sx={{ p: 4, borderRadius: 3 }}>
                   <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 4 }}>
                     <StarsIcon color="primary" /> 
-                    <Box onClick={() => setProjOpen(true)} sx={hover}>
+                    <Box sx={{...blink,...hover}} onClick={() => setProjOpen(true)}>
                       수행 프로젝트
                     </Box>
                     <Project/>
@@ -198,14 +198,29 @@ const Portfolio = () => {
                 <Paper sx={{ p: 4, borderRadius: 3 }}>
                   <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><AccountTreeIcon color="primary" /> 
                   <Box onClick={() => {setMapOpen(true)}} sx={hover}>
-                    개인 프로젝트
+                    <Typography
+                      variant="body2" 
+                      sx={blink}
+                    >
+                      <Box>개인 프로젝트</Box>
+                    </Typography>
                   </Box>
                   {/* <Button variant='contained' sx={hover} onClick={() => {setMapOpen(true)}}>개인 프로젝트</Button> */}
                   <MapProject/>
                   </Typography>
                   <Box>
                     <Typography variant="subtitle1" fontWeight="bold">Leaflet.js 프로젝트</Typography>
-                    <Typography variant="body2" color="text.secondary">React, Leaflet 활용 위치 기반 서비스</Typography>
+                    <Typography variant="body2" color="text.secondary">React, Leaflet.js 활용 위치 기반 서비스</Typography>
+                    <Box sx={{ mt: 2 }}>
+                      <Chip label={project.fe[1]} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />
+
+                      {/* 구분선 */}
+                      <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
+
+                      {/* BE 태그 직접 나열 */}
+                      <Chip label={project.be[0]} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />
+
+                    </Box>
                   </Box>
                 </Paper>
 
@@ -231,3 +246,5 @@ export default () => (
 );
 
 const hover = { cursor: 'pointer', px: 1.5, py: 0.5, borderRadius: 1, border: '1px solid transparent', transition: '0.2s', '&:hover': { bgcolor: 'rgba(144, 202, 249, 0.08)', border: '1px solid #90caf9', color: '#90caf9' }}
+
+const blink = { fontSize: '20px', fontWeight: 800, color: (theme) => theme.palette.mode === 'dark' ? '#90caf9' : '#1976d2', '@keyframes blink': { '0%': { filter: 'brightness(1)', opacity: (theme) => theme.palette.mode === 'dark' ? 0.4 : 0.6 }, '100%': { filter: 'brightness(1.5)', opacity: 1.5 } }, animation: 'blink 1s infinite alternate ease-in-out' };
