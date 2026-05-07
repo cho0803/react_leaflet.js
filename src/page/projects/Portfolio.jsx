@@ -41,7 +41,7 @@ const Portfolio = () => {
       mode,
       primary: { main: mode === 'light' ? '#1976d2' : '#60a5fa' },
       background: {
-        default: mode === 'light' ? '#f5f5f5' : '#ffffff',
+        default: mode === 'light' ? '#f5f5f5' : '#0a1929',
         paper: mode === 'light' ? '#ffffff' : '#132f4c',
       },
     },
