@@ -108,6 +108,8 @@ export const MapsProvider = ({ children }) => {
   
   const [isMarkerListOpen, setIsMarkerListOpen] = useState(false);
 
+  const [showAddRow, setShowAddRow] = useState(false);
+
   const theme = useTheme();
   // 모바일(sm 미만) 여부 체크
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -151,8 +153,8 @@ export const MapsProvider = ({ children }) => {
   })
 
   // 하위 컴포넌트에 전달할 값 (상태와 함수들)
-  const value= useMemo(() => ({ L, map, setMap, useMap, position, setPosition, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace, sidebarEl, asideEl, buttonEl,isMapOpen, setIsMapOpen, isMarkerListOpen, setIsMarkerListOpen, isMobile }), 
-                              [map, position, data, markers, errors, placeList, place, sidebarEl, asideEl, buttonEl, isMapOpen, isMarkerListOpen, isMobile]);
+  const value= useMemo(() => ({  isMobile, showAddRow, setShowAddRow, L, map, setMap, useMap, position, setPosition, data, markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace, sidebarEl, asideEl, buttonEl,isMapOpen, setIsMapOpen, isMarkerListOpen, setIsMarkerListOpen, }), 
+                              [isMapOpen, isMarkerListOpen, isMobile, showAddRow, map, position, data, markers, errors, placeList, place, sidebarEl, asideEl, buttonEl, ]);
   return (
     <MapsContext value={value}>
         { children }    

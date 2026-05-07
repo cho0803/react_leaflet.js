@@ -12,29 +12,16 @@ import 'leaflet/dist/leaflet.css';
 import Maps from "../maps/Maps"
 
 export default () => (
-  <MapsProvider>
     <MapProject />
-  </MapsProvider>
 );
 
 export function MapProject() {
   const { mapOpen, setMapOpen } = useContext(ProfileContext);
-   const {setPosition , markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
+  //  const { markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,  sidebarEl, asideEl, buttonEl,} = useContext(MapsContext)
 
   const handleClose = () => {
     setMapOpen(false);
   };
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const centerMenuItems = [
-    { text: '탐색', icon: <Search /> },
-    { text: '리스트', icon: <ListIcon /> },
-    { text: '추가', icon: <Add /> },
-    { text: '초기화', icon: <RestartAlt /> },
-  ];
 
   return (
     <Dialog

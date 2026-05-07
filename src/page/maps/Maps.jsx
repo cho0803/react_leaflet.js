@@ -25,7 +25,6 @@ export const Maps = () => {
   // const theme = useTheme();
   // 모바일(sm 미만) 여부 체크
   // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  console.log(isMobile,"isMobile")
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -105,9 +104,7 @@ export const Maps = () => {
       Leaflet Map
     </Typography>
   </Box>
-
   <Divider />
-
   <List>
     {/* 추가 버튼 */}
     <ListItem disablePadding sx={{ display: 'block' }}>
@@ -134,7 +131,6 @@ export const Maps = () => {
       <ListItemButton sx={{ minHeight: 48, px: 2.5, justifyContent: 'flex-start' }}
         onClick={
           async (e)=>{
-              console.log('하늘')
               if(place && !confirm("이 페이지를 벗어나면 저장되지 않은 정보가 사라집니다.")) return
               
               await setPosition([36.17, 127.83]);

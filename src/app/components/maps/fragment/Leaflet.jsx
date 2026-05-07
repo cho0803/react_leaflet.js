@@ -35,12 +35,12 @@ import { MapsContext, useContext, useState , useTheme, useMediaQuery} from "..";
 
 export default function Leaflet ({markers, setMarkers, place, setPlace, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, }) {
   
-  const {map, setMap} = useContext(MapsContext)
+  const {isMobile, map, setMap} = useContext(MapsContext)
   // console.log(map ? map.getCenter() : null,"map")
 
-  const theme = useTheme();
+  // const theme = useTheme();
   // 모바일(sm 미만) 여부 체크
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   // console.log(isMobile,"isMobile")
   
   
@@ -61,7 +61,7 @@ export default function Leaflet ({markers, setMarkers, place, setPlace, reset, s
         // )} // 최대 경계 설정
         maxBoundsViscosity={1.0} // 경계의 견고 정도 제어 (1.0일 경우 완전히 견고해져 경계 밖으로 드래그 불가)
         zoomControl={false}
-        ref={setMap}             // Leaflet 지도 인스턴스(L.Map)에 직접 접근하여 외부에서 지도를 조작하기 위한 ref 연결
+        // ref={setMap}             // Leaflet 지도 인스턴스(L.Map)에 직접 접근하여 외부에서 지도를 조작하기 위한 ref 연결
         style={{
           // flex 1 1 auto 적용 해제시
           // 전체화면 설정 

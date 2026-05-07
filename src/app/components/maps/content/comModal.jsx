@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 import { Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, CssBaseline, Divider, Typography, Paper, useTheme, useMediaQuery, Dialog, DialogContent, AppBar, Toolbar, InputBase } from '@mui/material';
-import { Menu, ChevronLeft, RestartAlt, Search, Map, Home, List as ListIcon, Add, Close as CloseIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { Menu, ChevronLeft, RestartAlt, Search, Map, Home, List as ListIcon, Add, Save, Delete, Close as CloseIcon, Menu as MenuIcon } from '@mui/icons-material';
 
 //전역 데이터 받아오기
 import { MapsContext, useContext, useState } from ".."
@@ -64,81 +64,193 @@ const rows = [
 //     </>
 //   )
 // }
-export default ({}) => {
-  const { data, isMarkerListOpen, setIsMarkerListOpen } = useContext(MapsContext);
-  console.log(data,isMarkerListOpen,"isMarkerListOpen")
+
+export default () => {
+  const { 
+    showAddRow, setShowAddRow, data, isMarkerListOpen, setIsMarkerListOpen,  markers, setMarkers, setValue, getValues, reset, register, errors, handleSubmit, refreshFn, placeList, setPlaceList, place, setPlace,
+  } = useContext(MapsContext);
+  
+  // 입력 폼 표시 여부 상태
+  if(!isMarkerListOpen) return
+
   return (
     <Dialog
       open={isMarkerListOpen}
-      // handleClose를 직접 타이핑하여 상태 변경
-      onClose={() => setIsMarkerListOpen(false)}
-      // MUI 브레이크포인트에 따른 반응형 너비 설정
+      onClose={() => { setIsMarkerListOpen(false); setShowAddRow(false); }}
       maxWidth="md"
       fullWidth
+      disableRestoreFocus 
       PaperProps={{
         sx: {
           borderRadius: { xs: 0, md: 2 },
           bgcolor: 'background.paper',
-          // 모바일(xs)에선 꽉 차게, PC(md)에선 여백 확보
           width: { xs: '100%', md: '35em' },
           margin: { xs: 0, md: 2 },
           backgroundImage: 'none',
+          position: 'relative'
         }
       }}
     >
-      <DialogContent sx={{ p: { xs: 1, md: 3 } }}>
+      {/* 우측 상단 버튼 그룹 */}
+      {/* {showAddRow &&        */}
+      <Box sx={{ position: 'absolute', top: 8, right: 8, zIndex: 1, display: 'flex', gap: 0.5 }}>
+        <IconButton 
+          onClick={() => setShowAddRow(!showAddRow)} 
+          sx={{ color: showAddRow ? 'error.main' : 'primary.main', bgcolor: 'action.hover' }}
+        >
+          <Add sx={{ transform: showAddRow && getValues('id') !='' ? 'rotate(45deg)' : 'none', transition: '0.2s' }} />
+        </IconButton>
+      </Box>
+      {/* } */}
+
+
+      <DialogContent sx={{ p: { xs: 1, md: 3 }, pt: { xs: 6, md: 7 } }}>
         <TableContainer component={Box} sx={{ maxHeight: '70vh' }}>
           <Table stickyHeader size="small">
             <TableHead>
               <TableRow>
                 {['ID', 'Title', 'Content', 'Lat', 'Lng'].map((head) => (
-                  <TableCell 
-                    key={head} 
-                    sx={{ 
-                      fontWeight: 'bold', 
-                      bgcolor: 'background.paper', // stickyHeader 배경 유지
-                      color: 'text.primary',
-                      borderBottom: '2px solid',
-                      borderColor: 'divider'
-                    }}
-                  >
+                  <TableCell key={head} sx={{ fontWeight: 'bold', bgcolor: 'background.paper', color: 'text.primary', borderBottom: '2px solid', borderColor: 'divider' }}>
                     {head}
                   </TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
+              {/* (+) 버튼 클릭 시 나타나는 입력 행 */}
+              {showAddRow && (
+                <TableRow sx={{ bgcolor: 'action.hover' }}>
+                  <TableCell ><InputBase placeholder="ID" {...register("id")}   sx={{ fontSize: '0.8rem' }} type="hidden" disabled />
+                  <Typography component="span" noWrap sx={{ display: 'inline-block', width: 'inherit', color: 'text.primary' }}>
+                    {isNaN(getValues("id")) ? "신규" : "수정"}
+                  </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <InputBase placeholder="제목" {...register("title",{ required: "제목을 입력해주세요" })  } sx={{ fontSize: '0.8rem', color: 'text.primary', borderBottom: '1px solid gray' }} autoFocus 
+                      onKeyUp={() => {
+                        if (!markers[getValues("id")]) {
+                          alert("지도에서 좌표를 클릭해주세요");
+                          return;
+                        }
+                        setMarkers((prev) => ({
+                          ...prev,
+                          [getValues("id")]: {
+                            position: markers[getValues("id")].position,
+                            title: getValues("title"),
+                            content: getValues("content"),
+                          },
+                        }));
+                      }}
+                  /></TableCell>
+                  <TableCell>
+                    <InputBase placeholder="내용" {...register("content",{ required: "내용을 입력해주세요" }) } sx={{ fontSize: '0.8rem', color: 'text.primary', borderBottom: '1px solid gray'}} 
+                      onKeyUp={() => {
+                        if (!markers[getValues("id")]) {
+                          alert("지도에서 좌표를 클릭해주세요");
+                          return;
+                        }
+                        setMarkers((prev) => ({
+                          ...prev,
+                          [getValues("id")]: {
+                            position: markers[getValues("id")].position,
+                            title: getValues("title"),
+                            content: getValues("content"),
+                          },
+                        }));
+                      }}
+                  /></TableCell>
+                  <TableCell><InputBase placeholder="Lat" {...register("lat")} sx={{ fontSize: '0.8rem', color: 'primary.main', borderBottom: '1px solid gray' }} /></TableCell>
+                  <TableCell><InputBase placeholder="Lng" {...register("lng")} sx={{ fontSize: '0.8rem', color: 'primary.main', borderBottom: '1px solid gray' }} /></TableCell>
+                  <TableCell>
+                    {showAddRow && (
+                      <IconButton onClick={handleSubmit(
+                          function (param) {
+                            // if (data.id) console.log("데이타 id", id);
+                            console.log(param);
+                            // param.id = Number(param.id) + 1 ? param.id : "";
+
+                            axios
+                              .post("api/test", {
+                                ...param,
+                                id: Number(param.id) + 1 ? param.id : "",
+                              })
+                              .then(async (res) => {
+                                // console.log(res.data);
+                                // console.log(res);
+
+                                if (!Number(param.id) + 0) {
+                                  // console.log(data, getValues("id"), "들어옴1");
+                                  setMarkers((prev) => {
+                                    const { [param.id]: $, ...rest } = prev;
+                                    console.log(prev, param.id, rest, "rest");
+                                    return rest;
+                                  });
+                                }
+                                refreshFn();
+                                
+                                if (!Number(param.id) + 0) {
+                                  // console.log(data, "데이타"); 
+                                  Object.entries(res.data).forEach(
+                                    ([key, value]) => {
+                                      // console.log(`${key}: ${value}`);
+                                      setValue(key, value);
+                                    }
+                                  );
+                                }
+                              });
+                          },
+                      )} color="primary" sx={{ bgcolor: 'action.hover' }}>
+                        <Save fontSize="small" />
+                      </IconButton>
+                    )}
+                  </TableCell>
+                </TableRow>
+              )}
+
               {data?.length > 0 ? (
                 data.map((item, index) => (
-                  <TableRow 
-                    key={item.id} 
-                    hover 
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
+                  <TableRow key={item.id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor: 'pointer' }}>
                     <TableCell sx={{ color: 'text.secondary' }}>{index}</TableCell>
                     <TableCell sx={{ fontWeight: 500, color: 'text.primary' }}>{item.title}</TableCell>
-                    <TableCell sx={{ 
-                      color: 'text.secondary', 
-                      maxWidth: { xs: '80px', md: '200px' }, 
-                      overflow: 'hidden', 
-                      textOverflow: 'ellipsis', 
-                      whiteSpace: 'nowrap' 
-                    }}>
+                    <TableCell sx={{ color: 'text.secondary', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {item.content}
                     </TableCell>
-                    <TableCell sx={{ color: 'primary.main', fontWeight: 'medium' }}>
-                      {Number(item.lat).toFixed(2)}
-                    </TableCell>
-                    <TableCell sx={{ color: 'primary.main', fontWeight: 'medium' }}>
-                      {Number(item.lng).toFixed(2)}
-                    </TableCell>
+                    <TableCell sx={{ color: 'primary.main' }}>{Number(item.lat).toFixed(2)}</TableCell>
+                    <TableCell sx={{ color: 'primary.main' }}>{Number(item.lng).toFixed(2)}</TableCell>
+                    {/* 삭제 버튼 열 */}
+                    {showAddRow && 
+                    <TableCell align="right">
+                      <IconButton 
+                        size="small" 
+                        sx={{ color: 'text.disabled', '&:hover': { color: 'error.main' } }}
+                        onClick={async(e) => {
+                          e.stopPropagation(); // 행 클릭 이벤트 방지
+                          if(window.confirm("정말 삭제하시겠습니까?")) {
+                            console.log(item.id, "삭제 실행");
+                            // onDelete(item.id); <- 삭제 로직 연결
+                        // console.log("삭제", getValues("id"));
+                              axios.delete(`api/test/${item.id  }`)
+                              
+                              await setMarkers((prev) => {
+                                const { [item.id]: _, ...rest } = prev;
+                              // console.log(rest, "rest");
+
+                                return rest;
+                              });
+                              refreshFn();
+                              reset();
+
+                          }
+                        }}
+                      >
+                        <Delete fontSize="small" />
+                      </IconButton>
+                    </TableCell>}
                   </TableRow>
                 ))
-              ) : (
+              ) : !showAddRow && (
                 <TableRow>
-                  <TableCell colSpan={5} align="center" sx={{ py: 5, color: 'text.disabled' }}>
-                    표시할 데이터가 없습니다.
-                  </TableCell>
+                  <TableCell colSpan={5} align="center" sx={{ py: 5, color: 'text.disabled' }}>표시할 데이터가 없습니다.</TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -147,7 +259,10 @@ export default ({}) => {
       </DialogContent>
     </Dialog>
   );
+  
 };
+
+
 
 export  function CustomModal ({ isOpen, closeModal, children }) {
     // const {Modal, Paper} = useContext(MapsContext)

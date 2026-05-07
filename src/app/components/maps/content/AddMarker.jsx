@@ -6,7 +6,7 @@ import { MapsContext, useContext } from "..";
 function AddMarker() {
   // console.info("AddMarker loading complete!");
 
-  const {setIsMarkerListOpen, markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, place, setPlace,}  = useContext(MapsContext)
+  const { setShowAddRow, setIsMarkerListOpen, markers, setMarkers, reset, setValue, getValues, sidebarEl, asideEl, buttonEl, place, setPlace,}  = useContext(MapsContext)
   // console.log(place ? '있다': '없다',"position")
   const map = useMapEvents({
     click: (e) => {
@@ -49,17 +49,25 @@ function AddMarker() {
             // icon={icon}
             position={markers[uuid].position}
             eventHandlers={{
-              click: (e) => {
+              click: async (e) => {
                 // 등록된 마커 클릭 이벤트
                 // console.log("clickEventHandlers loading complete!");
                 // console.log("테스트", markers[uuid].title);
                 const { lat, lng } = e.latlng;
 
-                // setValue("id", uuid);
+                await setValue("id", uuid);
                 setValue("lat", lat); // 위도
                 setValue("lng", lng); // 경도
                 setValue("title", markers[uuid].title); // 제목
                 setValue("content", markers[uuid].content); // 내용
+                // console.log(getValues('id'))
+
+                setIsMarkerListOpen(true);
+                setShowAddRow(true);
+                
+                //   setIsMarkerListOpen(true);
+                //   setShowAddRow(true);
+                // }, 0);
 
                 // console.log(
                 //   document.getElementsByClassName("sidebar")[0],
@@ -69,6 +77,8 @@ function AddMarker() {
 
                 // sidebarEl.style.transform = `translateX(-50%)`;
                 // sidebarEl.style.transition = `0.4s`
+                
+                if(!sidebarEl && !asideEl) return
 
                 if (
                   sidebarEl.style.transform == `translateX(0%)` &&
@@ -129,7 +139,7 @@ function AddMarker() {
                   buttonEl.setAttribute("aria-controls", "true");
                   return;
                 }
-
+// 
                 // 새로운 마커 추가
                 if (
                   sidebarEl.style.transform == `translateX(-100%)` &&
