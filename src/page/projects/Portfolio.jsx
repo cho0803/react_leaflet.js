@@ -27,7 +27,7 @@ const Portfolio = () => {
 
  const projectRef = useRef(null);
 
-      projectRef.current  =  projOpen ?  projectRef.current : currentPage
+projectRef.current  =  projOpen ?  projectRef.current : currentPage
 
  const project = projOpen ? projectPages[projectRef.current]: projectPages[currentPage];
 
@@ -36,52 +36,6 @@ const Portfolio = () => {
  const email = "cho0807s@naver.com";
  const skills = ["React", "ES6", "MUI", "Node.js", "Express.js","Git","SVN"];
 
-  // [변수화] 인덱스 n을 받아 프로젝트를 렌더링하는 컴포넌트
-  const ProjectItem = ({ n }) => {
-    
-    const project = projectPages[n];
-    if (!project) return null;
-
-    return (
-      
-      <Box sx={{ mb: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-          <Box>
-            <Typography variant="h6" fontWeight="bold" color="text.primary">{project.title}</Typography>
-            <Typography variant="body2" color="primary" fontWeight="600">{project.role}</Typography>
-          </Box>
-          <Typography variant="caption" sx={{ bgcolor: 'action.selected', px: 1, py: 0.5, borderRadius: 1, height: 'fit-content' }}>
-            {project.date}
-          </Typography>
-        </Box>
-
-        <Stack spacing={2.5}>
-          <Box>
-            <Typography variant="caption" fontWeight="bold" color="text.secondary" sx={{ display: 'block', mb: 1 }}>TECH STACK</Typography>
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              {project.fe.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />)}
-              <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
-              {project.be.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />)}
-            </Stack>
-          </Box>
-          <Box>
-            <Typography variant="caption" fontWeight="bold" color="text.secondary" sx={{ display: 'block', mb: 1 }}>MAIN WORK</Typography>
-            <Stack spacing={0.5}>
-              {project.work.map((w, i) => (
-                <Typography key={i} variant="body2" color="text.secondary" sx={{ display: 'flex', gap: 1 }}>
-                  {"*"} {w}
-                </Typography>
-              ))}
-            </Stack>
-          </Box>
-        </Stack>
-
-
-                
-      </Box>
-    );
-  };
-  
   const theme = useMemo(() => createTheme({
     palette: {
       mode,
@@ -112,8 +66,23 @@ const Portfolio = () => {
       }}>
         
         <Container maxWidth="lg" disableGutters sx={{ width: '100%' }}>
-          
+
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 4 }}>
+          <Box 
+            sx={{ 
+              width: '99%', 
+              padding: '16px',
+              borderRadius: '8px',
+              // 테마 함수 대신 직접 투명도가 있는 배경색 지정
+              backgroundColor: 'rgba(144, 202, 249, 0.1)', 
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <Typography >
+              { "기능 1 :수행 프로젝트를 클릭하시면 변경할수 있습니다"}
+            </Typography>
+          </Box>
             <IconButton onClick={() => setMode(mode === 'light' ? 'dark' : 'light')} color="inherit">
               {mode === 'dark' ? <LightMode /> : <DarkMode />}
             </IconButton>
@@ -168,7 +137,7 @@ const Portfolio = () => {
                 <Paper sx={{ p: 4, borderRadius: 3 }}>
                   <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 4 }}>
                     <StarsIcon color="primary" /> 
-                    <Box sx={{...blink,...hover}} onClick={() => setProjOpen(true)}>
+                    <Box sx={{...blink, ...hover}} onClick={() => setProjOpen(true)}>
                       수행 프로젝트
                     </Box>
                     <Project/>
@@ -189,35 +158,26 @@ const Portfolio = () => {
                     <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
                     {project.be.map(t => <Chip key={t} label={t} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />)}
                   </Box>
-                  {/* n 변수를 활용한 프로젝트 호출 */}
-                  {/* <ProjectItem n={0} /> */}
-                  {/* <Divider sx={{ my: 4, borderStyle: 'dashed' }} /> */}
-                  
                 </Paper>
 
                 <Paper sx={{ p: 4, borderRadius: 3 }}>
                   <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><AccountTreeIcon color="primary" /> 
-                  <Box onClick={() => {setMapOpen(true)}} sx={hover}>
-                    <Typography
-                      variant="body2" 
-                      sx={blink}
-                    >
-                      <Box>개인 프로젝트</Box>
-                    </Typography>
-                  </Box>
-                  {/* <Button variant='contained' sx={hover} onClick={() => {setMapOpen(true)}}>개인 프로젝트</Button> */}
-                  <MapProject/>
+                    <Box  sx={{...blink, ...hover}} onClick={() => {setMapOpen(true)}}>
+                      개인 프로젝트
+                    </Box>
+                    <MapProject/>
                   </Typography>
                   <Box>
                     <Typography variant="subtitle1" fontWeight="bold">Leaflet.js 프로젝트</Typography>
                     <Typography variant="body2" color="text.secondary">React, Leaflet.js 활용 위치 기반 서비스</Typography>
                     <Box sx={{ mt: 2 }}>
+                      {/* FE 기술 */}
                       <Chip label={project.fe[1]} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />
 
                       {/* 구분선 */}
                       <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
 
-                      {/* BE 태그 직접 나열 */}
+                      {/* BE 기술 */}
                       <Chip label={project.be[0]} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />
 
                     </Box>
