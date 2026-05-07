@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useContext, useRef } from 'react';
 import { 
   Container, Typography, Box, Grid, Button, Stack, Chip, 
-  Divider, IconButton, ThemeProvider, createTheme, CssBaseline, Paper 
+  Divider, IconButton, ThemeProvider, createTheme, CssBaseline, Paper, Snackbar 
 } from '@mui/material';
 
 import GitHub from '@mui/icons-material/GitHub';
@@ -39,9 +39,9 @@ const Portfolio = () => {
   const theme = useMemo(() => createTheme({
     palette: {
       mode,
-      primary: { main: mode === 'light' ? '#1976d2' : '#90caf9' },
+      primary: { main: mode === 'light' ? '#1976d2' : '#60a5fa' },
       background: {
-        default: mode === 'light' ? '#f5f5f5' : '#0a1929',
+        default: mode === 'light' ? '#f5f5f5' : '#ffffff',
         paper: mode === 'light' ? '#ffffff' : '#132f4c',
       },
     },
@@ -67,8 +67,8 @@ const Portfolio = () => {
         
         <Container maxWidth="lg" disableGutters sx={{ width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', mb: 4, gap: 1 }}>
-          <Box sx={{ flexGrow: 1, p: 2, borderRadius: '8px', backgroundColor: 'rgba(144, 202, 249, 0.1)', display: 'flex', alignItems: 'center' }}>
-        <Typography sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, fontSize: '14px', fontWeight: 500, color: (theme) => theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark' }}>
+          <Box sx={{ flexGrow: 1, p: 2, borderRadius: '8px', backgroundColor: 'rgb(0 141 255 / 10%)', display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, fontSize: '14px', fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? 'primary.main' : '#0d47a1' }}>
           * 수행 프로젝트를 클릭하시면 <Box component="br" sx={{ display: { xs: 'block', sm: 'none' } }} /> 프로젝트 변경 할 수 있습니다.<br />
           * 개인 프로젝트를 클릭하시면 <Box component="br" sx={{ display: { xs: 'block', sm: 'none' } }} /> 개인 프로젝트 확인 할 수 있습니다.
         </Typography>
@@ -96,7 +96,42 @@ const Portfolio = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><Email fontSize="small" color="primary" /><Typography variant="body2">{email}</Typography></Box>
                   </Stack>
                   <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
-                    <Button fullWidth variant="outlined" size="small" startIcon={<Email />}>Email</Button>
+                    <Button fullWidth variant="outlined" size="small" startIcon={<Email />}
+                      onClick={() =>{
+                        navigator.clipboard.writeText(email);
+                        setOpen(true); // 복사 성공 시 알림 표시
+                      }} >Email
+                    </Button>
+                    {/* 복사 완료 알림 메시지 */}
+<Snackbar
+  open={open}
+  autoHideDuration={2000}
+  onClose={() => setOpen(false)}
+  message="이메일 주소가 복사되었습니다!"
+  anchorOrigin={{ vertical: 'middle', horizontal: 'center' }}
+  sx={{ 
+    top: '50% !important', 
+    left: '50% !important', 
+    transform: 'translate(-50%, -90%) !important',
+    '& .MuiSnackbarContent-root': {
+      // 배경색: 더 밝은 네이비 블루로 조정하여 답답함을 해소
+      backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1a3a5a' : '#f0f7ff',
+      // 글자색: 가장 밝은 스카이 블루(#e3f2fd)와 진한 파랑으로 대비 극대화
+      color: (theme) => theme.palette.mode === 'dark' ? '#e3f2fd' : '#0d47a1',
+      // 테두리: 더 선명한 스카이 블루 빛으로 강조
+      border: (theme) => theme.palette.mode === 'dark' ? '1px solid #90caf9' : '1px solid #1976d2',
+      fontWeight: 'bold',
+      borderRadius: '24px',
+      fontSize: '0.85rem',
+      justifyContent: 'center',
+      // 광채 효과 추가 (Glow)
+      boxShadow: (theme) => theme.palette.mode === 'dark' 
+        ? '0 0 15px rgba(144, 202, 249, 0.4)' 
+        : '0 4px 12px rgba(25, 118, 210, 0.2)',
+      minWidth: '220px'
+    }
+  }}
+/>
                     <Button fullWidth variant="outlined" size="small" startIcon={<GitHub />}>GitHub</Button>
                   </Stack>
                 </Paper>
