@@ -25,16 +25,16 @@ const Portfolio = () => {
   const {projectPages, currentPage, projOpen, setProjOpen ,setMapOpen } = useContext(ProfileContext);
   const [mode, setMode] = useState('dark');
 
- const projectRef = useRef(null);
+  const projectRef = useRef(null);
+  
+  projectRef.current  =  projOpen ?  projectRef.current : currentPage
 
-projectRef.current  =  projOpen ?  projectRef.current : currentPage
+  const project = projOpen ? projectPages[projectRef.current]: projectPages[currentPage];
+ 
+  const [open, setOpen] = useState(false);
 
- const project = projOpen ? projectPages[projectRef.current]: projectPages[currentPage];
-
- const [open, setOpen] = useState(false);
-
- const email = "cho0807s@naver.com";
- const skills = ["React", "ES6", "MUI", "Node.js", "Express.js","Git","SVN"];
+  const email = "cho0807s@naver.com";
+  const skills = ["React", "ES6", "MUI", "Node.js", "Express.js","Git","SVN"];
 
   const theme = useMemo(() => createTheme({
     palette: {
@@ -66,27 +66,19 @@ projectRef.current  =  projOpen ?  projectRef.current : currentPage
       }}>
         
         <Container maxWidth="lg" disableGutters sx={{ width: '100%' }}>
-
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 4 }}>
-          <Box 
-            sx={{ 
-              width: '99%', 
-              padding: '16px',
-              borderRadius: '8px',
-              // 테마 함수 대신 직접 투명도가 있는 배경색 지정
-              backgroundColor: 'rgba(144, 202, 249, 0.1)', 
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            <Typography >
-              { "기능 1 :수행 프로젝트를 클릭하시면 변경할수 있습니다"}
-            </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', mb: 4, gap: 1 }}>
+          <Box sx={{ flexGrow: 1, p: 2, borderRadius: '8px', backgroundColor: 'rgba(144, 202, 249, 0.1)', display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, fontSize: '14px', fontWeight: 500, color: (theme) => theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark' }}>
+          * 수행 프로젝트를 클릭하시면 <Box component="br" sx={{ display: { xs: 'block', sm: 'none' } }} /> 프로젝트 변경 할 수 있습니다.<br />
+          * 개인 프로젝트를 클릭하시면 <Box component="br" sx={{ display: { xs: 'block', sm: 'none' } }} /> 개인 프로젝트 확인 할 수 있습니다.
+        </Typography>
           </Box>
-            <IconButton onClick={() => setMode(mode === 'light' ? 'dark' : 'light')} color="inherit">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton sx={{ flexShrink: 0 }} onClick={() => setMode(mode === 'light' ? 'dark' : 'light')} color="inherit">
               {mode === 'dark' ? <LightMode /> : <DarkMode />}
             </IconButton>
           </Box>
+        </Box>
 
           <Grid container spacing={4} sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
             
@@ -171,21 +163,17 @@ projectRef.current  =  projOpen ?  projectRef.current : currentPage
                     <Typography variant="subtitle1" fontWeight="bold">Leaflet.js 프로젝트</Typography>
                     <Typography variant="body2" color="text.secondary">React, Leaflet.js 활용 위치 기반 서비스</Typography>
                     <Box sx={{ mt: 2 }}>
-                      {/* FE 기술 */}
-                      <Chip label={project.fe[1]} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />
-
-                      {/* 구분선 */}
-                      <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
-
-                      {/* BE 기술 */}
-                      <Chip label={project.be[0]} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />
-
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, mt: 1.5 }}>
+                        {["React", "MUI CSS"].map((t, i) => <Chip key={`f-${i}`} label={t} size="small" variant="outlined" color="info" sx={{ fontWeight: 600 }} />)}
+                        <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
+                        {["Springboot", "Express.js", "Docker", "PostgreSQL"].map((t, i) => <Chip key={`b-${i}`} label={t} size="small" variant="outlined" color="success" sx={{ fontWeight: 600 }} />)}
+                      </Box>
                     </Box>
                   </Box>
                 </Paper>
 
                 <Paper sx={{ p: 4, borderRadius: 3 }}>
-                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><SchoolIcon color="primary" /> 교육</Typography>
+                  <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}><SchoolIcon color="primary" /> 학력</Typography>
                   <Typography variant="subtitle1" fontWeight="bold">오산대학교 - 컴퓨터공학 전공</Typography>
                   <Typography variant="body2" color="text.secondary">2015.03 ~ 2020.02 졸업</Typography>
                 </Paper>
