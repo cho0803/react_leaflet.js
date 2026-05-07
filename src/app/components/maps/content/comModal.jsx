@@ -92,7 +92,7 @@ export default () => {
       }}
     >
       {/* 우측 상단 버튼 그룹 */}
-      {/* {showAddRow &&        */}
+      {getValues('id')  &&       
       <Box sx={{ position: 'absolute', top: 8, right: 8, zIndex: 1, display: 'flex', gap: 0.5 }}>
         <IconButton 
           onClick={() => setShowAddRow(!showAddRow)} 
@@ -101,7 +101,7 @@ export default () => {
           <Add sx={{ transform: showAddRow && getValues('id') !='' ? 'rotate(45deg)' : 'none', transition: '0.2s' }} />
         </IconButton>
       </Box>
-      {/* } */}
+      } 
 
 
       <DialogContent sx={{ p: { xs: 1, md: 3 }, pt: { xs: 6, md: 7 } }}>
