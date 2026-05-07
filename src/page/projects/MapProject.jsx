@@ -23,6 +23,8 @@ export function MapProject() {
     setMapOpen(false);
   };
 
+  const theme = useTheme();
+
   return (
     <Dialog
       open={mapOpen}
