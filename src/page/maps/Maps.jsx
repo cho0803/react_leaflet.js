@@ -136,6 +136,7 @@ export const Maps = () => {
               await setPosition([36.17, 127.83]);
               setPosition('');
               setPlace('')
+              reset()
               // 저장안한 marker 초기화
               setMarkers((prev) => {
               const rest = Object.keys(prev).reduce((acc, key) => {
