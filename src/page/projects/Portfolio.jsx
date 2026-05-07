@@ -103,36 +103,36 @@ const Portfolio = () => {
                       }} >Email
                     </Button>
                     {/* 복사 완료 알림 메시지 */}
-<Snackbar
-  open={open}
-  autoHideDuration={2000}
-  onClose={() => setOpen(false)}
-  message="이메일 주소가 복사되었습니다!"
-  anchorOrigin={{ vertical: 'middle', horizontal: 'center' }}
-  sx={{ 
-    top: '50% !important', 
-    left: '50% !important', 
-    transform: 'translate(-50%, -90%) !important',
-    '& .MuiSnackbarContent-root': {
-      // 배경색: 더 밝은 네이비 블루로 조정하여 답답함을 해소
-      backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1a3a5a' : '#f0f7ff',
-      // 글자색: 가장 밝은 스카이 블루(#e3f2fd)와 진한 파랑으로 대비 극대화
-      color: (theme) => theme.palette.mode === 'dark' ? '#e3f2fd' : '#0d47a1',
-      // 테두리: 더 선명한 스카이 블루 빛으로 강조
-      border: (theme) => theme.palette.mode === 'dark' ? '1px solid #90caf9' : '1px solid #1976d2',
-      fontWeight: 'bold',
-      borderRadius: '24px',
-      fontSize: '0.85rem',
-      justifyContent: 'center',
-      // 광채 효과 추가 (Glow)
-      boxShadow: (theme) => theme.palette.mode === 'dark' 
-        ? '0 0 15px rgba(144, 202, 249, 0.4)' 
-        : '0 4px 12px rgba(25, 118, 210, 0.2)',
-      minWidth: '220px'
-    }
-  }}
-/>
-                    <Button fullWidth variant="outlined" size="small" startIcon={<GitHub />}>GitHub</Button>
+                    <Snackbar
+                      open={open}
+                      autoHideDuration={2000}
+                      onClose={() => setOpen(false)}
+                      message="이메일 주소가 복사되었습니다!"
+                      anchorOrigin={{ vertical: 'middle', horizontal: 'center' }}
+                      sx={{ 
+                        top: '50% !important', 
+                        left: '50% !important', 
+                        transform: 'translate(-50%, -90%) !important',
+                        '& .MuiSnackbarContent-root': {
+                          // 배경색: 더 밝은 네이비 블루로 조정하여 답답함을 해소
+                          backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1a3a5a' : '#f0f7ff',
+                          // 글자색: 가장 밝은 스카이 블루(#e3f2fd)와 진한 파랑으로 대비 극대화
+                          color: (theme) => theme.palette.mode === 'dark' ? '#e3f2fd' : '#0d47a1',
+                          // 테두리: 더 선명한 스카이 블루 빛으로 강조
+                          border: (theme) => theme.palette.mode === 'dark' ? '1px solid #90caf9' : '1px solid #1976d2',
+                          fontWeight: 'bold',
+                          borderRadius: '24px',
+                          fontSize: '0.85rem',
+                          justifyContent: 'center',
+                          // 광채 효과 추가 (Glow)
+                          boxShadow: (theme) => theme.palette.mode === 'dark' 
+                            ? '0 0 15px rgba(144, 202, 249, 0.4)' 
+                            : '0 4px 12px rgba(25, 118, 210, 0.2)',
+                          minWidth: '220px'
+                        }
+                      }}
+                    />
+                    <Button component="a" href="https://placeholder.com" fullWidth variant="outlined" size="small" startIcon={<GitHub />}>GitHub</Button>
                   </Stack>
                 </Paper>
 
