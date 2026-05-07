@@ -206,8 +206,9 @@ export default () => {
 
                 <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 1.5, color: 'primary.main' }}>기술스택</Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-                    {currentData.fe.map(t => <Chip key={t} label={t} size="small" color="primary" variant="outlined" />)}
-                    {currentData.be.map(t => <Chip key={t} label={t} size="small" color="info" variant="outlined" />)}
+                    {currentData.fe.map(t => <Chip key={t} label={t} size="small" color="info" variant="outlined" />)}
+                    <Box component="span" sx={{ color: 'text.secondary', mx: 0.5 }}>/</Box>
+                    {currentData.be.map(t => <Chip key={t} label={t} size="small" color="success" variant="outlined" />)}
                 </Box>
 
                 <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 1.5, color: 'primary.main' }}>주요업무</Typography>
