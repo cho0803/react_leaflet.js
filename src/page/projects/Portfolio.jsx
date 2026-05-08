@@ -68,7 +68,7 @@ const Portfolio = () => {
         <Container maxWidth="lg" disableGutters sx={{ width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', mb: 4, gap: 1 }}>
           <Box sx={{ flexGrow: 1, p: 2, borderRadius: '8px', backgroundColor: 'rgb(0 141 255 / 10%)', display: 'flex', alignItems: 'center' }}>
-        <Typography sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, fontSize: '14px', fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? 'primary.main' : '#0d47a1' }}>
+        <Typography sx={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, fontSize: '16px', fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? 'primary.main' : '#0d47a1' }}>
           * 수행 프로젝트를 클릭하시면 <Box component="br" sx={{ display: { xs: 'block', sm: 'none' } }} /> 프로젝트 변경 할 수 있습니다.<br />
           * 개인 프로젝트를 클릭하시면 <Box component="br" sx={{ display: { xs: 'block', sm: 'none' } }} /> 개인 프로젝트 확인 할 수 있습니다.
         </Typography>
